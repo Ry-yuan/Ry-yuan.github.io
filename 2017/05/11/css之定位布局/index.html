@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="css," />
 
 
 
@@ -90,15 +90,27 @@
 
 
 
-<meta name="description" content="如果你觉得困难，那也许是在进步">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Ry-yuan">
-<meta property="og:url" content="http://Ry-yuan.com/index.html">
+<meta name="description" content="css之定位布局(position,定位布局技巧)1.什么是定位css中的position属性，position有四个值：absolute/relative/fixed/static(绝对/相对/固定/静态(默认))通过定位属性可以设置一些不规则的布局，使用TLBR(top,left,bottom,right)来调整元素位置。 2.各个属性值的描述：1.static(静态) 没有特别的设定，遵循基">
+<meta name="keywords" content="css">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css之定位布局">
+<meta property="og:url" content="http://Ry-yuan.com/2017/05/11/css之定位布局/index.html">
 <meta property="og:site_name" content="Ry-yuan">
-<meta property="og:description" content="如果你觉得困难，那也许是在进步">
+<meta property="og:description" content="css之定位布局(position,定位布局技巧)1.什么是定位css中的position属性，position有四个值：absolute/relative/fixed/static(绝对/相对/固定/静态(默认))通过定位属性可以设置一些不规则的布局，使用TLBR(top,left,bottom,right)来调整元素位置。 2.各个属性值的描述：1.static(静态) 没有特别的设定，遵循基">
+<meta property="og:image" content="http://ry-yuan.com/img/p1.png">
+<meta property="og:image" content="http://ry-yuan.com/img/p2.png">
+<meta property="og:image" content="http://ry-yuan.com/img/p3.png">
+<meta property="og:image" content="http://ry-yuan.com/img/p4.png">
+<meta property="og:image" content="http://ry-yuan.com/img/p5.png">
+<meta property="og:image" content="http://ry-yuan.com/img/p6.png">
+<meta property="og:image" content="http://ry-yuan.com/img/p7.png">
+<meta property="og:image" content="http://ry-yuan.com/img/p8.png">
+<meta property="og:image" content="http://ry-yuan.com/img/p9.png">
+<meta property="og:updated_time" content="2017-05-11T11:39:13.930Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Ry-yuan">
-<meta name="twitter:description" content="如果你觉得困难，那也许是在进步">
+<meta name="twitter:title" content="css之定位布局">
+<meta name="twitter:description" content="css之定位布局(position,定位布局技巧)1.什么是定位css中的position属性，position有四个值：absolute/relative/fixed/static(绝对/相对/固定/静态(默认))通过定位属性可以设置一些不规则的布局，使用TLBR(top,left,bottom,right)来调整元素位置。 2.各个属性值的描述：1.static(静态) 没有特别的设定，遵循基">
+<meta name="twitter:image" content="http://ry-yuan.com/img/p1.png">
 
 
 
@@ -126,13 +138,13 @@
 
 
 
-  <link rel="canonical" href="http://Ry-yuan.com/"/>
+  <link rel="canonical" href="http://Ry-yuan.com/2017/05/11/css之定位布局/"/>
 
 
 
 
 
-  <title>Ry-yuan</title>
+  <title>css之定位布局 | Ry-yuan</title>
 </head>
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -156,9 +168,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-   page-home 
- ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -261,9 +271,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -289,9 +299,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/11/css之定位布局/" itemprop="url">css之定位布局</a></h1>
+          <h1 class="post-title" itemprop="name headline">css之定位布局</h1>
         
 
         <div class="post-meta">
@@ -349,182 +357,81 @@
       
 
       
+        <h3 id="css之定位布局-position-定位布局技巧"><a href="#css之定位布局-position-定位布局技巧" class="headerlink" title="css之定位布局(position,定位布局技巧)"></a>css之定位布局(position,定位布局技巧)</h3><h4 id="1-什么是定位"><a href="#1-什么是定位" class="headerlink" title="1.什么是定位"></a>1.什么是定位</h4><p>css中的position属性，position有四个值：absolute/relative/fixed/static(绝对/相对/固定/静态(默认))通过定位属性可以设置一些不规则的布局，使用TLBR(top,left,bottom,right)来调整元素位置。</p>
+<h4 id="2-各个属性值的描述："><a href="#2-各个属性值的描述：" class="headerlink" title="2.各个属性值的描述："></a>2.各个属性值的描述：</h4><p>1.static(静态) 没有特别的设定，遵循基本的定位规定，不能通过z-index进行层次分级，在普通流中，各个元素默认的属性。<br>2.relative(相对定位) 对象不可层叠、不脱离文档流，参考自身静态位置通过 top,bottom,left,right 定位。<br>3.absolute(绝对定位) 脱离文档流，通过 top,bottom,left,right 定位。选取其最近一个最有定位设置的父级对象进行绝对定位，如果对象的父级没有设置定位属性，absolute元素将以body坐标原点进行定位。<br>4.fixed（固定定位） 这里所固定的参照对像是可视窗口而并非是body或是父级元素。使用了fixed的元素不会随着窗口的滚动而滚动。属于absolute的子集。</p>
+<h4 id="3-各个属性值的具体作用："><a href="#3-各个属性值的具体作用：" class="headerlink" title="3.各个属性值的具体作用："></a>3.各个属性值的具体作用：</h4><p>A.<strong>static</strong>：（静态，默认的属性）通常情况下都不会使用，但是会存在有些场景，就是你想把position的值从其他值修改成默认时使用。</p>
+<p>B.<strong>relative</strong>：（相对定位）一个元素设定了position:relative，因为其不脱离文本流，如果不设置TLBR(top,left,bottom,right)的话，它的位置不会被改变，且不会影响当前布局，相当于没事发生一样。如果设置了TLBR后，元素就可以向指定的方向偏移，但是他原有的位置还是占据着的，例子如图：<br>图一：对child-1 设置了position：relative<br><img src="/img/p1.png" alt="p1"><br>图二：再对child-1 调位置 top：20px left：20px<br><img src="/img/p2.png" alt="p2"><br>C.<strong>absolute</strong>: (绝对定位)，完全脱离文本流（普通流），原来的位置不再占有，且可以设置TLBR任意移动；</p>
+<p>特别说明一下，对元素设置了absolute后，其父级元素都没有设置position：absolute/relative/fixed其会以body为父级。</p>
+<p>图一：<br><img src="/img/p3.png" alt="p3"><br>图二：<br><img src="/img/p4.png" alt="p4"><br>图三：<br><img src="/img/p5.png" alt="p5"><br>D.<strong>fixed</strong>：(固定定位),不会随着页面滚动而滚动，这里就不贴图了，最形象的就是那些网页小广告，你滚动页面，但是它一直在网页的右边或左边，死跟着你。</p>
+<h4 id="4-定位布局技巧：position：relative-与-position：absolute-结合使用"><a href="#4-定位布局技巧：position：relative-与-position：absolute-结合使用" class="headerlink" title="4.定位布局技巧：position：relative 与 position：absolute 结合使用:"></a>4.定位布局技巧：position：relative 与 position：absolute 结合使用:</h4><p>上面提到如果对元素设置了absolute后，其父级元素都没有设置position：relative，其会以body为父级。这样的话我们该元素定位到我们的目标位置将很困难，量像素麻烦。图片说明：<br>图一：初始状态<br><img src="/img/p6.png" alt="p6"><br>图二：对box-chd-chd设置position：absolute 并设置 top：0， left:0 可以看到它从body作为父级，会以最左上角作为起点<br><img src="/img/p7.png" alt="p7"><br>图三：对box 设置position：relative，可以看到此时box-chd-chd以box作为父级<br><img src="/img/p8.png" alt="p8"><br>图四：再对box-chd 设置position：relative，可以看到box-chd-chd以box-chd作为父级<br><img src="/img/p9.png" alt="p9"><br>可以看出，当子代设置了position：absolute后，其父级那个设置了position：relative，这个子代就会从该父级元素最左上方作为起点移动，并且遵循就近原则，即子代向上找父级，当找到第一个有父级设置了relative就以它最左上方作为起点。<br>relative 与 absolute 结合的方式，对定位布局起到了便利，需要移动的距离也得到缩小，不用从body开始整个页面来量取像素，同时也方便管理，结构清晰。</p>
+<p>总结：上一篇写了float的布局技巧，这章是position，可以看出position与float都是一种布局方式，且各有各的应用场景，可以根据需求来选择布局方式。<br>作者：Ry-yuan<br>如需转载请标明出处，原文地址：<a href="http://www.cnblogs.com/Ry-yuan/p/6822619.html" target="_blank" rel="external">http://www.cnblogs.com/Ry-yuan/p/6822619.html</a></p>
+
+      
+    </div>
+
+    <div>
+      
         
-          
-          css之定位布局(position,定位布局技巧)1.什么是定位css中的position属性，position有四个值：absolute/relative/fixed/static(绝对/相对/固定
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/05/11/css之定位布局/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+
+      
+    </div>
+
+    <div>
+      
         
+
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
-      
-    </div>
-
-    <div>
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://Ry-yuan.com/2017/05/10/css之浮动布局/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ry-yuan">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ry-yuan">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/10/css之浮动布局/" itemprop="url">css之浮动布局</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-10T17:06:11+08:00">
-                2017-05-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/css/" rel="tag"># css</a>
           
-            
-          
-
-          
-          
-             <span id="/2017/05/10/css之浮动布局/" class="leancloud_visitors" data-flag-title="css之浮动布局">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
         
-          
-          css之浮动布局(float,浮动原理,清除/闭合浮动方法)
-1.什么是浮动：在我们布局的时用到的一种技术，能够方便我们进行布局，通过让元素浮动，我们可以使元素在水平上左右移动，再通过margin属性
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/05/10/css之浮动布局/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/10/css之浮动布局/" rel="next" title="css之浮动布局">
+                <i class="fa fa-chevron-left"></i> css之浮动布局
+              </a>
+            
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
 
-    <div>
-      
-    </div>
+          <span class="post-nav-divider"></span>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
       
 
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -532,6 +439,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -551,8 +462,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.png"
@@ -605,6 +525,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#css之定位布局-position-定位布局技巧"><span class="nav-number">1.</span> <span class="nav-text">css之定位布局(position,定位布局技巧)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-什么是定位"><span class="nav-number">1.1.</span> <span class="nav-text">1.什么是定位</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-各个属性值的描述："><span class="nav-number">1.2.</span> <span class="nav-text">2.各个属性值的描述：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-各个属性值的具体作用："><span class="nav-number">1.3.</span> <span class="nav-text">3.各个属性值的具体作用：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-定位布局技巧：position：relative-与-position：absolute-结合使用"><span class="nav-number">1.4.</span> <span class="nav-text">4.定位布局技巧：position：relative 与 position：absolute 结合使用:</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -724,6 +660,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
 
   
 

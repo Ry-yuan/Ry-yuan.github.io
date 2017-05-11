@@ -103,7 +103,7 @@
 <meta property="og:image" content="http://ry-yuan.com/img/float04.png">
 <meta property="og:image" content="http://ry-yuan.com/img/float05.png">
 <meta property="og:image" content="http://ry-yuan.com/img/float06.png">
-<meta property="og:updated_time" content="2017-05-10T09:32:46.898Z">
+<meta property="og:updated_time" content="2017-05-11T11:33:15.189Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="css之浮动布局">
 <meta name="twitter:description" content="css之浮动布局(float,浮动原理,清除/闭合浮动方法) 1.什么是浮动：在我们布局的时用到的一种技术，能够方便我们进行布局，通过让元素浮动，我们可以使元素在水平上左右移动，再通过margin属性调整位置。 2.浮动的原理：使当前元素脱离普通流，相当于浮动起来一样，浮动的框可以左右移动，直至它的外边缘遇到包含框或者另一个浮动框的边缘 3.浮动的生成：使用css属性float:left/righ">
@@ -365,10 +365,10 @@
 </ul>
 <p><img src="/img/float01.png" alt="float01"><br><img src="/img/float02.png" alt="float02"></p>
 <h4 id="5-清除浮动与闭合浮动"><a href="#5-清除浮动与闭合浮动" class="headerlink" title="5.清除浮动与闭合浮动:"></a>5.清除浮动与闭合浮动:</h4><p>先说说我个人的理解：我将解释一下我理解的闭合浮动与清除浮动<br>清除浮动：使用clear元素清除外面浮动，解决外面浮动对自己的影响<br>闭合浮动：当前块级中，其子元素使用了浮动，会给当前块内部和块外部的布局带来影响，所以将当前块中的浮动闭合，能将影响最大化清除。举个例子:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="undefined"></span></div><div class="line">.box1&#123;</div><div class="line">        width: 200px;</div><div class="line">        border: 2px solid #0f0;</div><div class="line">        /*overflow: hidden;*/</div><div class="line">    &#125;</div><div class="line">    .box1 .child-1&#123;</div><div class="line">        float: left;</div><div class="line">        height: 100px;</div><div class="line">        width: 100px;</div><div class="line">        background: #fd0;</div><div class="line">    &#125;</div><div class="line">    .box1 .child-2&#123;</div><div class="line">        float: left;</div><div class="line">        height: 100px;</div><div class="line">        width: 100px;</div><div class="line">        background: #fba;</div><div class="line">    &#125;</div><div class="line">    .box2&#123;</div><div class="line">        width: 200px;</div><div class="line">        height: 150px;</div><div class="line">        border: 2px solid #00f;</div><div class="line">        /* clear: both; */</div><div class="line">    &#125;</div><div class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box1"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"child-1"</span>&gt;</span>child-1<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"child-2"</span>&gt;</span>child-2<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box2"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure></p>
-<h5 id="图一"><a href="#图一" class="headerlink" title="图一:"></a>图一:</h5><p><img src="/img/float03.png" alt="float3" title="Optional title"></p>
-<h5 id="图二"><a href="#图二" class="headerlink" title="图二:"></a>图二:</h5><p><img src="/img/float04.png" alt="float4" title="Optional title"></p>
-<h5 id="图三-区分清除浮动与闭合浮动（个人理解：在外面解决问题，内部问题未解决）清除浮动：对box2使用-clear-both"><a href="#图三-区分清除浮动与闭合浮动（个人理解：在外面解决问题，内部问题未解决）清除浮动：对box2使用-clear-both" class="headerlink" title="图三:区分清除浮动与闭合浮动（个人理解：在外面解决问题，内部问题未解决）清除浮动：对box2使用:clear:both"></a>图三:区分清除浮动与闭合浮动（个人理解：在外面解决问题，内部问题未解决）清除浮动：对box2使用:<code>clear:both</code></h5><p><img src="/img/float05.png" alt="float5" title="Optional title"></p>
-<h5 id="图四-闭合浮动（在内部解决问题：同时解决外部问题）闭合浮动-对box1使用overflow-hidden（其中一种方式，后面还有更好的方式）"><a href="#图四-闭合浮动（在内部解决问题：同时解决外部问题）闭合浮动-对box1使用overflow-hidden（其中一种方式，后面还有更好的方式）" class="headerlink" title="图四:闭合浮动（在内部解决问题：同时解决外部问题）闭合浮动:对box1使用overflow:hidden（其中一种方式，后面还有更好的方式）"></a>图四:闭合浮动（在内部解决问题：同时解决外部问题）闭合浮动:对box1使用overflow:hidden（其中一种方式，后面还有更好的方式）</h5><p><img src="/img/float06.png" alt="float6" title="Optional title"></p>
+<h5 id="图一"><a href="#图一" class="headerlink" title="图一:"></a>图一:</h5><p><img src="/img/float03.png" alt="float3"></p>
+<h5 id="图二"><a href="#图二" class="headerlink" title="图二:"></a>图二:</h5><p><img src="/img/float04.png" alt="float4"></p>
+<h5 id="图三-区分清除浮动与闭合浮动（个人理解：在外面解决问题，内部问题未解决）清除浮动：对box2使用-clear-both"><a href="#图三-区分清除浮动与闭合浮动（个人理解：在外面解决问题，内部问题未解决）清除浮动：对box2使用-clear-both" class="headerlink" title="图三:区分清除浮动与闭合浮动（个人理解：在外面解决问题，内部问题未解决）清除浮动：对box2使用:clear:both"></a>图三:区分清除浮动与闭合浮动（个人理解：在外面解决问题，内部问题未解决）清除浮动：对box2使用:<code>clear:both</code></h5><p><img src="/img/float05.png" alt="float5"></p>
+<h5 id="图四-闭合浮动（在内部解决问题：同时解决外部问题）闭合浮动-对box1使用overflow-hidden（其中一种方式，后面还有更好的方式）"><a href="#图四-闭合浮动（在内部解决问题：同时解决外部问题）闭合浮动-对box1使用overflow-hidden（其中一种方式，后面还有更好的方式）" class="headerlink" title="图四:闭合浮动（在内部解决问题：同时解决外部问题）闭合浮动:对box1使用overflow:hidden（其中一种方式，后面还有更好的方式）"></a>图四:闭合浮动（在内部解决问题：同时解决外部问题）闭合浮动:对box1使用overflow:hidden（其中一种方式，后面还有更好的方式）</h5><p><img src="/img/float06.png" alt="float6"></p>
 <h4 id="6-闭合浮动方法-常见的几个"><a href="#6-闭合浮动方法-常见的几个" class="headerlink" title="6.闭合浮动方法(常见的几个):"></a>6.闭合浮动方法(常见的几个):</h4><h5 id="1-通过在浮动元素的末尾添加一个空元素，设置-clear：both属性；"><a href="#1-通过在浮动元素的末尾添加一个空元素，设置-clear：both属性；" class="headerlink" title="1.通过在浮动元素的末尾添加一个空元素，设置 clear：both属性；"></a>1.通过在浮动元素的末尾添加一个空元素，设置 clear：both属性；</h5><p>缺点：成本太高，额外添加了一个元素，维护困难<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box1"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"child-1"</span>&gt;</span>child-1<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"child-2"</span>&gt;</span>child-2<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"clear: both;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box2"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure></p>
 <h5 id="2-通过设置父元素overflow或者display：table属性来闭合浮动，给box1添加overflow：hidden"><a href="#2-通过设置父元素overflow或者display：table属性来闭合浮动，给box1添加overflow：hidden" class="headerlink" title="2.通过设置父元素overflow或者display：table属性来闭合浮动，给box1添加overflow：hidden"></a>2.通过设置父元素overflow或者display：table属性来闭合浮动，给box1添加overflow：hidden</h5><h5 id="3-使用伪元素：after-下面是代码，给box1添加上clearfloat这class即可"><a href="#3-使用伪元素：after-下面是代码，给box1添加上clearfloat这class即可" class="headerlink" title="3.使用伪元素：after,下面是代码，给box1添加上clearfloat这class即可"></a>3.使用伪元素：after,下面是代码，给box1添加上clearfloat这class即可</h5><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*适配ie6*/</span></div><div class="line"><span class="selector-class">.clearfloat</span>&#123;</div><div class="line"><span class="attribute">zoom</span>:<span class="number">1</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.clearfloat</span><span class="selector-pseudo">:after</span>&#123;</div><div class="line"><span class="attribute">display</span>:block;</div><div class="line"><span class="attribute">height</span>:<span class="number">0</span>;</div><div class="line"><span class="attribute">content</span>:<span class="string">""</span>;</div><div class="line"><span class="attribute">clear</span>:both;</div><div class="line"><span class="attribute">visibility</span>:hidden;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
       
@@ -408,6 +408,22 @@
         
       
 
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/11/css之定位布局/" rel="prev" title="css之定位布局">
+                css之定位布局 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
       
 
       
@@ -476,7 +492,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
