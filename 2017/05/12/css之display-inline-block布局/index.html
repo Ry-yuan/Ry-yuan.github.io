@@ -1,0 +1,831 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="css," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="1.解释一下display的几个常用的属性值，inline ， block， inline-block●inline:  1.使元素变成行内元素，拥有行内元素的特性，即可以与其他行内元素共享一行，不会独占一行.  2.不能更改元素的height，width的值，大小由内容撑开.  3.可以使用padding，margin的left和right产生边距效果，但是top和bottom就不行.   ●">
+<meta name="keywords" content="css">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css之display:inline-block布局">
+<meta property="og:url" content="http://Ry-yuan.com/2017/05/12/css之display-inline-block布局/index.html">
+<meta property="og:site_name" content="Ry-yuan">
+<meta property="og:description" content="1.解释一下display的几个常用的属性值，inline ， block， inline-block●inline:  1.使元素变成行内元素，拥有行内元素的特性，即可以与其他行内元素共享一行，不会独占一行.  2.不能更改元素的height，width的值，大小由内容撑开.  3.可以使用padding，margin的left和right产生边距效果，但是top和bottom就不行.   ●">
+<meta property="og:image" content="http://ry-yuan.com/img/ib1.png">
+<meta property="og:image" content="http://ry-yuan.com/img/ib2.png">
+<meta property="og:image" content="http://ry-yuan.com/img/ib3.png">
+<meta property="og:image" content="http://ry-yuan.com/img/ib4.png">
+<meta property="og:image" content="http://ry-yuan.com/img/ib5.png">
+<meta property="og:image" content="http://ry-yuan.com/img/ib6.png">
+<meta property="og:image" content="http://ry-yuan.com/img/ib7.png">
+<meta property="og:updated_time" content="2017-05-12T16:13:55.441Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="css之display:inline-block布局">
+<meta name="twitter:description" content="1.解释一下display的几个常用的属性值，inline ， block， inline-block●inline:  1.使元素变成行内元素，拥有行内元素的特性，即可以与其他行内元素共享一行，不会独占一行.  2.不能更改元素的height，width的值，大小由内容撑开.  3.可以使用padding，margin的left和right产生边距效果，但是top和bottom就不行.   ●">
+<meta name="twitter:image" content="http://ry-yuan.com/img/ib1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://Ry-yuan.com/2017/05/12/css之display-inline-block布局/"/>
+
+
+
+
+
+  <title>css之display:inline-block布局 | Ry-yuan</title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ry-yuan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://Ry-yuan.com/2017/05/12/css之display-inline-block布局/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ry-yuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ry-yuan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">css之display:inline-block布局</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-12T23:10:55+08:00">
+                2017-05-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/05/12/css之display-inline-block布局/" class="leancloud_visitors" data-flag-title="css之display:inline-block布局">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="1-解释一下display的几个常用的属性值，inline-，-block，-inline-block"><a href="#1-解释一下display的几个常用的属性值，inline-，-block，-inline-block" class="headerlink" title="1.解释一下display的几个常用的属性值，inline ， block， inline-block"></a>1.解释一下display的几个常用的属性值，inline ， block， inline-block</h4><h5 id="●inline"><a href="#●inline" class="headerlink" title="●inline:"></a>●inline:</h5><p>  1.使元素变成行内元素，拥有行内元素的特性，即可以与其他行内元素共享一行，不会独占一行.<br>  2.不能更改元素的height，width的值，大小由内容撑开.<br>  3.可以使用padding，margin的left和right产生边距效果，但是top和bottom就不行.  </p>
+<h5 id="●-block"><a href="#●-block" class="headerlink" title="● block:"></a>● block:</h5><p>  1.使元素变成块级元素，独占一行，在不设置自己的宽度的情况下，块级元素会默认填满父级元素的宽度.<br>  2.能够改变元素的height，width的值.<br>  3.可以设置padding，margin的各个属性值，top，left，bottom，right都能够产生边距效果.  </p>
+<h5 id="●-inline-block"><a href="#●-inline-block" class="headerlink" title="● inline-block:"></a>● inline-block:</h5><p>  1.结果了inline与block的一些特点，结合了上述inline的第1个特点和block的第2,3个特点.<br>  2.用通俗的话讲，就是不独占一行的块级元素。如图:<br>图一:<br><img src="/img/ib1.png" alt="lb1"><br>图二：<br><img src="/img/ib2.png" alt="lb2"></p>
+<h5 id="两个图可以看出，display：inline-block后块级元素能够在同一行显示，有人这说不就像浮动一样吗。没错，display：inline-block的效果几乎和浮动一样，但也有不同，接下来讲一下inline-block和浮动的比较。"><a href="#两个图可以看出，display：inline-block后块级元素能够在同一行显示，有人这说不就像浮动一样吗。没错，display：inline-block的效果几乎和浮动一样，但也有不同，接下来讲一下inline-block和浮动的比较。" class="headerlink" title="两个图可以看出，display：inline-block后块级元素能够在同一行显示，有人这说不就像浮动一样吗。没错，display：inline-block的效果几乎和浮动一样，但也有不同，接下来讲一下inline-block和浮动的比较。"></a>两个图可以看出，display：inline-block后块级元素能够在同一行显示，有人这说不就像浮动一样吗。没错，display：inline-block的效果几乎和浮动一样，但也有不同，接下来讲一下inline-block和浮动的比较。</h5><h4 id="2-inline-block布局-vs-浮动布局"><a href="#2-inline-block布局-vs-浮动布局" class="headerlink" title="2.inline-block布局 vs 浮动布局"></a>2.inline-block布局 vs 浮动布局</h4><h5 id="a-不同之处：对元素设置display：inline-block-，元素不会脱离文本流，而float就会使得元素脱离文本流，且还有父元素高度坍塌的效果"><a href="#a-不同之处：对元素设置display：inline-block-，元素不会脱离文本流，而float就会使得元素脱离文本流，且还有父元素高度坍塌的效果" class="headerlink" title="a.不同之处：对元素设置display：inline-block ，元素不会脱离文本流，而float就会使得元素脱离文本流，且还有父元素高度坍塌的效果"></a>a.不同之处：对元素设置display：inline-block ，元素不会脱离文本流，而float就会使得元素脱离文本流，且还有父元素高度坍塌的效果</h5><h5 id="b-相同之处：能在某程度上达到一样的效果"><a href="#b-相同之处：能在某程度上达到一样的效果" class="headerlink" title="b.相同之处：能在某程度上达到一样的效果"></a>b.相同之处：能在某程度上达到一样的效果</h5><p>我们先来看看这两种布局：<br>图一：display：inline-block<br><img src="/img/ib3.png" alt="lb3"><br>图二：对两个孩子使用float：left，我在上一篇浮动布局讲过，这是父元素会高度坍塌，所以要闭合浮动，对box使用overflow：hidden，效果如下：<br><img src="/img/ib4.png" alt="lb4"><br>乍一看两个都能做到几乎相同的效果，<strong>（仔细看看display：inline-block中有间隙问题，这个留到下面再讲）</strong></p>
+<h5 id="c-float不太好的地方：参差不齐的现象，我们看一个效果："><a href="#c-float不太好的地方：参差不齐的现象，我们看一个效果：" class="headerlink" title="c.float不太好的地方：参差不齐的现象，我们看一个效果："></a>c.float不太好的地方：参差不齐的现象，我们看一个效果：</h5><p>图三：<br><img src="/img/ib5.png" alt="lb5"><br>图四：<br><img src="/img/ib6.png" alt="lb6"></p>
+<h5 id="从图3-4可以看出浮动的局限性在于，若要元素排满一行，换行后还要整齐排列，就要子元素的高度一致才行，不然就会出现图三的效果，而inline-block就不会。"><a href="#从图3-4可以看出浮动的局限性在于，若要元素排满一行，换行后还要整齐排列，就要子元素的高度一致才行，不然就会出现图三的效果，而inline-block就不会。" class="headerlink" title="从图3,4可以看出浮动的局限性在于，若要元素排满一行，换行后还要整齐排列，就要子元素的高度一致才行，不然就会出现图三的效果，而inline-block就不会。"></a>从图3,4可以看出浮动的局限性在于，若要元素排满一行，换行后还要整齐排列，就要子元素的高度一致才行，不然就会出现图三的效果，而inline-block就不会。</h5><h4 id="3-inline-block存在的小问题："><a href="#3-inline-block存在的小问题：" class="headerlink" title="3.inline-block存在的小问题："></a>3.inline-block存在的小问题：</h4><h5 id="a-上面可以看到用了display：inline-block后，存在间隙问题，间隙为4像素，这个问题产生的原因是换行引起的，因为我们写标签时通常会在标签结束符后顺手打个回车，而回车会产生回车符，回车符相当于空白符，通常情况下，多个连续的空白符会合并成一个空白符，而产生“空白间隙”的真正原因就是这个让我们并不怎么注意的空白符。"><a href="#a-上面可以看到用了display：inline-block后，存在间隙问题，间隙为4像素，这个问题产生的原因是换行引起的，因为我们写标签时通常会在标签结束符后顺手打个回车，而回车会产生回车符，回车符相当于空白符，通常情况下，多个连续的空白符会合并成一个空白符，而产生“空白间隙”的真正原因就是这个让我们并不怎么注意的空白符。" class="headerlink" title="a.上面可以看到用了display：inline-block后，存在间隙问题，间隙为4像素，这个问题产生的原因是换行引起的，因为我们写标签时通常会在标签结束符后顺手打个回车，而回车会产生回车符，回车符相当于空白符，通常情况下，多个连续的空白符会合并成一个空白符，而产生“空白间隙”的真正原因就是这个让我们并不怎么注意的空白符。"></a>a.上面可以看到用了display：inline-block后，存在间隙问题，间隙为4像素，这个问题产生的原因是换行引起的，因为我们写标签时通常会在标签结束符后顺手打个回车，而回车会产生回车符，回车符相当于空白符，通常情况下，多个连续的空白符会合并成一个空白符，而产生“空白间隙”的真正原因就是这个让我们并不怎么注意的空白符。</h5><h5 id="b-去除空隙的方法："><a href="#b-去除空隙的方法：" class="headerlink" title="b.去除空隙的方法："></a>b.去除空隙的方法：</h5><p>1.对父元素添加，font-size：0，即将字体大小设为0，那么那个空白符也变成0px，从而消除空隙<br>现在这种方法已经可以兼容各种浏览器，以前chrome浏览器是不兼容的<br>图一：<br><img src="/img/ib7.png" alt="lb7">  </p>
+<h5 id="c-浏览器兼容性：ie6-7是不兼容-display：inline-block的所以要额外处理一下："><a href="#c-浏览器兼容性：ie6-7是不兼容-display：inline-block的所以要额外处理一下：" class="headerlink" title="c.浏览器兼容性：ie6/7是不兼容 display：inline-block的所以要额外处理一下："></a>c.浏览器兼容性：ie6/7是不兼容 display：inline-block的所以要额外处理一下：</h5><p>在ie6/7下：<br>对于行内元素直接使用<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">对于块级元素：需添加```display:inline;zoom：1;</div></pre></td></tr></table></figure></p>
+<h4 id="4-总结"><a href="#4-总结" class="headerlink" title="4.总结:"></a>4.总结:</h4><p>display：inline-block的布局方式和浮动的布局方式，究竟使用哪个，我觉得应该根据实际情况来决定的：<br>a.对于横向排列东西来说，我更倾向与使用inline-block来布局，因为这样清晰，也不用再像浮动那样清除浮动，害怕布局混乱等等。<br>b.对于浮动布局就用于需要文字环绕的时候，毕竟这才是浮动真正的用武之地，水平排列的是就交给inline-block了。</p>
+<p>本文由我拜读张鑫旭老师一篇<a href="http://www.zhangxinxu.com/wordpress/2010/11/%E6%8B%9C%E6%8B%9C%E4%BA%86%E6%B5%AE%E5%8A%A8%E5%B8%83%E5%B1%80-%E5%9F%BA%E4%BA%8Edisplayinline-block%E7%9A%84%E5%88%97%E8%A1%A8%E5%B8%83%E5%B1%80/" target="_blank" rel="external">文章</a>总结出来。</p>
+<h6 id="css布局系列到此完结。"><a href="#css布局系列到此完结。" class="headerlink" title="css布局系列到此完结。"></a>css布局系列到此完结。</h6>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/css/" rel="tag"># css</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/11/css之定位布局/" rel="next" title="css之定位布局">
+                <i class="fa fa-chevron-left"></i> css之定位布局
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Ry-yuan" />
+          <p class="site-author-name" itemprop="name">Ry-yuan</p>
+           
+              <p class="site-description motion-element" itemprop="description">如果你觉得困难，那也许是在进步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-解释一下display的几个常用的属性值，inline-，-block，-inline-block"><span class="nav-number">1.</span> <span class="nav-text">1.解释一下display的几个常用的属性值，inline ， block， inline-block</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#●inline"><span class="nav-number">1.1.</span> <span class="nav-text">●inline:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#●-block"><span class="nav-number">1.2.</span> <span class="nav-text">● block:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#●-inline-block"><span class="nav-number">1.3.</span> <span class="nav-text">● inline-block:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#两个图可以看出，display：inline-block后块级元素能够在同一行显示，有人这说不就像浮动一样吗。没错，display：inline-block的效果几乎和浮动一样，但也有不同，接下来讲一下inline-block和浮动的比较。"><span class="nav-number">1.4.</span> <span class="nav-text">两个图可以看出，display：inline-block后块级元素能够在同一行显示，有人这说不就像浮动一样吗。没错，display：inline-block的效果几乎和浮动一样，但也有不同，接下来讲一下inline-block和浮动的比较。</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-inline-block布局-vs-浮动布局"><span class="nav-number">2.</span> <span class="nav-text">2.inline-block布局 vs 浮动布局</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#a-不同之处：对元素设置display：inline-block-，元素不会脱离文本流，而float就会使得元素脱离文本流，且还有父元素高度坍塌的效果"><span class="nav-number">2.1.</span> <span class="nav-text">a.不同之处：对元素设置display：inline-block ，元素不会脱离文本流，而float就会使得元素脱离文本流，且还有父元素高度坍塌的效果</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#b-相同之处：能在某程度上达到一样的效果"><span class="nav-number">2.2.</span> <span class="nav-text">b.相同之处：能在某程度上达到一样的效果</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#c-float不太好的地方：参差不齐的现象，我们看一个效果："><span class="nav-number">2.3.</span> <span class="nav-text">c.float不太好的地方：参差不齐的现象，我们看一个效果：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#从图3-4可以看出浮动的局限性在于，若要元素排满一行，换行后还要整齐排列，就要子元素的高度一致才行，不然就会出现图三的效果，而inline-block就不会。"><span class="nav-number">2.4.</span> <span class="nav-text">从图3,4可以看出浮动的局限性在于，若要元素排满一行，换行后还要整齐排列，就要子元素的高度一致才行，不然就会出现图三的效果，而inline-block就不会。</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-inline-block存在的小问题："><span class="nav-number">3.</span> <span class="nav-text">3.inline-block存在的小问题：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#a-上面可以看到用了display：inline-block后，存在间隙问题，间隙为4像素，这个问题产生的原因是换行引起的，因为我们写标签时通常会在标签结束符后顺手打个回车，而回车会产生回车符，回车符相当于空白符，通常情况下，多个连续的空白符会合并成一个空白符，而产生“空白间隙”的真正原因就是这个让我们并不怎么注意的空白符。"><span class="nav-number">3.1.</span> <span class="nav-text">a.上面可以看到用了display：inline-block后，存在间隙问题，间隙为4像素，这个问题产生的原因是换行引起的，因为我们写标签时通常会在标签结束符后顺手打个回车，而回车会产生回车符，回车符相当于空白符，通常情况下，多个连续的空白符会合并成一个空白符，而产生“空白间隙”的真正原因就是这个让我们并不怎么注意的空白符。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#b-去除空隙的方法："><span class="nav-number">3.2.</span> <span class="nav-text">b.去除空隙的方法：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#c-浏览器兼容性：ie6-7是不兼容-display：inline-block的所以要额外处理一下："><span class="nav-number">3.3.</span> <span class="nav-text">c.浏览器兼容性：ie6/7是不兼容 display：inline-block的所以要额外处理一下：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-总结"><span class="nav-number">4.</span> <span class="nav-text">4.总结:</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#css布局系列到此完结。"><span class="nav-number">4.0.1.</span> <span class="nav-text">css布局系列到此完结。</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ry-yuan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+&nbsp;|&nbsp;
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("RjwnbvSlgbai8OyA9HotKOIY-gzGzoHsz", "Bwqfl7y14vPhnj48bjA112I8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
