@@ -93,13 +93,13 @@
 <meta name="description" content="1.首先两者的用法：onXXXX的用法：以onclick为例第一种：123obj.onclick = function()&amp;#123;//do something..&amp;#125; 第二种：1234obj.onclick= fn;function fn ()&amp;#123;//do something...&amp;#125; 第三种：当函数fn有参数的情况下使用匿名函数来传参：1234obj.onclick">
 <meta name="keywords" content="JavaScript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JavaScript之onXXXX事件和addEventListener的区别">
+<meta property="og:title" content="Js之on事件和addEventListener的区别">
 <meta property="og:url" content="http://Ry-yuan.me/2017/05/16/JavaScript之onXXXX事件和addEventListener的区别/index.html">
 <meta property="og:site_name" content="Ry-yuan(瑞元)">
 <meta property="og:description" content="1.首先两者的用法：onXXXX的用法：以onclick为例第一种：123obj.onclick = function()&amp;#123;//do something..&amp;#125; 第二种：1234obj.onclick= fn;function fn ()&amp;#123;//do something...&amp;#125; 第三种：当函数fn有参数的情况下使用匿名函数来传参：1234obj.onclick">
-<meta property="og:updated_time" content="2017-05-16T14:56:10.446Z">
+<meta property="og:updated_time" content="2017-05-17T15:47:35.103Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JavaScript之onXXXX事件和addEventListener的区别">
+<meta name="twitter:title" content="Js之on事件和addEventListener的区别">
 <meta name="twitter:description" content="1.首先两者的用法：onXXXX的用法：以onclick为例第一种：123obj.onclick = function()&amp;#123;//do something..&amp;#125; 第二种：1234obj.onclick= fn;function fn ()&amp;#123;//do something...&amp;#125; 第三种：当函数fn有参数的情况下使用匿名函数来传参：1234obj.onclick">
 
 
@@ -134,7 +134,7 @@
 
 
 
-  <title>JavaScript之onXXXX事件和addEventListener的区别 | Ry-yuan(瑞元)</title>
+  <title>Js之on事件和addEventListener的区别 | Ry-yuan(瑞元)</title>
 </head>
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -289,7 +289,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">JavaScript之onXXXX事件和addEventListener的区别</h1>
+          <h1 class="post-title" itemprop="name headline">Js之on事件和addEventListener的区别</h1>
         
 
         <div class="post-meta">
@@ -319,7 +319,7 @@
 
           
           
-             <span id="/2017/05/16/JavaScript之onXXXX事件和addEventListener的区别/" class="leancloud_visitors" data-flag-title="JavaScript之onXXXX事件和addEventListener的区别">
+             <span id="/2017/05/16/JavaScript之onXXXX事件和addEventListener的区别/" class="leancloud_visitors" data-flag-title="Js之on事件和addEventListener的区别">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -352,16 +352,16 @@
 <p>第三种：当函数fn有参数的情况下使用匿名函数来传参：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">obj.onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;fn(param)&#125;;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params">param</span>)</span>&#123;</div><div class="line"><span class="comment">//do something..</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>不能够这样写:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">obj.onclick= fn(param);</div></pre></td></tr></table></figure></p>
 <p>因为这样写函数会立即执行，不会等待点击触发</p>
-<h4 id="addEventListener的用法："><a href="#addEventListener的用法：" class="headerlink" title="addEventListener的用法："></a>addEventListener的用法：</h4><p>addEventListener(event,funtionName,useCapture)<br>参数：<br>event:事件的类型如 “click”<br>funtionName：方法名<br>useCapture(可选)：布尔值，指定事件是否在捕获或冒泡阶段执行。<br>  ● true - 事件句柄在捕获阶段执行<br>  ● false- false- 默认。事件句柄在冒泡阶段执行<br>一种：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">obj.addEventListener(<span class="string">"click"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line"><span class="comment">//do something</span></div><div class="line">&#125;));</div></pre></td></tr></table></figure></p>
-<p>二种，没参数直接写函数名<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">obj.addEventListener(<span class="string">"click"</span>,fn,fasle));</div><div class="line">funciton fn()&#123;</div><div class="line"><span class="comment">//do something..</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>三种：函数有参数时需要使用匿名函数来传递参数<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">obj.addEventListener(<span class="string">"click"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;fn()parm&#125;,<span class="literal">false</span>);</div></pre></td></tr></table></figure></p>
-<h3 id="2-两者的区别"><a href="#2-两者的区别" class="headerlink" title="2.两者的区别"></a>2.两者的区别</h3><h4 id="2-1-onxxxx事件会被后面的onxxxx相同的事件覆盖"><a href="#2-1-onxxxx事件会被后面的onxxxx相同的事件覆盖" class="headerlink" title="2.1 onxxxx事件会被后面的onxxxx相同的事件覆盖"></a>2.1 onxxxx事件会被后面的onxxxx相同的事件覆盖</h4><p>以onclick为例：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">obj.onclick(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">alert(<span class="string">"hello world"</span>);</div><div class="line">&#125;);</div><div class="line">obj.onclick(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">alert(<span class="string">"hello world too"</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h4 id="addEventListener的用法："><a href="#addEventListener的用法：" class="headerlink" title="addEventListener的用法："></a>addEventListener的用法：</h4><p>addEventListener(event,funtionName,useCapture)<br>参数：<br>event:事件的类型如 “click”<br>funtionName：方法名<br>useCapture(可选)：布尔值，指定事件是否在捕获或冒泡阶段执行。<br>  ● true - 事件句柄在捕获阶段执行<br>  ● false- false- 默认。事件句柄在冒泡阶段执行<br>一种：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">obj.addEventListener(<span class="string">"click"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line"><span class="comment">//do something</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>二种，没参数直接写函数名<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">obj.addEventListener(<span class="string">"click"</span>,fn,fasle));</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>)</span>&#123;</div><div class="line"><span class="comment">//do something..</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>三种：函数有参数时需要使用 <em>匿名函数</em>来传递参数<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">obj.addEventListener(<span class="string">"click"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;fn()parm&#125;,<span class="literal">false</span>);</div></pre></td></tr></table></figure></p>
+<h3 id="2-两者的区别"><a href="#2-两者的区别" class="headerlink" title="2.两者的区别"></a>2.两者的区别</h3><h4 id="2-1-on事件会被后面的on事件覆盖"><a href="#2-1-on事件会被后面的on事件覆盖" class="headerlink" title="2.1 on事件会被后面的on事件覆盖"></a>2.1 on事件会被后面的on事件覆盖</h4><p>以onclick为例：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">obj.onclick(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">alert(<span class="string">"hello world"</span>);</div><div class="line">&#125;);</div><div class="line">obj.onclick(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">alert(<span class="string">"hello world too"</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
 <p>最终会只有弹框输出：<br>hello world too</p>
 <h4 id="2-2addEventListener-则不会覆盖。"><a href="#2-2addEventListener-则不会覆盖。" class="headerlink" title="2.2addEventListener 则不会覆盖。"></a>2.2addEventListener 则不会覆盖。</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">obj.addEventListener(<span class="string">"click"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">alert(<span class="string">"hello world"</span>);</div><div class="line">&#125;));</div><div class="line">obj.addEventListener(<span class="string">"click"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">alert(<span class="string">"hello world too"</span>);</div><div class="line">&#125;));</div></pre></td></tr></table></figure>
 <p>这样会有：<br>hello world<br>hello world too</p>
-<h3 id="3-addEventListener注意事项："><a href="#3-addEventListener注意事项：" class="headerlink" title="3.addEventListener注意事项："></a>3.addEventListener注意事项：</h3><h4 id="特别说明addEventListener-不被IE9以下兼容，IE9以下用使用-addEvent-；"><a href="#特别说明addEventListener-不被IE9以下兼容，IE9以下用使用-addEvent-；" class="headerlink" title="特别说明addEventListener 不被IE9以下兼容，IE9以下用使用 addEvent()；"></a>特别说明addEventListener 不被IE9以下兼容，IE9以下用使用 addEvent()；</h4><p>形式：obj.addEvent(event,funtionName);<br>event:事件类型（需要写成“onclick”前面加on，这个与addEventListener不同）<br>funtionName:方法名（要参数是也是需要使用匿名函数来传参）</p>
+<h3 id="3-addEventListener注意事项："><a href="#3-addEventListener注意事项：" class="headerlink" title="3.addEventListener注意事项："></a>3.addEventListener注意事项：</h3><h4 id="特别说明addEventListener-不被IE9以下兼容，IE9以下用使用-attachEvent-；"><a href="#特别说明addEventListener-不被IE9以下兼容，IE9以下用使用-attachEvent-；" class="headerlink" title="特别说明addEventListener 不被IE9以下兼容，IE9以下用使用 attachEvent()；"></a>特别说明addEventListener 不被IE9以下兼容，IE9以下用使用 attachEvent()；</h4><p>形式：obj.attachEvent(event,funtionName);<br>event:事件类型（需要写成“onclick”前面加on，这个与addEventListener不同）<br>funtionName:方法名（要参数是也是需要使用匿名函数来传参）</p>
 <h3 id="4-最后奉上事件集合："><a href="#4-最后奉上事件集合：" class="headerlink" title="4.最后奉上事件集合："></a>4.最后奉上事件集合：</h3><p>1.鼠标事件：<br>  ● click(单击)<br>  ● dbclick(双击)<br>  ● mousedown(鼠标按下)<br>  ● mouseout(鼠标移走)<br>  ● mouseover(鼠标移入)<br>  ● mouseup(鼠标弹起)<br>  ● mousemove(鼠标移动)<br>2.键盘事件：<br>  ● keydown(键按下)<br>  ● keypress(按键)<br>  ● keyup(键起来)<br>3.HTML事件：<br>  ● load（加载页面）<br>  ● unload（卸载）<br>  ● change（改变）<br>  ● scroll（滚动）<br>  ● focus（获得焦点）<br>  ● blur（失去焦点）</p>
-<h3 id="5-总结："><a href="#5-总结：" class="headerlink" title="5.总结："></a>5.总结：</h3><p>onXXX与addEventListener都是为dom元素添加事件监听，使其在事件发生后执行相应的代码，操作。有了它们我们实现了页面与用户交互。</p>
+<h3 id="5-总结："><a href="#5-总结：" class="headerlink" title="5.总结："></a>5.总结：</h3><p>on与addEventListener都是为dom元素添加事件监听，使其在事件发生后执行相应的代码，操作。有了它们我们实现了页面与用户交互。</p>
 <p>作者：Ry-yuan（瑞元）</p>
 
       
@@ -405,8 +405,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/16/英语演讲/" rel="next" title="英语演讲">
-                <i class="fa fa-chevron-left"></i> 英语演讲
+              <a href="/2017/05/12/css之display-inline-block布局/" rel="next" title="css之display:inline-block布局">
+                <i class="fa fa-chevron-left"></i> css之display:inline-block布局
               </a>
             
           </div>
@@ -485,7 +485,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -533,7 +533,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-首先两者的用法："><span class="nav-number">1.</span> <span class="nav-text">1.首先两者的用法：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#onXXXX的用法：以onclick为例"><span class="nav-number">1.1.</span> <span class="nav-text">onXXXX的用法：以onclick为例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#addEventListener的用法："><span class="nav-number">1.2.</span> <span class="nav-text">addEventListener的用法：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-两者的区别"><span class="nav-number">2.</span> <span class="nav-text">2.两者的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-onxxxx事件会被后面的onxxxx相同的事件覆盖"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 onxxxx事件会被后面的onxxxx相同的事件覆盖</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2addEventListener-则不会覆盖。"><span class="nav-number">2.2.</span> <span class="nav-text">2.2addEventListener 则不会覆盖。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-addEventListener注意事项："><span class="nav-number">3.</span> <span class="nav-text">3.addEventListener注意事项：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#特别说明addEventListener-不被IE9以下兼容，IE9以下用使用-addEvent-；"><span class="nav-number">3.1.</span> <span class="nav-text">特别说明addEventListener 不被IE9以下兼容，IE9以下用使用 addEvent()；</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-最后奉上事件集合："><span class="nav-number">4.</span> <span class="nav-text">4.最后奉上事件集合：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-总结："><span class="nav-number">5.</span> <span class="nav-text">5.总结：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-首先两者的用法："><span class="nav-number">1.</span> <span class="nav-text">1.首先两者的用法：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#onXXXX的用法：以onclick为例"><span class="nav-number">1.1.</span> <span class="nav-text">onXXXX的用法：以onclick为例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#addEventListener的用法："><span class="nav-number">1.2.</span> <span class="nav-text">addEventListener的用法：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-两者的区别"><span class="nav-number">2.</span> <span class="nav-text">2.两者的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-on事件会被后面的on事件覆盖"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 on事件会被后面的on事件覆盖</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2addEventListener-则不会覆盖。"><span class="nav-number">2.2.</span> <span class="nav-text">2.2addEventListener 则不会覆盖。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-addEventListener注意事项："><span class="nav-number">3.</span> <span class="nav-text">3.addEventListener注意事项：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#特别说明addEventListener-不被IE9以下兼容，IE9以下用使用-attachEvent-；"><span class="nav-number">3.1.</span> <span class="nav-text">特别说明addEventListener 不被IE9以下兼容，IE9以下用使用 attachEvent()；</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-最后奉上事件集合："><span class="nav-number">4.</span> <span class="nav-text">4.最后奉上事件集合：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-总结："><span class="nav-number">5.</span> <span class="nav-text">5.总结：</span></a></li></ol></div>
             
 
           </div>
