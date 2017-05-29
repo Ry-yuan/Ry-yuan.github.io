@@ -1,0 +1,835 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="1.理解dom：DOM（Document Object Model ，文档对象模型）一种独立于语言，用于操作xml，html文档的应用编程接口。怎么说，我从两个角度理解：  ● 对于JavaScript，为了能够使JavaScript操作Html，JavaScript就有了一套自己的dom编程接口。  ● 对于Html，dom使得html形成一棵dom树，类似于一颗家族树一样，一层接一层，子子孙孙">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Js之浅谈dom操作">
+<meta property="og:url" content="http://Ry-yuan.me/2017/05/29/Js之浅谈dom操作/index.html">
+<meta property="og:site_name" content="Ry-yuan(瑞元)">
+<meta property="og:description" content="1.理解dom：DOM（Document Object Model ，文档对象模型）一种独立于语言，用于操作xml，html文档的应用编程接口。怎么说，我从两个角度理解：  ● 对于JavaScript，为了能够使JavaScript操作Html，JavaScript就有了一套自己的dom编程接口。  ● 对于Html，dom使得html形成一棵dom树，类似于一颗家族树一样，一层接一层，子子孙孙">
+<meta property="og:image" content="http://ry-yuan.me/img/dom.png">
+<meta property="og:updated_time" content="2017-05-29T08:33:28.284Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Js之浅谈dom操作">
+<meta name="twitter:description" content="1.理解dom：DOM（Document Object Model ，文档对象模型）一种独立于语言，用于操作xml，html文档的应用编程接口。怎么说，我从两个角度理解：  ● 对于JavaScript，为了能够使JavaScript操作Html，JavaScript就有了一套自己的dom编程接口。  ● 对于Html，dom使得html形成一棵dom树，类似于一颗家族树一样，一层接一层，子子孙孙">
+<meta name="twitter:image" content="http://ry-yuan.me/img/dom.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://Ry-yuan.me/2017/05/29/Js之浅谈dom操作/"/>
+
+
+
+
+
+  <title>Js之浅谈dom操作 | Ry-yuan(瑞元)</title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ry-yuan(瑞元)</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://Ry-yuan.me/2017/05/29/Js之浅谈dom操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ry-yuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ry-yuan(瑞元)">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Js之浅谈dom操作</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-29T16:11:55+08:00">
+                2017-05-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/05/29/Js之浅谈dom操作/" class="leancloud_visitors" data-flag-title="Js之浅谈dom操作">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-理解dom："><a href="#1-理解dom：" class="headerlink" title="1.理解dom："></a>1.理解dom：</h2><h3 id="DOM（Document-Object-Model-，文档对象模型）一种独立于语言，用于操作xml，html文档的应用编程接口。"><a href="#DOM（Document-Object-Model-，文档对象模型）一种独立于语言，用于操作xml，html文档的应用编程接口。" class="headerlink" title="DOM（Document Object Model ，文档对象模型）一种独立于语言，用于操作xml，html文档的应用编程接口。"></a>DOM（Document Object Model ，文档对象模型）一种独立于语言，用于操作xml，html文档的应用编程接口。</h3><h3 id="怎么说，我从两个角度理解："><a href="#怎么说，我从两个角度理解：" class="headerlink" title="怎么说，我从两个角度理解："></a>怎么说，我从两个角度理解：</h3><p>  ● 对于JavaScript，为了能够使JavaScript操作Html，JavaScript就有了一套自己的dom编程接口。<br>  ● 对于Html，dom使得html形成一棵dom树，类似于一颗家族树一样，一层接一层，子子孙孙。</p>
+<h3 id="所以说，有了DOM，在我看来就是相当于JavaScript拿到了钥匙一样可以去操作Html的每一个节点，触摸Html每寸肌肤。（咳。。。）"><a href="#所以说，有了DOM，在我看来就是相当于JavaScript拿到了钥匙一样可以去操作Html的每一个节点，触摸Html每寸肌肤。（咳。。。）" class="headerlink" title="所以说，有了DOM，在我看来就是相当于JavaScript拿到了钥匙一样可以去操作Html的每一个节点，触摸Html每寸肌肤。（咳。。。）"></a>所以说，有了DOM，在我看来就是相当于JavaScript拿到了钥匙一样可以去操作Html的每一个节点，触摸Html每寸肌肤。（咳。。。）</h3><h2 id="2-介绍dom树："><a href="#2-介绍dom树：" class="headerlink" title="2.介绍dom树："></a>2.介绍dom树：</h2><h3 id="html代码"><a href="#html代码" class="headerlink" title="html代码:"></a>html代码:</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>dom<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"www.baidu.com"</span>&gt;</span>百度<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="代码对应的dom树结构图："><a href="#代码对应的dom树结构图：" class="headerlink" title="代码对应的dom树结构图："></a>代码对应的dom树结构图：</h3><p><img src="/img/dom.png" alt="dom-tree"><br>说明：html标签通过浏览器的解析后才会形成dom树，此后HTML中的每个标签元素，属性，文本都能看做是一个dom的节点，JavaScript都能通过dom的提供的编程接口操作到每个节点,可以去了解浏览器的渲染机制能够帮助我们了解dom。</p>
+<h2 id="3-认识JavaScript中的dom编程接口"><a href="#3-认识JavaScript中的dom编程接口" class="headerlink" title="3.认识JavaScript中的dom编程接口:"></a>3.认识JavaScript中的dom编程接口:</h2><p>上面说了html形成的dom树，接着说下通过js的dom编程接口去操作这棵dom树。</p>
+<h3 id="JavaScriptDOM操作的常用方法和属性："><a href="#JavaScriptDOM操作的常用方法和属性：" class="headerlink" title="JavaScriptDOM操作的常用方法和属性："></a>JavaScriptDOM操作的常用方法和属性：</h3><h4 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法:"></a>常用方法:</h4><ol>
+<li>获取节点：<br> a. document.getElementById(idName)   通过id号来获取元素，返回一个元素对象<br> b. document.getElementsByName(name)  通过name属性获取id号，返回元素对象数组<br> c. document.getElementsByClassName(className)  通过class来获取元素，返回元素对象数组（ie8以上才有）<br> d. document.getElementsByTagName(tagName)  通过标签名获取元素，返回元素对象数组</li>
+<li>获取/设置元素的属性值：<br> a. element.getAttribute(attributeName) 括号传入属性名，返回对应属性的属性值<br> b. element.setAttribute(attributeName,attributeValue)  传入属性名及设置的值</li>
+<li>创建节点Node：<br> a. document.createElement(“h3”)  创建一个html元素，这里以创建h3元素为例<br> b. document.createTextNode(String);  创建一个文本节点；<br> c. document.createAttribute(“class”); 创建一个属性节点，这里以创建class属性为例</li>
+<li>增添节点：<br> a. element.appendChild(Node);  往element内部最后面添加一个节点，参数是节点类型<br> b. elelment.insertBefore(newNode,existingNode);  在element内部的中在existingNode前面插入newNode</li>
+<li>删除节点：<br> a. element.removeChild(Node) 删除当前节点下指定的子节点，删除成功返回该被删除的节点，否则返回null</li>
+</ol>
+<h4 id="常用属性"><a href="#常用属性" class="headerlink" title="常用属性:"></a>常用属性:</h4><ol>
+<li>获取当前元素的父节点 ：<br> a. element.parentNode  返回当前元素的父节点对象</li>
+<li>获取当前元素的子节点：<br> a. element.chlidren  返回当前元素所有子元素节点对象，只返回HTML节点<br> b. element.chilidNodes 返回当前元素多有子节点，包括文本，HTML，属性节点。（回车也会当做一个节点）<br> c. element.firstChild  返回当前元素的第一个子节点对象<br> d. element.lastChild  返回当前元素的最后一个子节点对象</li>
+<li>获取当前元素的同级元素：<br> a. element.nextSibling 返回当前元素的下一个同级元素 没有就返回null<br> b. element.previousSibling 返回当前元素上一个同级元素 没有就返回null</li>
+<li>获取当前元素的文本：<br> a. element.innerHTML  返回元素的所有文本，包括html代码<br> b. element.innerText  返回当前元素的自身及子代所有文本值，只是文本内容，不包括html代码</li>
+<li>获取当前节点的节点类型：node.nodeType 返回节点的类型,数字形式（1-12）常见几个1：元素节点，2：属性节点，3：文本节点。</li>
+<li>设置样式：element.style.color=“#eea”;  设置元素的样式时使用style，这里以设置文字颜色为例。</li>
+</ol>
+<h2 id="4-总结："><a href="#4-总结：" class="headerlink" title="4.总结："></a>4.总结：</h2><h3 id="大家都会觉得用jQuery来操作dom会更加的方便且好用，因为jq对js的dom进行了封装，使得我们Write-Less-Do-More。但是我觉得还是要总结一下原生js的dom，从根本上了解js对dom的操作，只会有利而无害。"><a href="#大家都会觉得用jQuery来操作dom会更加的方便且好用，因为jq对js的dom进行了封装，使得我们Write-Less-Do-More。但是我觉得还是要总结一下原生js的dom，从根本上了解js对dom的操作，只会有利而无害。" class="headerlink" title="大家都会觉得用jQuery来操作dom会更加的方便且好用，因为jq对js的dom进行了封装，使得我们Write Less, Do More。但是我觉得还是要总结一下原生js的dom，从根本上了解js对dom的操作，只会有利而无害。"></a>大家都会觉得用jQuery来操作dom会更加的方便且好用，因为jq对js的dom进行了封装，使得我们Write Less, Do More。但是我觉得还是要总结一下原生js的dom，从根本上了解js对dom的操作，只会有利而无害。</h3>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/16/JavaScript之onXXXX事件和addEventListener的区别/" rel="next" title="Js之on事件和addEventListener的区别">
+                <i class="fa fa-chevron-left"></i> Js之on事件和addEventListener的区别
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Ry-yuan" />
+          <p class="site-author-name" itemprop="name">Ry-yuan</p>
+           
+              <p class="site-description motion-element" itemprop="description">如果你觉得困难，那也许是在进步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-理解dom："><span class="nav-number">1.</span> <span class="nav-text">1.理解dom：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DOM（Document-Object-Model-，文档对象模型）一种独立于语言，用于操作xml，html文档的应用编程接口。"><span class="nav-number">1.1.</span> <span class="nav-text">DOM（Document Object Model ，文档对象模型）一种独立于语言，用于操作xml，html文档的应用编程接口。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#怎么说，我从两个角度理解："><span class="nav-number">1.2.</span> <span class="nav-text">怎么说，我从两个角度理解：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#所以说，有了DOM，在我看来就是相当于JavaScript拿到了钥匙一样可以去操作Html的每一个节点，触摸Html每寸肌肤。（咳。。。）"><span class="nav-number">1.3.</span> <span class="nav-text">所以说，有了DOM，在我看来就是相当于JavaScript拿到了钥匙一样可以去操作Html的每一个节点，触摸Html每寸肌肤。（咳。。。）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-介绍dom树："><span class="nav-number">2.</span> <span class="nav-text">2.介绍dom树：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#html代码"><span class="nav-number">2.1.</span> <span class="nav-text">html代码:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码对应的dom树结构图："><span class="nav-number">2.2.</span> <span class="nav-text">代码对应的dom树结构图：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-认识JavaScript中的dom编程接口"><span class="nav-number">3.</span> <span class="nav-text">3.认识JavaScript中的dom编程接口:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScriptDOM操作的常用方法和属性："><span class="nav-number">3.1.</span> <span class="nav-text">JavaScriptDOM操作的常用方法和属性：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常用方法"><span class="nav-number">3.1.1.</span> <span class="nav-text">常用方法:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常用属性"><span class="nav-number">3.1.2.</span> <span class="nav-text">常用属性:</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-总结："><span class="nav-number">4.</span> <span class="nav-text">4.总结：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#大家都会觉得用jQuery来操作dom会更加的方便且好用，因为jq对js的dom进行了封装，使得我们Write-Less-Do-More。但是我觉得还是要总结一下原生js的dom，从根本上了解js对dom的操作，只会有利而无害。"><span class="nav-number">4.1.</span> <span class="nav-text">大家都会觉得用jQuery来操作dom会更加的方便且好用，因为jq对js的dom进行了封装，使得我们Write Less, Do More。但是我觉得还是要总结一下原生js的dom，从根本上了解js对dom的操作，只会有利而无害。</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ry-yuan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+&nbsp;|&nbsp;
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("RjwnbvSlgbai8OyA9HotKOIY-gzGzoHsz", "Bwqfl7y14vPhnj48bjA112I8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
