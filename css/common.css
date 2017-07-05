@@ -10,10 +10,9 @@ ol {
 .md-container {
   position: relative;
   overflow: hidden;
-  margin: 30px auto;
-  width: 800px;
-  height: 400px;
-  border: 2px solid #daa;
+  margin: 0px auto;
+  width: 1000px;
+  height: 500px;
 }
 .arrow-box {
   background-color: #fff;
@@ -23,6 +22,7 @@ ol {
   cursor: pointer;
   width: 50px;
   height: 63px;
+  z-index: 1000;
 }
 .arrow-box:hover {
   opacity: 0.8;
@@ -47,4 +47,24 @@ ol {
   height: 63px;
   background: url(../demo-images/icon-arrow.png) no-repeat;
   background-position: -50px 0px;
+}
+.point-box {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  margin-left: -60px;
+  width: 120px;
+  height: 20px;
+  text-align: center;
+}
+.point-box .point {
+  display: inline-block;
+  margin-left: 5px;
+  width: 12px;
+  height: 12px;
+  border-radius: 12px;
+  background-color: #ccc;
+}
+.point-box .point1 {
+  background-color: #f58220;
 }
