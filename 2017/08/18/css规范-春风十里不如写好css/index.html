@@ -1,0 +1,965 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="css," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="前言：最近看了看春风十里不如你，本来很少看剧的，暑假有点闲就看了，感觉不错，挺喜欢这部剧，就套了个名字，嘿嘿嘿。剧里面印象深刻的是《致橡树》这首诗，念几句：  我如果爱你,绝不像攀援的凌霄花，借你的高枝炫耀自己;我如果爱你,绝不学痴情的鸟儿，为绿荫重复单调的歌曲；也不止像险峰，增加你的高度，衬托你的威仪。  不骚了，回到正题，写css也一样需要爱，你爱一门技术就要用心付出，对知识寸土必争，寸草必得">
+<meta name="keywords" content="css">
+<meta property="og:type" content="article">
+<meta property="og:title" content="&#39;css规范--春风十里不如写好css&#39;">
+<meta property="og:url" content="http://Ry-yuan.me/2017/08/18/css规范-春风十里不如写好css/index.html">
+<meta property="og:site_name" content="Ry-yuan(瑞元)">
+<meta property="og:description" content="前言：最近看了看春风十里不如你，本来很少看剧的，暑假有点闲就看了，感觉不错，挺喜欢这部剧，就套了个名字，嘿嘿嘿。剧里面印象深刻的是《致橡树》这首诗，念几句：  我如果爱你,绝不像攀援的凌霄花，借你的高枝炫耀自己;我如果爱你,绝不学痴情的鸟儿，为绿荫重复单调的歌曲；也不止像险峰，增加你的高度，衬托你的威仪。  不骚了，回到正题，写css也一样需要爱，你爱一门技术就要用心付出，对知识寸土必争，寸草必得">
+<meta property="og:updated_time" content="2017-08-19T08:04:46.333Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="&#39;css规范--春风十里不如写好css&#39;">
+<meta name="twitter:description" content="前言：最近看了看春风十里不如你，本来很少看剧的，暑假有点闲就看了，感觉不错，挺喜欢这部剧，就套了个名字，嘿嘿嘿。剧里面印象深刻的是《致橡树》这首诗，念几句：  我如果爱你,绝不像攀援的凌霄花，借你的高枝炫耀自己;我如果爱你,绝不学痴情的鸟儿，为绿荫重复单调的歌曲；也不止像险峰，增加你的高度，衬托你的威仪。  不骚了，回到正题，写css也一样需要爱，你爱一门技术就要用心付出，对知识寸土必争，寸草必得">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://Ry-yuan.me/2017/08/18/css规范-春风十里不如写好css/"/>
+
+
+
+
+
+  <title>'css规范--春风十里不如写好css' | Ry-yuan(瑞元)</title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ry-yuan(瑞元)</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://Ry-yuan.me/2017/08/18/css规范-春风十里不如写好css/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ry-yuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ry-yuan(瑞元)">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">'css规范--春风十里不如写好css'</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-18T15:59:33+08:00">
+                2017-08-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/08/18/css规范-春风十里不如写好css/" class="leancloud_visitors" data-flag-title="'css规范--春风十里不如写好css'">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>最近看了看春风十里不如你，本来很少看剧的，暑假有点闲就看了，感觉不错，挺喜欢这部剧，就套了个名字，嘿嘿嘿。剧里面印象深刻的是《致橡树》这首诗，念几句：</p>
+<blockquote>
+<p>我如果爱你,绝不像攀援的凌霄花，借你的高枝炫耀自己;<br>我如果爱你,绝不学痴情的鸟儿，为绿荫重复单调的歌曲；<br>也不止像险峰，增加你的高度，衬托你的威仪。</p>
+</blockquote>
+<p>不骚了，回到正题，写css也一样需要爱，你爱一门技术就要用心付出，对知识寸土必争，寸草必得。写css容易，写好就需要下功夫了。如果我爱你，就会去研究怎么去写好你，下面先说说怎么规范的写css。  </p>
+<hr>
+<h2 id="css语法规范："><a href="#css语法规范：" class="headerlink" title="css语法规范："></a>css语法规范：</h2><ul>
+<li><p>每条属性声明占一行，增加易读性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">/*bad*/</div><div class="line">body&#123;margin: 0;padding: 0;&#125;</div><div class="line">/*good*/</div><div class="line">body&#123;</div><div class="line">    margin: 0;</div><div class="line">    padding: 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>颜色采用十六进制写法（不使用颜色名），并且能够简写的进行简写:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">/*bad*/</div><div class="line">.example&#123;</div><div class="line">    color: #ffaabb;</div><div class="line">&#125;</div><div class="line">/*good*/</div><div class="line">.example&#123;</div><div class="line">    color: #fab;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>0值的单位进行省略，如将margin:0px，写成margin:0:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">/*bad*/</div><div class="line">.example&#123;</div><div class="line">    margin: 0px;</div><div class="line">&#125;</div><div class="line">/*good*/</div><div class="line">.example&#123;</div><div class="line">    margin: 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>有选择器组时，每个选择器占一行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">body,</div><div class="line">html,</div><div class="line">p&#123;</div><div class="line">    margin: 0;</div><div class="line">    padding: 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>连字符使用-，而不使用_，因为能少按一个shift就少按，还有和js变量命名区分开。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/*bad*/</div><div class="line">.index_list &#123;&#125;</div><div class="line">/*good*/</div><div class="line">.index-list &#123;&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>选择器避免使用标签名。(首先可能使得一些不必要的标签带上样式，其次会对选择器寻找上也会在一定程度上浪费时间)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/*bad*/</div><div class="line">.index-list li&#123;&#125;</div><div class="line">/*good*/</div><div class="line">.index-list .item&#123;&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>媒体查询，不要写在文档最后或分开到另外文档，应该写在相应规则的附近，这样有利于修改和阅读</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">.index-nav&#123;</div><div class="line">    margin-top: 10px;</div><div class="line">&#125;</div><div class="line">/*和相关的规则一起放*/</div><div class="line">@media (min-width: 480px)&#123;</div><div class="line">    .index-nav&#123;</div><div class="line">        margin-top: 5px;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>前缀，css3的一些属性要注意带上前缀：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">.selector &#123;</div><div class="line">  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);</div><div class="line">          box-shadow: 0 1px 2px rgba(0,0,0,.15);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>引号方面，使用双引号而不使用单引号,url不用使用引号：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">/*no good*/</div><div class="line">.example&#123;</div><div class="line">    font-family: &apos;Times New Roman&apos;,Georgia,Serif;</div><div class="line">    background: url(&quot;../images/icon.png&quot;);</div><div class="line">&#125;</div><div class="line">/*good*/</div><div class="line">.example&#123;</div><div class="line">    font-family: &quot;Times New Roman&quot;,Georgia,Serif;</div><div class="line">    background: url(../images/icon.png);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>每条属性声明语句结束后加上分号，最后一条声明可省略分号，但不建议</p>
+</li>
+<li>每个属性声明的冒号（:）后添加一个空格</li>
+<li>小于1的小数点的值，省略0，如0.5px，可写成.5px</li>
+<li>避免使用@import指令，使用link标签来引入css文件</li>
+<li>避免使用!important，这个优先级最高，滥用会使得维护困难，代码混乱</li>
+<li>Less,Sass等预处理言的嵌套不超过3层</li>
+<li>避免使用id:(因为id优先级高，且具有唯一性，复用性差，而且id是html与js的挂钩，class是HTML与css的挂钩，这样能够让代码更为的清晰，不用说看到一个id，既要到js里查查有没有什么用，又到css里看看有什么样式，确实麻烦。)</li>
+<li>注释需要全面易懂，不要只写一点  </li>
+</ul>
+<hr>
+<h2 id="css属性声明顺序规范："><a href="#css属性声明顺序规范：" class="headerlink" title="css属性声明顺序规范："></a>css属性声明顺序规范：</h2><p>css属性的书写顺序大致分为4组，从上到下依次书写：</p>
+<ol>
+<li>Positioning Model（定位的相关属性）：<ul>
+<li>有position，display，TRBL，z-index，float，overflow等</li>
+</ul>
+</li>
+<li>Box Model （盒子模型的属性）：<ul>
+<li>有margin，padding，border，width，height等</li>
+</ul>
+</li>
+<li>Typographic （文本，排版）<ul>
+<li>有font，line-height，text-align</li>
+</ul>
+</li>
+<li>Visual （视觉方面的）<ul>
+<li>有background，color，transition，list-style </li>
+</ul>
+</li>
+</ol>
+<p>例子：</p>
+<pre><code>.example{
+    content: &quot;hello&quot;;
+    /*positioning*/
+    position: absolute;
+    top: 10px;
+    left: 12px;
+    /*box model*/
+    margin-top: 20px;
+    width: 100px;
+    heith: 100px;
+    /*typographic*/
+    text-align: center;
+    font-size: 12px;
+    /*visual*/
+    color: #f00;
+    background-color: #0f0;
+}
+</code></pre><p>特别的：如果有content属性时，需要把其放到最前面     </p>
+<hr>
+<h2 id="css的文件分类："><a href="#css的文件分类：" class="headerlink" title="css的文件分类："></a>css的文件分类：</h2><blockquote>
+<p>文件分类这不会有什么标准，分好，适合自己开发和维护便可。比如：可以有公共的css，某个页面的css，重置的css，皮肤的css，部件的css等，可根据自己的需求，习惯等分分类。不必太过拘束。  </p>
+</blockquote>
+<ul>
+<li>common.css（通用）</li>
+<li>main.css（主要）</li>
+<li>reset.css（重置）</li>
+<li>skin.css（皮肤）  </li>
+</ul>
+<hr>
+<h2 id="css选择器命名："><a href="#css选择器命名：" class="headerlink" title="css选择器命名："></a>css选择器命名：</h2><p>命名这东西可以说让每个前端开发的人员苦恼的东西，有时得想半天去想一个名字，煎熬啊。老是想，到底怎么样的命名才比较好呢？我这样命名接着会不会重复？等等。。。<br>到底怎样命名才比较规范，参考一下NEC规范或者是BEM规范。个人比较喜欢NEC，因为其比较简约些,详细的可以到NEC官网上看看。<br>看看NEC的分类：</p>
+<ul>
+<li>布局（grid）（.g-）：将页面分割为几个大块，通常有头部、主体、主栏、侧栏、尾部等！</li>
+<li>模块（module）（.m-）：通常是一个语义化的可以重复使用的较大的整体！比如导航、登录、注册、各种列表、评论、搜索等！</li>
+<li>元件（unit）（.u-）：通常是一个不可再分的较为小巧的个体，通常被重复用于各种模块中！比如按钮、输入框、loading、图标等！</li>
+<li>功能（function）（.f-）：为方便一些常用样式的使用，我们将这些使用率较高的样式剥离出来，按需使用，通常这些选择器具有固定样式表现，比如清除浮动等！不可滥用！</li>
+<li>皮肤（skin）（.s-）：如果你需要把皮肤型的样式抽离出来，通常为文字色、背景色（图）、边框色等，非换肤型网站通常只提取文字色！非换肤型网站不可滥用此类！</li>
+<li>状态（.z-）：为状态类样式加入前缀，统一标识，方便识别，她只能组合使用或作为后代出现（.u-ipt.z-dis{}，.m-list li.z-sel{}）</li>
+</ul>
+<blockquote>
+<p>我们参考NEC的分类命名的规范，学习学习它的命名，可以照着使用，也可以有自己不同的命名，可以根据团队的习惯等。规矩是死的，人是活的，能灵活去变通才是最好的，能够写出清晰易懂的代码就ok。  </p>
+</blockquote>
+<hr>
+<h2 id="css命名常用单词："><a href="#css命名常用单词：" class="headerlink" title="css命名常用单词："></a>css命名常用单词：</h2><ul>
+<li>头：header </li>
+<li>尾：footer </li>
+<li>导航：nav </li>
+<li>侧栏：sidebar </li>
+<li>栏目：column </li>
+<li>外围容器：wrapper </li>
+<li>登录条：loginbar </li>
+<li>标志：logo </li>
+<li>广告：banner </li>
+<li>页面主体：main </li>
+<li>热点：hot </li>
+<li>新闻：news </li>
+<li>下载：download </li>
+<li>子导航：subnav </li>
+<li>菜单：menu </li>
+<li>子菜单：submenu </li>
+<li>搜索：search </li>
+<li>友情链接：friendlink </li>
+<li>页脚：footer </li>
+<li>版权：copyright </li>
+<li>滚动：scroll </li>
+<li>内容：content </li>
+<li>标签页：tab </li>
+<li>文章列表：list </li>
+<li>信息：msg </li>
+<li>小技巧：tips </li>
+<li>标题：title </li>
+<li>加入：joinus </li>
+<li>指南：guild </li>
+<li>服务：service </li>
+<li>注册：regsiter </li>
+<li>状态：status </li>
+<li>投票：vote </li>
+<li>合作伙伴：partner</li>
+<li>容器：container</li>
+<li>按钮：button</li>
+</ul>
+<blockquote>
+<p>单词这方面能看懂就好，英语也要学号才行啊，有时候不懂怎么命名，就查查英文单词怎么写，看得出英语还是很重要啊。css的命名单词长度不要太长太冗余，看懂就好，有些单词过长可以适当的缩写一下。</p>
+</blockquote>
+<h2 id="最后说说："><a href="#最后说说：" class="headerlink" title="最后说说："></a>最后说说：</h2><blockquote>
+<p>如果想学好一门技术，就想要从各个方面研究他，本文也是，了解css也要css的规范，这对于强迫症的人就是很好的疗药，我就是这样，总觉得自己的css写得太不规范，也不容易维护，想要去修饰好，所以写写博客来强迫自己去改正，博客是个好东西，写给自己看看同时也写给别人看，所以这会有约束，从而不断的修饰改正错误，从中自己也会学到很多东西，可谓春风十里不如写博客。</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/css/" rel="tag"># css</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/25/前端性能优化-图片懒加载-lazyload-image/" rel="next" title="前端性能优化--图片懒加载(lazyload image)">
+                <i class="fa fa-chevron-left"></i> 前端性能优化--图片懒加载(lazyload image)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Ry-yuan" />
+          <p class="site-author-name" itemprop="name">Ry-yuan</p>
+           
+              <p class="site-description motion-element" itemprop="description">如果你觉得困难，那也许是在进步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言："><span class="nav-number">1.</span> <span class="nav-text">前言：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#css语法规范："><span class="nav-number">2.</span> <span class="nav-text">css语法规范：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#css属性声明顺序规范："><span class="nav-number">3.</span> <span class="nav-text">css属性声明顺序规范：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#css的文件分类："><span class="nav-number">4.</span> <span class="nav-text">css的文件分类：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#css选择器命名："><span class="nav-number">5.</span> <span class="nav-text">css选择器命名：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#css命名常用单词："><span class="nav-number">6.</span> <span class="nav-text">css命名常用单词：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后说说："><span class="nav-number">7.</span> <span class="nav-text">最后说说：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ry-yuan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+&nbsp;|&nbsp;
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("RjwnbvSlgbai8OyA9HotKOIY-gzGzoHsz", "Bwqfl7y14vPhnj48bjA112I8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
