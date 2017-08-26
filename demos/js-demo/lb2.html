@@ -90,16 +90,21 @@
 
 
 
-<meta name="description" content="圣杯布局   * {     margin: 0;     padding: 0;     text-align: center; }  .header {     width: 100%;     height: 50px;     background-color: #fae; }  .container {     overflow: hidden;     pad">
+<meta name="description" content="轮播图--淡入淡出">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Ry-yuan(瑞元)">
-<meta property="og:url" content="http://Ry-yuan.me/css-demo/layout/grail-layout.html">
+<meta property="og:url" content="http://Ry-yuan.me/demos/js-demo/lb2.html">
 <meta property="og:site_name" content="Ry-yuan(瑞元)">
-<meta property="og:description" content="圣杯布局   * {     margin: 0;     padding: 0;     text-align: center; }  .header {     width: 100%;     height: 50px;     background-color: #fae; }  .container {     overflow: hidden;     pad">
-<meta property="og:updated_time" content="2017-08-21T14:08:19.715Z">
+<meta property="og:description" content="轮播图--淡入淡出">
+<meta property="og:image" content="http://ry-yuan.me/demos/js-demo/images/picture1.jpg">
+<meta property="og:image" content="http://ry-yuan.me/demos/js-demo/images/picture2.jpg">
+<meta property="og:image" content="http://ry-yuan.me/demos/js-demo/images/picture3.jpg">
+<meta property="og:image" content="http://ry-yuan.me/demos/js-demo/images/picture4.jpg">
+<meta property="og:updated_time" content="2017-08-26T03:46:01.226Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ry-yuan(瑞元)">
-<meta name="twitter:description" content="圣杯布局   * {     margin: 0;     padding: 0;     text-align: center; }  .header {     width: 100%;     height: 50px;     background-color: #fae; }  .container {     overflow: hidden;     pad">
+<meta name="twitter:description" content="轮播图--淡入淡出">
+<meta name="twitter:image" content="http://ry-yuan.me/demos/js-demo/images/picture1.jpg">
 
 
 
@@ -127,7 +132,7 @@
 
 
 
-  <link rel="canonical" href="http://Ry-yuan.me/css-demo/layout/grail-layout.html"/>
+  <link rel="canonical" href="http://Ry-yuan.me/demos/js-demo/lb2.html"/>
 
 
 
@@ -277,67 +282,27 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>圣杯布局</title>
+    <title>轮播图--淡入淡出</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/lb2.css">
 </head>
-<style type="text/css">
-* {
-    margin: 0;
-    padding: 0;
-    text-align: center;
-}
-
-.header {
-    width: 100%;
-    height: 50px;
-    background-color: #fae;
-}
-
-.container {
-    overflow: hidden;
-    padding-left: 200px;
-    padding-right: 300px;
-}
-
-
-/* .container:after { content: " "; clear: both; display: table; }
- */
-
-.main {
-    float: left;
-    width: 100%;
-    height: 200px;
-    background-color: #ada;
-}
-
-.left {
-    position: relative;
-    left: -200px;
-    float: left;
-    margin-left: -100%;
-    width: 200px;
-    height: 200px;
-    background-color: #abc;
-}
-
-.right {
-    position: relative;
-    right: -300px;
-    float: left;
-    margin-left: -300px;
-    width: 300px;
-    height: 200px;
-    background-color: #adc;
-}
-</style>
 
 <body>
-    <header class="header">头部内容</header>
-    <div class="container">
-        <!-- 优先写中心部分，因为优先渲染。 -->
-        <div class="main">中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分</div>
-        <div class="left">左侧内容部分</div>
-        <div class="right">右侧内容部分</div>
+    <div id="md-container" class="md-container">
+        <img class=" picture pic1" src="images/picture1.jpg" alt="">
+        <img class=" picture pic2" src="images/picture2.jpg" alt="">
+        <img class=" picture pic3" src="images/picture3.jpg" alt="">
+        <img class=" picture pic4" src="images/picture4.jpg" alt="">
+        <div id="arrowLeft" class="arrow-box arrow-left"><i class="md-arrow"></i></div>
+        <div id="arrowRight" class="arrow-box  arrow-right"><i class="md-arrow"></i></div>
+        <ul id="point-box" class="point-box">
+            <li class="point point1"></li>
+            <li class="point"></li>
+            <li class="point"></li>
+            <li class="point"></li>
+        </ul>
     </div>
+    <script type="text/javascript" src="js/lb2.js"></script>
 </body>
 
 </html>

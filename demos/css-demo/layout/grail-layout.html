@@ -90,16 +90,16 @@
 
 
 
-<meta name="description" content="总结：本次的psd转html完成得还不是很好，完成度95%,主要问题： ps的切图水平还不足 使用的时间还是过长，开发不够速度 对类命名还是不够熟悉 对less的使用还不够熟练 对sublime text的使用还有待提高，以便增加工作速率 本次只是单纯的实现界面，页面没有实际的功能  目标： 提高全局概念，对页面制作时考虑与后台的对接是否方面 提高ps的应用能力 提高工具的使用 增强基础知识">
+<meta name="description" content="圣杯布局   * {     margin: 0;     padding: 0;     text-align: center; }  .header {     width: 100%;     height: 50px;     background-color: #fae; }  .container {     overflow: hidden;     pad">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Ry-yuan(瑞元)">
-<meta property="og:url" content="http://Ry-yuan.me/psd-html/project01/summary.html">
+<meta property="og:url" content="http://Ry-yuan.me/demos/css-demo/layout/grail-layout.html">
 <meta property="og:site_name" content="Ry-yuan(瑞元)">
-<meta property="og:description" content="总结：本次的psd转html完成得还不是很好，完成度95%,主要问题： ps的切图水平还不足 使用的时间还是过长，开发不够速度 对类命名还是不够熟悉 对less的使用还不够熟练 对sublime text的使用还有待提高，以便增加工作速率 本次只是单纯的实现界面，页面没有实际的功能  目标： 提高全局概念，对页面制作时考虑与后台的对接是否方面 提高ps的应用能力 提高工具的使用 增强基础知识">
-<meta property="og:updated_time" content="2017-07-07T14:50:58.486Z">
+<meta property="og:description" content="圣杯布局   * {     margin: 0;     padding: 0;     text-align: center; }  .header {     width: 100%;     height: 50px;     background-color: #fae; }  .container {     overflow: hidden;     pad">
+<meta property="og:updated_time" content="2017-08-21T14:08:19.715Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ry-yuan(瑞元)">
-<meta name="twitter:description" content="总结：本次的psd转html完成得还不是很好，完成度95%,主要问题： ps的切图水平还不足 使用的时间还是过长，开发不够速度 对类命名还是不够熟悉 对less的使用还不够熟练 对sublime text的使用还有待提高，以便增加工作速率 本次只是单纯的实现界面，页面没有实际的功能  目标： 提高全局概念，对页面制作时考虑与后台的对接是否方面 提高ps的应用能力 提高工具的使用 增强基础知识">
+<meta name="twitter:description" content="圣杯布局   * {     margin: 0;     padding: 0;     text-align: center; }  .header {     width: 100%;     height: 50px;     background-color: #fae; }  .container {     overflow: hidden;     pad">
 
 
 
@@ -127,7 +127,7 @@
 
 
 
-  <link rel="canonical" href="http://Ry-yuan.me/psd-html/project01/summary.html"/>
+  <link rel="canonical" href="http://Ry-yuan.me/demos/css-demo/layout/grail-layout.html"/>
 
 
 
@@ -272,20 +272,75 @@
 
     
     
-      <h1 id="总结：本次的psd转html完成得还不是很好，完成度95-主要问题："><a href="#总结：本次的psd转html完成得还不是很好，完成度95-主要问题：" class="headerlink" title="总结：本次的psd转html完成得还不是很好，完成度95%,主要问题："></a>总结：本次的psd转html完成得还不是很好，完成度95%,主要问题：</h1><ul>
-<li>ps的切图水平还不足</li>
-<li>使用的时间还是过长，开发不够速度</li>
-<li>对类命名还是不够熟悉</li>
-<li>对less的使用还不够熟练</li>
-<li>对sublime text的使用还有待提高，以便增加工作速率</li>
-<li>本次只是单纯的实现界面，页面没有实际的功能</li>
-</ul>
-<h1 id="目标："><a href="#目标：" class="headerlink" title="目标："></a>目标：</h1><ul>
-<li>提高全局概念，对页面制作时考虑与后台的对接是否方面</li>
-<li>提高ps的应用能力</li>
-<li>提高工具的使用</li>
-<li>增强基础知识</li>
-</ul>
+      <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>圣杯布局</title>
+</head>
+<style type="text/css">
+* {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.header {
+    width: 100%;
+    height: 50px;
+    background-color: #fae;
+}
+
+.container {
+    overflow: hidden;
+    padding-left: 200px;
+    padding-right: 300px;
+}
+
+
+/* .container:after { content: " "; clear: both; display: table; }
+ */
+
+.main {
+    float: left;
+    width: 100%;
+    height: 200px;
+    background-color: #ada;
+}
+
+.left {
+    position: relative;
+    left: -200px;
+    float: left;
+    margin-left: -100%;
+    width: 200px;
+    height: 200px;
+    background-color: #abc;
+}
+
+.right {
+    position: relative;
+    right: -300px;
+    float: left;
+    margin-left: -300px;
+    width: 300px;
+    height: 200px;
+    background-color: #adc;
+}
+</style>
+
+<body>
+    <header class="header">头部内容</header>
+    <div class="container">
+        <!-- 优先写中心部分，因为优先渲染。 -->
+        <div class="main">中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分中心内容部分</div>
+        <div class="left">左侧内容部分</div>
+        <div class="right">右侧内容部分</div>
+    </div>
+</body>
+
+</html>
 
     
   </div>
