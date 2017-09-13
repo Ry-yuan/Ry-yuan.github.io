@@ -1,0 +1,952 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="介绍 这是红宝书（JavaScript高级程序设计 3版）的读书笔记第三篇（灵魂篇介绍），有着剩下的第三章的知识内容，当然其中还有我个人的理解。红宝书这本书可以说是难啃的，要看完不容易，挺厚的，要看懂更不容易，要熟练js更是难，中间需要不断的积累与重温。因此不是读一两遍就能把这书吃透，需要多读，可谓温故而知新，可以为师矣。   很多人看这些厚的书都是三天打鱼两天晒网，很少能看下去，能记住的东西往往">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript--我发现，原来你是这样的JS（基础概念--灵魂 ，注入数据类型和操作符）">
+<meta property="og:url" content="http://Ry-yuan.me/2017/09/10/JavaScript-我发现，原来你是这样的JS（基础概念-灵魂-，注入数据类型和操作符）/index.html">
+<meta property="og:site_name" content="Ry-yuan(瑞元)">
+<meta property="og:description" content="介绍 这是红宝书（JavaScript高级程序设计 3版）的读书笔记第三篇（灵魂篇介绍），有着剩下的第三章的知识内容，当然其中还有我个人的理解。红宝书这本书可以说是难啃的，要看完不容易，挺厚的，要看懂更不容易，要熟练js更是难，中间需要不断的积累与重温。因此不是读一两遍就能把这书吃透，需要多读，可谓温故而知新，可以为师矣。   很多人看这些厚的书都是三天打鱼两天晒网，很少能看下去，能记住的东西往往">
+<meta property="og:updated_time" content="2017-09-13T07:48:07.906Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript--我发现，原来你是这样的JS（基础概念--灵魂 ，注入数据类型和操作符）">
+<meta name="twitter:description" content="介绍 这是红宝书（JavaScript高级程序设计 3版）的读书笔记第三篇（灵魂篇介绍），有着剩下的第三章的知识内容，当然其中还有我个人的理解。红宝书这本书可以说是难啃的，要看完不容易，挺厚的，要看懂更不容易，要熟练js更是难，中间需要不断的积累与重温。因此不是读一两遍就能把这书吃透，需要多读，可谓温故而知新，可以为师矣。   很多人看这些厚的书都是三天打鱼两天晒网，很少能看下去，能记住的东西往往">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://Ry-yuan.me/2017/09/10/JavaScript-我发现，原来你是这样的JS（基础概念-灵魂-，注入数据类型和操作符）/"/>
+
+
+
+
+
+  <title>JavaScript--我发现，原来你是这样的JS（基础概念--灵魂 ，注入数据类型和操作符） | Ry-yuan(瑞元)</title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ry-yuan(瑞元)</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://Ry-yuan.me/2017/09/10/JavaScript-我发现，原来你是这样的JS（基础概念-灵魂-，注入数据类型和操作符）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ry-yuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ry-yuan(瑞元)">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JavaScript--我发现，原来你是这样的JS（基础概念--灵魂 ，注入数据类型和操作符）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-10T15:39:52+08:00">
+                2017-09-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/09/10/JavaScript-我发现，原来你是这样的JS（基础概念-灵魂-，注入数据类型和操作符）/" class="leancloud_visitors" data-flag-title="JavaScript--我发现，原来你是这样的JS（基础概念--灵魂 ，注入数据类型和操作符）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><blockquote>
+<p>这是红宝书（JavaScript高级程序设计 3版）的读书笔记第三篇（灵魂篇介绍），有着剩下的第三章的知识内容，当然其中还有我个人的理解。红宝书这本书可以说是难啃的，要看完不容易，挺厚的，要看懂更不容易，要熟练js更是难，中间需要不断的积累与重温。因此不是读一两遍就能把这书吃透，需要多读，可谓温故而知新，可以为师矣。  </p>
+<p>很多人看这些厚的书都是三天打鱼两天晒网，很少能看下去，能记住的东西往往前3章的内容，所以我写博客就是为了能和大家一起来读这本书，一起学js。</p>
+<p>温馨提示：笔记言辞会有主观色彩，知识重点记录。博客内容为基础，适合初学者。</p>
+</blockquote>
+<h2 id="基本概念（灵魂篇）"><a href="#基本概念（灵魂篇）" class="headerlink" title="基本概念（灵魂篇）"></a>基本概念（灵魂篇）</h2><blockquote>
+<p>上一篇是躯壳篇讲的是一些了解性的东西，而接下来便说内涵（数据类型和操作符），换作中文来看就如同让你理解词和含义，语句的含义，就像将这些字和语句注入灵魂。<br>同系列：<br><a href="http://www.cnblogs.com/Ry-yuan/p/7482599.html" target="_blank" rel="external">第一篇：JavaScript–我发现，原来你是这样的JS（初识、源泉）</a><br><a href="http://www.cnblogs.com/Ry-yuan/p/7496574.html" target="_blank" rel="external">第二篇：JavaScript–我发现，原来你是这样的JS（基础概念–躯壳，不妨从中文角度看js）</a></p>
+</blockquote>
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><blockquote>
+<p>js的数据结构有6种，5种基本类型和一种复杂类型。js中不支持任何自定义的数据类型，所以说就这6种就够了。  </p>
+</blockquote>
+<p>5种基本数据类型：  </p>
+<ul>
+<li>Undefined</li>
+<li>Null</li>
+<li>Boolean</li>
+<li>Number</li>
+<li>String  </li>
+</ul>
+<p>1种复杂类型：  </p>
+<ul>
+<li>Object类型</li>
+</ul>
+<h3 id="1-1-typeof操作符"><a href="#1-1-typeof操作符" class="headerlink" title="1.1 typeof操作符"></a>1.1 typeof操作符</h3><blockquote>
+<p>该操作符可以检测某变量是什么数据类型。</p>
+</blockquote>
+<p>typeof返回的值：  </p>
+<ul>
+<li>“undefined” – 表示这个值没有被定义</li>
+<li>“string” – 表示这是一个字符串</li>
+<li>“number”  –表示这是一个数字类型</li>
+<li>“boolean”  –表示是一个布尔型</li>
+<li>“object”  –表示这是一个对象</li>
+<li>“function “  –表示这是一个函数  </li>
+</ul>
+<blockquote>
+<p>特别：对于null，typeof null 会返回”object”,因为null表示的是一个空对象的引用  </p>
+</blockquote>
+<p>typeof使用例子：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> str = <span class="string">"hello"</span>;</div><div class="line"><span class="keyword">var</span> a;</div><div class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> str)  <span class="comment">//"string"</span></div><div class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="number">666</span>)  <span class="comment">//"number"</span></div><div class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> a)  <span class="comment">// "undefined"</span></div><div class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="literal">null</span>)  <span class="comment">// "object"</span></div></pre></td></tr></table></figure></p>
+<h3 id="1-2-Undefined类型"><a href="#1-2-Undefined类型" class="headerlink" title="1.2 Undefined类型"></a>1.2 Undefined类型</h3><blockquote>
+<p>undefined 类型的值只有一个，undefined。当使用var对变量声明但没有进行初始化的时候默认的值就是undefined。  </p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> value ;</div><div class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> value);   <span class="comment">// "undefined" </span></div><div class="line"></div><div class="line"><span class="comment">//特别:对于没有声明的变量typeof 返回的值也是undefined,例如：</span></div><div class="line"><span class="comment">//下面的a没被声明</span></div><div class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> a);    <span class="comment">//"undefined"</span></div></pre></td></tr></table></figure>
+<h3 id="1-3-Null类型"><a href="#1-3-Null类型" class="headerlink" title="1.3 Null类型"></a>1.3 Null类型</h3><blockquote>
+<p>Null类型也是只用一个值null，null是一个空对象指针。所以使用typeof检测时会返回object。  </p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="literal">null</span>);   <span class="comment">//"object"</span></div></pre></td></tr></table></figure>
+<h4 id="注意点："><a href="#注意点：" class="headerlink" title="注意点："></a>注意点：</h4><p>1.null的使用：在定义的变量将会用来保存一个对象时，那初始化为null，这样我们就知道该变量将来会引用一个对象。  </p>
+<p>2.实际上undefined值是派生值null的，因此对他们进行相等性测试会返回true：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(<span class="literal">null</span> == <span class="literal">undefined</span>);  <span class="comment">//true</span></div></pre></td></tr></table></figure></p>
+<h3 id="1-4-Boolean类型"><a href="#1-4-Boolean类型" class="headerlink" title="1.4 Boolean类型"></a>1.4 Boolean类型</h3><blockquote>
+<p>boolean类型有两个值 true和false，其他类型的值都有与这两个值等价的值，就是说其他类型的值都能转成这两值中的其中一个。通过转型函数Boolean()</p>
+<h4 id="注意点：-1"><a href="#注意点：-1" class="headerlink" title="注意点："></a>注意点：</h4><p>任何类型的数据都可以调用Boolean()方法，都能返回一个true或false，至于返回什么，有一定的规则，规则如下：    </p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//对于Undefined</span></div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Boolean</span>(<span class="literal">undefined</span>));  <span class="comment">//false</span></div><div class="line"><span class="comment">//对于String，非空字符串返回true，空字符串返回false</span></div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Boolean</span>(<span class="string">""</span>));   <span class="comment">//false</span></div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Boolean</span>(<span class="string">"hahaha"</span>));   <span class="comment">//true</span></div><div class="line"><span class="comment">//对于Numble类型，任何非0数字返回true，0和NaN返回false</span></div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Boolean</span>(<span class="number">123</span>));  <span class="comment">//true</span></div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Boolean</span>(<span class="number">0</span>));  <span class="comment">//false</span></div><div class="line"><span class="comment">//对于Object，任何对象都返回true</span></div><div class="line"><span class="built_in">console</span>.log(<span class="keyword">new</span> <span class="built_in">Array</span>());  <span class="comment">//true</span></div></pre></td></tr></table></figure>
+<h3 id="1-5-Number类型"><a href="#1-5-Number类型" class="headerlink" title="1.5 Number类型"></a>1.5 Number类型</h3><blockquote>
+<p>Number 类型就是数字的类型，各种数字都是该类型，包含整数，浮点数。</p>
+</blockquote>
+<p><b>常见的数字：</b><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//整数</span></div><div class="line"><span class="keyword">var</span> intNum = <span class="number">10</span>;</div><div class="line"><span class="comment">//八进制0开头</span></div><div class="line"><span class="keyword">var</span> num1 = <span class="number">066</span>;</div><div class="line"><span class="comment">//十六进制0x开头</span></div><div class="line"><span class="keyword">var</span> num2 = <span class="number">0xA</span>;</div><div class="line"><span class="comment">//浮点数</span></div><div class="line"><span class="keyword">var</span> floatNum = <span class="number">0.6</span>;</div><div class="line"><span class="comment">//极大的数4123000,使用科学表示法e，e6表示10的6次方</span></div><div class="line"><span class="keyword">var</span> floatNum2 = <span class="number">4.123e6</span>;</div><div class="line"><span class="comment">//最大值</span></div><div class="line"><span class="built_in">Number</span>.MAX_VALUE;   <span class="comment">//1.7976931348623157e+308</span></div><div class="line"><span class="comment">//最小值 </span></div><div class="line"><span class="built_in">Number</span>.MIN_VALUE;   <span class="comment">//5e-324</span></div><div class="line"><span class="comment">//超出最大值时，表示为正无穷</span></div><div class="line"><span class="literal">Infinity</span></div><div class="line"><span class="comment">//超出最小值时，表示为负无穷</span></div><div class="line">-<span class="literal">Infinity</span></div><div class="line"><span class="comment">//NaN (Not a Number) 非数值</span></div><div class="line"><span class="literal">NaN</span></div><div class="line"><span class="comment">//判断非数值的函数isNaN()</span></div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">isNaN</span>(<span class="number">10</span>))  <span class="comment">//false</span></div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">isNaN</span>(<span class="string">"10"</span>)) <span class="comment">//false,isNaN()会尝试将字符串转为数字，此处"10"能转为10</span></div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">isNaN</span>(<span class="string">"bey"</span>));  <span class="comment">//true , "bey"不能被转成数字</span></div></pre></td></tr></table></figure></p>
+<h3 id="1-6-String类型"><a href="#1-6-String类型" class="headerlink" title="1.6 String类型"></a>1.6 String类型</h3><blockquote>
+<p>String用于表示由零或多个16位Unicode字符组成的字符序列，即字符串。</p>
+<p>字符串由单引号（’ ‘）或双引号（” “）包含。但首尾不能是不同的引号，比如一单一双。</p>
+<h4 id="错点"><a href="#错点" class="headerlink" title="错点:"></a>错点:</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//这样会报错</span></div><div class="line"><span class="keyword">var</span> str = <span class="string">'javasritp";</span></div></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="特点："><a href="#特点：" class="headerlink" title="特点："></a>特点：</h4><p>1.拼接字符串使用’+’号<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> str1 = <span class="string">"hello"</span>;</div><div class="line"><span class="keyword">var</span> str2 = str1 + <span class="string">"world"</span>;</div><div class="line"><span class="built_in">console</span>.log(str2); <span class="comment">// "hello world"</span></div></pre></td></tr></table></figure></p>
+<p>2.其他类型的数据转换为字符串使用toString()函数<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> num = <span class="number">123</span>;</div><div class="line"><span class="keyword">var</span> str = num.toString();  <span class="comment">//数字123通过toString转为了字符串</span></div><div class="line"><span class="built_in">console</span>.log(str);  <span class="comment">//"123"</span></div><div class="line"><span class="comment">//使用""拼接其他数据类型可以转换成String</span></div><div class="line"><span class="keyword">var</span> s = <span class="number">23</span>+<span class="string">""</span>;  <span class="comment">//"23"</span></div></pre></td></tr></table></figure></p>
+<h3 id="1-7-Object类型"><a href="#1-7-Object类型" class="headerlink" title="1.7 Object类型"></a>1.7 Object类型</h3><blockquote>
+<p>ECMAScript中的对象其实就是一组数据和功能的集合。通过new操作符后跟要创建的对象类型的名称来创建。  </p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//创建一个Object对象</span></div><div class="line"><span class="keyword">var</span>  o = <span class="keyword">new</span> <span class="built_in">Object</span>();</div></pre></td></tr></table></figure>
+<h4 id="关键："><a href="#关键：" class="headerlink" title="关键："></a>关键：</h4><blockquote>
+<p>这里的Object相当于祖宗一样，创建Object的实例并没有什么用处。他像是java中java.lang.Object 对象一样。 </p>
+<h4 id="特点：-1"><a href="#特点：-1" class="headerlink" title="特点："></a>特点：</h4><p>每个Object类型的实例共有的属性和方法：</p>
+</blockquote>
+<ul>
+<li>constructor： 保存着用于创建当前对象的函数。</li>
+<li>hasOwnProperty：用于检测给定的属性在当前对象的实例中是否存在。</li>
+<li>isPrototypeOf ： 用于检查传入的对象是否是当前对象的原型</li>
+<li>propertyIsEnumerble ： 用于检查给定属性能否使用for-in来枚举</li>
+<li>toLocaleString() : 返回对象的字符串表示。</li>
+<li>toString() : 返回对象的字符串表示。</li>
+<li>valueOf() : 返回对象的字符串，数值，或布尔表示。通常和toString() 返回的值相同。</li>
+</ul>
+<h2 id="操作符（运算符）"><a href="#操作符（运算符）" class="headerlink" title="操作符（运算符）"></a>操作符（运算符）</h2><blockquote>
+<p>接下来是操作数据值的操作符。包含算术操作符，位操作符，关系操作符，相等操作符。</p>
+<h3 id="1一元操作符"><a href="#1一元操作符" class="headerlink" title="1一元操作符"></a>1一元操作符</h3><p>只能操作一个值的操作符称为一元操作符。</p>
+<h4 id="1-1递增与递减："><a href="#1-1递增与递减：" class="headerlink" title="1.1递增与递减："></a>1.1递增与递减：</h4><p><b>形式:</b> 这就是自增自减，使用两个加号(++)或两个减号(–)</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> num = <span class="number">5</span>;</div><div class="line">num++;   <span class="comment">//相当于num = num+1; 此时num = 6;</span></div><div class="line">num--;   <span class="comment">//相当于num = num-1; 此时num = 5;</span></div></pre></td></tr></table></figure>
+<p><b><font color="#f00">注意点：</font></b>递增减的前置型（加减号在数值前面）和后置型（加减号在数值后面）；<br>1.没区别的情况：当只有唯一一条递增或递减操作时，前后不影响结果  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">var</span> num1 = <span class="number">5</span>;</div><div class="line"><span class="keyword">var</span> num2 = <span class="number">5</span>;</div><div class="line">num1++;   <span class="comment">//执行后num1的值会变成6</span></div><div class="line">++num2;   <span class="comment">//执行num2的值会变成6</span></div></pre></td></tr></table></figure>
+<p> 2.有区别情况：当操作数在一条语句中进行不仅仅是递增或递减操作时</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> val1= <span class="number">5</span>;</div><div class="line"><span class="keyword">var</span> val2 = <span class="number">5</span>;</div><div class="line"><span class="keyword">var</span> val3 = <span class="number">20</span>;</div><div class="line"><span class="keyword">var</span> sum1 = val1-- + val3;   <span class="comment">//sum1等于25</span></div><div class="line"><span class="keyword">var</span> sum2 = --val2 + val3;   <span class="comment">//sum2等于24</span></div><div class="line"><span class="comment">//此处的val1 和 val2 的值相同但最后结果不同.</span></div><div class="line"><span class="comment">//val1是后置，通俗点讲就是放到最后才进行自减操作.所以顺序是原来的val1值(5)和val3相加后赋值给sum1，最后val1才自减。</span></div><div class="line"><span class="comment">//val2是前置，通俗点讲前置最大，先进行了自减操作。所以顺序是val1自减，后和val3相加最后赋值给sum2</span></div></pre></td></tr></table></figure>
+<h4 id="1-2一元加号和减号"><a href="#1-2一元加号和减号" class="headerlink" title="1.2一元加号和减号"></a>1.2一元加号和减号</h4><p><b>形式：</b>在一个数值前使用一个加号或减号。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> num = <span class="number">100</span>;</div><div class="line"><span class="comment">//用+正数还是正数，负数还是负数</span></div><div class="line">+num;  <span class="comment">//100</span></div><div class="line"><span class="comment">//用减号就变成相反数</span></div><div class="line">-num;  <span class="comment">//-100</span></div></pre></td></tr></table></figure></p>
+<p><b><font color="#f00">注意点：</font></b>当操作的不是数字时，使用+,-可以使其执行转换，类似于Number() 函数。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//对于+号</span></div><div class="line"><span class="keyword">var</span> str = <span class="string">"10"</span>;</div><div class="line">str = +str;  <span class="comment">//值会变成数字10</span></div><div class="line"><span class="keyword">var</span> str2 = <span class="string">"hello"</span>;</div><div class="line">str2 = +str2 <span class="comment">//值为NaN，因为不能转为数字</span></div><div class="line"><span class="keyword">var</span> boo = <span class="literal">false</span>;</div><div class="line">boo = +<span class="literal">false</span>;  <span class="comment">//值变为0</span></div><div class="line"></div><div class="line"><span class="comment">//对于-号，也差不多，只是变成相反数</span></div><div class="line"><span class="keyword">var</span> s = <span class="string">"100"</span>;</div><div class="line">s = -s; <span class="comment">//值为-100</span></div></pre></td></tr></table></figure></p>
+<h3 id="2-加性-乘性运算符（加，减-乘，除，取模）"><a href="#2-加性-乘性运算符（加，减-乘，除，取模）" class="headerlink" title="2.加性/乘性运算符（加，减,乘，除，取模）"></a>2.加性/乘性运算符（加，减,乘，除，取模）</h3><p>1.加号（+）：进行加法运算<br>2.减号（-）：进行减法运算<br>3.乘号（*）：进行乘法运算<br>4.除号（/）：进行除法运算<br>5.求模（%）：求余数<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="number">30</span>+<span class="number">20</span>;  <span class="comment">//50</span></div><div class="line"><span class="number">30</span><span class="number">-10</span>;  <span class="comment">//20</span></div><div class="line"><span class="number">30</span>*<span class="number">20</span>;  <span class="comment">//600</span></div><div class="line"><span class="number">30</span>/<span class="number">10</span>;  <span class="comment">//3</span></div><div class="line"><span class="number">25</span>/<span class="number">6</span> ;  <span class="comment">//1`</span></div></pre></td></tr></table></figure></p>
+<h3 id="3-布尔操作符"><a href="#3-布尔操作符" class="headerlink" title="3.布尔操作符"></a>3.布尔操作符</h3><blockquote>
+<p>布尔操作符有三个：非，与，或  </p>
+</blockquote>
+<p>####3.1逻辑非<br>1.符号：!<br>2.功能：非操作会返回一个布尔值，功能对布尔值取非，即相反。它会对值转成布尔值。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(!<span class="literal">false</span>);  <span class="comment">//true</span></div><div class="line"><span class="built_in">console</span>.log(!<span class="number">0</span>);  <span class="comment">//0的布尔转换是false，进行非操作后就是true</span></div><div class="line"><span class="built_in">console</span>.log(!<span class="string">"hh"</span>)  <span class="comment">//非空字符串布尔是true，进行非操作后就是false</span></div><div class="line"></div><div class="line"><span class="comment">//小技巧，使用两!!可以类似于Boolean函数，对任何数值进行布尔转换</span></div><div class="line"><span class="built_in">console</span>.log(!!<span class="string">"hello"</span>);  <span class="comment">//true</span></div><div class="line"><span class="built_in">console</span>.log(!!<span class="number">0</span>);  <span class="comment">//false</span></div></pre></td></tr></table></figure>
+<p>####3.2逻辑与<br>1.符号：&amp;&amp;<br>2.功能：进行与操作需要两个值，当两个值布尔值都为true时才会返回true，否则返回false，并且它是一个短路操作符（当第一个值为false时，就不用再判断第二个值）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(<span class="literal">false</span>&amp;&amp;<span class="literal">true</span>); <span class="comment">//false</span></div><div class="line"><span class="built_in">console</span>.log(<span class="literal">false</span>&amp;&amp;<span class="literal">false</span>); <span class="comment">//false</span></div><div class="line"><span class="built_in">console</span>.log(<span class="literal">true</span>&amp;&amp;<span class="literal">false</span>); <span class="comment">//false</span></div><div class="line"><span class="built_in">console</span>.log(<span class="literal">true</span>&amp;&amp;<span class="literal">true</span>); <span class="comment">//true</span></div></pre></td></tr></table></figure>
+<p>3.<b><font color="#f00">注意点：</font></b> &amp;&amp;（与）操作不一定回返回布尔值一下是特殊情况：</p>
+<ul>
+<li>如果第一个操作数是一个对象的时候，返回第二个操作数</li>
+<li>如果第一个操作数是null，返回null</li>
+<li>如果第一个操作数是NaN，返回NaN</li>
+<li>如果第一个操作数是undefined，返回undefined。<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//数组对象</span></div><div class="line"><span class="keyword">var</span> arr = <span class="keyword">new</span> <span class="built_in">Array</span>();</div><div class="line"><span class="comment">//字符串</span></div><div class="line"><span class="keyword">var</span> str = <span class="string">'hello'</span>;</div><div class="line"><span class="built_in">console</span>.log(arr&amp;&amp;str) <span class="comment">//'hello'</span></div><div class="line"><span class="built_in">console</span>.log(<span class="literal">null</span>&amp;&amp;str) <span class="comment">// null</span></div><div class="line"><span class="built_in">console</span>.log(<span class="literal">NaN</span>&amp;&amp;str)  <span class="comment">//NaN</span></div><div class="line"><span class="built_in">console</span>.log(<span class="literal">undefined</span>&amp;&amp;str) <span class="comment">//undefined</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>####3.3逻辑或<br>1.符号：||<br>2.功能：进行与操作需要两个值，当存在有一个值的布尔值为true则返回true，否则false，或操作也是短路操作符，放当第一个操作值为true时，直接返回true，不用检查第二个操作值。<br><b><font color="#f00">3.注意点：</font></b>如果有一个操作数不是布尔值， ||（或）操作不一定回返回布尔值一下是特殊情况：  </p>
+<ul>
+<li>如果第一个是对象，则返回第一个操作数</li>
+<li>如果第一个数是false，则返回第二个数</li>
+<li>如果两个数都是对象，返回第一个操作数</li>
+<li>如果两个操作数是NaN，返回NaN</li>
+<li>如果两操作数是undefined， 返回undefined。  </li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> arr  = <span class="keyword">new</span> <span class="built_in">Array</span>();</div><div class="line"><span class="built_in">console</span>.log(arr||<span class="string">"str"</span>);  <span class="comment">//返回arr空数组[]</span></div><div class="line"><span class="built_in">console</span>.log(<span class="literal">NaN</span>||<span class="literal">NaN</span>) ; <span class="comment">//NaN</span></div><div class="line"><span class="built_in">console</span>.log(<span class="literal">false</span> || <span class="string">"str"</span>) <span class="comment">//"str"</span></div></pre></td></tr></table></figure>
+<h3 id="4-关系操作符"><a href="#4-关系操作符" class="headerlink" title="4 关系操作符"></a>4 关系操作符</h3><p>1.关系操作符有，大于(&gt;)，小于(&lt;)，小于等于(&lt;=)，大于等于(&gt;=)<br><b><font color="#f00">2.注意点：</font></b><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//1.对于数值转换，直接进行比较，返回true或false</span></div><div class="line"><span class="number">34</span>&gt;<span class="number">23</span>;  <span class="comment">//true</span></div><div class="line"><span class="comment">//2.对于两个字符串比较，是通过从前往后逐个比较其字符编码值（ascll码）大小</span></div><div class="line"><span class="string">"Biasd"</span>&lt;<span class="string">"adsf"</span>;  <span class="comment">//true， 因为B字符编码为66小于a字符编码97</span></div><div class="line"><span class="comment">//3.对于字符串和数字比较，会将字符串转为数字</span></div><div class="line"><span class="string">"23"</span>&lt;<span class="number">3</span>;  <span class="comment">//false ， "23"会转成23,然后和3比较</span></div><div class="line"><span class="string">"a"</span>&lt;<span class="number">3</span> <span class="comment">//false  , "a"转为NaN，NaN和任何操作数比较都为false</span></div></pre></td></tr></table></figure></p>
+<h3 id="5-相等操作符"><a href="#5-相等操作符" class="headerlink" title="5.相等操作符"></a>5.相等操作符</h3><blockquote>
+<p>相等操作符有相等(==)和不相等(!=)，全等(===)和不全等(!==)  </p>
+<p>相等和不相等是先转换后比较，而全等和不全等是仅比较不转换  </p>
+</blockquote>
+<h4 id="5-1相等和不相等转换重点："><a href="#5-1相等和不相等转换重点：" class="headerlink" title="5.1相等和不相等转换重点："></a>5.1相等和不相等转换重点：</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//1.如果有一个操作值为布尔值，则将该布尔值转为数值，true转为1，false转为0</span></div><div class="line"><span class="literal">true</span> == <span class="number">1</span> ;  <span class="comment">//true</span></div><div class="line"><span class="comment">//2.null 和 undefined相等</span></div><div class="line"><span class="literal">null</span> == <span class="literal">undefined</span> ; <span class="comment">//true</span></div><div class="line"><span class="comment">//3.有一个操作数为NaN时，一定返回false</span></div><div class="line"><span class="literal">NaN</span> == <span class="number">1</span>;  <span class="comment">//false</span></div><div class="line"><span class="comment">//4.两个NaN比较也返回false</span></div><div class="line"><span class="literal">NaN</span> == <span class="literal">NaN</span> ;  <span class="comment">//false</span></div><div class="line"><span class="comment">//5.两个值是对象时，若不是指向同一对象就返回false</span></div></pre></td></tr></table></figure>
+<h4 id="5-2全等和不全等重点："><a href="#5-2全等和不全等重点：" class="headerlink" title="5.2全等和不全等重点："></a>5.2全等和不全等重点：</h4><blockquote>
+<p>可以看出全等是3个等号，所以比较严格，不会像相等一样进行转换。通俗的说：你不是就不是。</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//相等和全等的比较</span></div><div class="line"><span class="string">"55"</span> == <span class="number">55</span> ;  <span class="comment">//true,相等情况下，"55"可以转换</span></div><div class="line"><span class="string">"55"</span> === <span class="number">55</span> ;  <span class="comment">//false,全等情况，"55"不转换为数字，所以数据类型不同，直接返回false</span></div><div class="line"></div><div class="line"><span class="comment">//关于null 和 undefined，上面相等比较时时两个值相等，但全等比较就不等</span></div><div class="line"><span class="literal">null</span> === <span class="literal">undefined</span> ;  <span class="comment">//false</span></div></pre></td></tr></table></figure>
+<h3 id="6-条件操作符-三元操作符"><a href="#6-条件操作符-三元操作符" class="headerlink" title="6.条件操作符(三元操作符)"></a>6.条件操作符(三元操作符)</h3><p>1.模板：表达式1?表达式2:表达式3。<br>2.使用说明：当表达式1为true时，返回冒号前的表达式2的结果，false就返回冒号后表达式3<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//例子:</span></div><div class="line"><span class="keyword">var</span> num = <span class="number">3</span>&gt;<span class="number">2</span>?<span class="number">1</span>:<span class="number">0</span>;   <span class="comment">//num的值为1</span></div></pre></td></tr></table></figure></p>
+<h3 id="7-赋值操作符"><a href="#7-赋值操作符" class="headerlink" title="7.赋值操作符"></a>7.赋值操作符</h3><h4 id="1-简单的赋值操作由（-）号表示"><a href="#1-简单的赋值操作由（-）号表示" class="headerlink" title="1.简单的赋值操作由（=）号表示"></a>1.简单的赋值操作由（=）号表示</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> val = <span class="number">10</span>;  <span class="comment">//对val赋值为10</span></div></pre></td></tr></table></figure>
+<h4 id="2-复合赋值操作"><a href="#2-复合赋值操作" class="headerlink" title="2.复合赋值操作"></a>2.复合赋值操作</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> num = <span class="number">10</span>;</div><div class="line">num = num+<span class="number">10</span>;</div><div class="line"><span class="comment">//上面那句可以用下面一句替代</span></div><div class="line">num += <span class="number">10</span>;</div></pre></td></tr></table></figure>
+<h3 id="8-逗号操作符"><a href="#8-逗号操作符" class="headerlink" title="8.逗号操作符"></a>8.逗号操作符</h3><p>1.使用逗号操作符可以在一条语句执行多条操作；<br>2.使用逗号操作符进行赋值，赋值时总会返回表达式最后一项<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//同时对三个变量声明并赋值</span></div><div class="line"><span class="keyword">var</span> num=<span class="number">1</span>, num2 = <span class="number">2</span> , num3 = <span class="number">3</span>;</div><div class="line"><span class="comment">//赋值时总会返回表达式最后一项</span></div><div class="line"><span class="keyword">var</span> n = (<span class="number">32</span>,<span class="number">12</span>,<span class="number">5</span>,<span class="number">1</span>,<span class="number">2</span>);   <span class="comment">//最后n被赋值为2</span></div></pre></td></tr></table></figure></p>
+<p>##最后几句</p>
+<blockquote>
+<p>这次的博客篇幅比较多介绍数据类型和操作符，可以多看几次，也可以专看注意点，重点等，已经特别标出。看完这里基本概念已经完了。接下来还会继续更新笔记，敬请关注。写一篇博客不容易，花费很多心思，如果觉得写得好，关注一下，给个赞吧，让我有动力继续写博，哈哈。  </p>
+<p>本文出自博客园：<a href="http://www.cnblogs.com/Ry-yuan/" target="_blank" rel="external">http://www.cnblogs.com/Ry-yuan/</a><br>作者：Ry<br>欢迎转载，转载请标明出处</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/08/JavaScript--我发现，原来你是这样的js（基础概念躯壳）/" rel="next" title="JavaScript--原来你是这样的js（基本概念躯壳篇）--不妨从中文角度看js">
+                <i class="fa fa-chevron-left"></i> JavaScript--原来你是这样的js（基本概念躯壳篇）--不妨从中文角度看js
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Ry-yuan" />
+          <p class="site-author-name" itemprop="name">Ry-yuan</p>
+           
+              <p class="site-description motion-element" itemprop="description">如果你觉得困难，那也许是在进步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念（灵魂篇）"><span class="nav-number">2.</span> <span class="nav-text">基本概念（灵魂篇）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据类型"><span class="nav-number">3.</span> <span class="nav-text">数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-typeof操作符"><span class="nav-number">3.1.</span> <span class="nav-text">1.1 typeof操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-Undefined类型"><span class="nav-number">3.2.</span> <span class="nav-text">1.2 Undefined类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-Null类型"><span class="nav-number">3.3.</span> <span class="nav-text">1.3 Null类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#注意点："><span class="nav-number">3.3.1.</span> <span class="nav-text">注意点：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-Boolean类型"><span class="nav-number">3.4.</span> <span class="nav-text">1.4 Boolean类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#注意点：-1"><span class="nav-number">3.4.1.</span> <span class="nav-text">注意点：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-Number类型"><span class="nav-number">3.5.</span> <span class="nav-text">1.5 Number类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-String类型"><span class="nav-number">3.6.</span> <span class="nav-text">1.6 String类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#错点"><span class="nav-number">3.6.1.</span> <span class="nav-text">错点:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#特点："><span class="nav-number">3.6.2.</span> <span class="nav-text">特点：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7-Object类型"><span class="nav-number">3.7.</span> <span class="nav-text">1.7 Object类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关键："><span class="nav-number">3.7.1.</span> <span class="nav-text">关键：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#特点：-1"><span class="nav-number">3.7.2.</span> <span class="nav-text">特点：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作符（运算符）"><span class="nav-number">4.</span> <span class="nav-text">操作符（运算符）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1一元操作符"><span class="nav-number">4.1.</span> <span class="nav-text">1一元操作符</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1递增与递减："><span class="nav-number">4.1.1.</span> <span class="nav-text">1.1递增与递减：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2一元加号和减号"><span class="nav-number">4.1.2.</span> <span class="nav-text">1.2一元加号和减号</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-加性-乘性运算符（加，减-乘，除，取模）"><span class="nav-number">4.2.</span> <span class="nav-text">2.加性/乘性运算符（加，减,乘，除，取模）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-布尔操作符"><span class="nav-number">4.3.</span> <span class="nav-text">3.布尔操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-关系操作符"><span class="nav-number">4.4.</span> <span class="nav-text">4 关系操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-相等操作符"><span class="nav-number">4.5.</span> <span class="nav-text">5.相等操作符</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1相等和不相等转换重点："><span class="nav-number">4.5.1.</span> <span class="nav-text">5.1相等和不相等转换重点：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2全等和不全等重点："><span class="nav-number">4.5.2.</span> <span class="nav-text">5.2全等和不全等重点：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-条件操作符-三元操作符"><span class="nav-number">4.6.</span> <span class="nav-text">6.条件操作符(三元操作符)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-赋值操作符"><span class="nav-number">4.7.</span> <span class="nav-text">7.赋值操作符</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-简单的赋值操作由（-）号表示"><span class="nav-number">4.7.1.</span> <span class="nav-text">1.简单的赋值操作由（=）号表示</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-复合赋值操作"><span class="nav-number">4.7.2.</span> <span class="nav-text">2.复合赋值操作</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-逗号操作符"><span class="nav-number">4.8.</span> <span class="nav-text">8.逗号操作符</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ry-yuan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+&nbsp;|&nbsp;
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("RjwnbvSlgbai8OyA9HotKOIY-gzGzoHsz", "Bwqfl7y14vPhnj48bjA112I8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

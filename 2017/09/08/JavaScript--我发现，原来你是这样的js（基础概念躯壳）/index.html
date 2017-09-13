@@ -1,0 +1,874 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="介绍 这是红宝书（JavaScript高级程序设计 3版）的读书笔记第二篇（躯壳篇），有着部分第三章的知识内容，当然其中还有我个人的理解。红宝书这本书可以说是难啃的，要看完不容易，挺厚的，要看懂更不容易，要熟练js更是难，中间需要不断的积累与重温。因此不是读一两遍就能把这书吃透，需要多读，可谓温故而知新，可以为师矣。   很多人看这些厚的书都是三天打鱼两天晒网，很少能看下去，能记住的东西往往前3章">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript--原来你是这样的js（基本概念躯壳篇）--不妨从中文角度看js">
+<meta property="og:url" content="http://Ry-yuan.me/2017/09/08/JavaScript--我发现，原来你是这样的js（基础概念躯壳）/index.html">
+<meta property="og:site_name" content="Ry-yuan(瑞元)">
+<meta property="og:description" content="介绍 这是红宝书（JavaScript高级程序设计 3版）的读书笔记第二篇（躯壳篇），有着部分第三章的知识内容，当然其中还有我个人的理解。红宝书这本书可以说是难啃的，要看完不容易，挺厚的，要看懂更不容易，要熟练js更是难，中间需要不断的积累与重温。因此不是读一两遍就能把这书吃透，需要多读，可谓温故而知新，可以为师矣。   很多人看这些厚的书都是三天打鱼两天晒网，很少能看下去，能记住的东西往往前3章">
+<meta property="og:updated_time" content="2017-09-10T11:08:23.175Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript--原来你是这样的js（基本概念躯壳篇）--不妨从中文角度看js">
+<meta name="twitter:description" content="介绍 这是红宝书（JavaScript高级程序设计 3版）的读书笔记第二篇（躯壳篇），有着部分第三章的知识内容，当然其中还有我个人的理解。红宝书这本书可以说是难啃的，要看完不容易，挺厚的，要看懂更不容易，要熟练js更是难，中间需要不断的积累与重温。因此不是读一两遍就能把这书吃透，需要多读，可谓温故而知新，可以为师矣。   很多人看这些厚的书都是三天打鱼两天晒网，很少能看下去，能记住的东西往往前3章">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://Ry-yuan.me/2017/09/08/JavaScript--我发现，原来你是这样的js（基础概念躯壳）/"/>
+
+
+
+
+
+  <title>JavaScript--原来你是这样的js（基本概念躯壳篇）--不妨从中文角度看js | Ry-yuan(瑞元)</title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ry-yuan(瑞元)</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://Ry-yuan.me/2017/09/08/JavaScript--我发现，原来你是这样的js（基础概念躯壳）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ry-yuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ry-yuan(瑞元)">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JavaScript--原来你是这样的js（基本概念躯壳篇）--不妨从中文角度看js</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-08T18:44:32+08:00">
+                2017-09-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/09/08/JavaScript--我发现，原来你是这样的js（基础概念躯壳）/" class="leancloud_visitors" data-flag-title="JavaScript--原来你是这样的js（基本概念躯壳篇）--不妨从中文角度看js">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><blockquote>
+<p>这是红宝书（JavaScript高级程序设计 3版）的读书笔记第二篇（躯壳篇），有着部分第三章的知识内容，当然其中还有我个人的理解。红宝书这本书可以说是难啃的，要看完不容易，挺厚的，要看懂更不容易，要熟练js更是难，中间需要不断的积累与重温。因此不是读一两遍就能把这书吃透，需要多读，可谓温故而知新，可以为师矣。  </p>
+<p>很多人看这些厚的书都是三天打鱼两天晒网，很少能看下去，能记住的东西往往前3章的内容，所以我写博客就是为了能和大家一起来读这本书，一起学js。</p>
+<p>温馨提示：笔记言辞会有主观色彩，知识重点记录。博客内容为基础，适合初学者。</p>
+</blockquote>
+<p>正在转到正题……</p>
+<hr>
+<h2 id="基本概念-躯壳篇"><a href="#基本概念-躯壳篇" class="headerlink" title="基本概念(躯壳篇)"></a>基本概念(躯壳篇)</h2><blockquote>
+<p>首先要说的，JavaScript是一门高级语言，没错语言，语言就要有一定的语法，接地气的讲就像中文，中文也有一定的语法，比如怎样书写，一撇一划便形成汉字之美，这样就写出大家都懂得汉字。类似的JavaScript也有语法：</p>
+<h3 id="1-区分大小写"><a href="#1-区分大小写" class="headerlink" title="1.区分大小写"></a>1.区分大小写</h3><ul>
+<li>在js中的一切，如变量，函数名，操作符等都区分大小写。 如变量名为test 和 Test 是两个不同的变量。  </li>
+</ul>
+</blockquote>
+<h3 id="2-标识符（就是自己去定义的名称，如变量，函数名，属性名，参数等）"><a href="#2-标识符（就是自己去定义的名称，如变量，函数名，属性名，参数等）" class="headerlink" title="2.标识符（就是自己去定义的名称，如变量，函数名，属性名，参数等）"></a>2.标识符（就是自己去定义的名称，如变量，函数名，属性名，参数等）</h3><ul>
+<li>由字母，下划线（_），美元符号（$），和数字组成，且第一个字符不能以数字开头。如<figure class="highlight plain"><figcaption><span>这样的命名是错误的。  </span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">* 命名方式建议使用驼峰式命名：如myFriend。  </div><div class="line"></div><div class="line">### 3.注释  </div><div class="line">* 单行注释</div></pre></td></tr></table></figure></li>
+</ul>
+<p>// 这是单行注释<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">* 块级（多行）注释</div></pre></td></tr></table></figure></p>
+<pre><code>/*
+* 这是多行注释
+*/
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">### 4.严格模式</div><div class="line">&gt;严格模式在ES5中加入，为了增强js代码的安全性和消除js的一些不合理异常的行为。  </div><div class="line"></div><div class="line">* 启动严格模式：</div><div class="line">```javascript</div><div class="line">//在js中加入use strict 这条字符串</div><div class="line">&quot;use strict&quot;</div></pre></td></tr></table></figure>
+<ul>
+<li>“use strict”加入的位置（哪里想用加哪里）：<br>1.如果需要整个js脚本都使用严格模式就在文件第一行加入这句话<br>2.如果在函数中使用严格模式就在函数内部第一行加入这句话。  </li>
+</ul>
+<h3 id="5-关键字和保留字"><a href="#5-关键字和保留字" class="headerlink" title="5.关键字和保留字"></a>5.关键字和保留字</h3><blockquote>
+<p>这么说吧，关键字和保留字都是一些特定的词，这些词不能在作为标识符使用，也就是你不能用来定义自己的东西，人家有申请专利。就像人家肯德基，你不能再取肯德基了吧，你最多来个肯基基是不是。</p>
+</blockquote>
+<ul>
+<li>比如：if，else，do ，while，for ，break，var，let等等，还挺多，这个不用记，多敲代码就自然而然知道了。  </li>
+</ul>
+<h3 id="6-变量"><a href="#6-变量" class="headerlink" title="6.变量"></a>6.变量</h3><blockquote>
+<p>js是一门弱类型语言，它不像java的强类型，对于每个数据类型的声明都需要指出是什么类型的数据。而js的变量声明就用var这个操作符。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//声明一个变量,它可以用来保存任何类型的值，此处没对sum赋值，默认为undefined</span></div><div class="line"><span class="keyword">var</span> sum;</div><div class="line"><span class="comment">//声明一个变量并赋值，此处赋值了字符串</span></div><div class="line"><span class="keyword">var</span> message = <span class="string">"hello javascript!"</span>;</div><div class="line"><span class="comment">//此处再对message这个变量赋值数字12，是允许的，不会报错</span></div><div class="line">message = <span class="number">12</span>;</div></pre></td></tr></table></figure>
+<h4 id="注意点："><a href="#注意点：" class="headerlink" title="注意点："></a>注意点：</h4><p>1.在没有使用var声明变量时，该变量是属于全局变量。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">setAge</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="comment">//没有使用var定义，age为全局变量</span></div><div class="line">    age = <span class="number">10</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">//函数外部可以使用age</span></div><div class="line"><span class="built_in">console</span>.log(age); <span class="comment">//10</span></div></pre></td></tr></table></figure></p>
+<p>2.在严格模式下，不使用var定义变量会报错。</p>
+<h3 id="7-语句"><a href="#7-语句" class="headerlink" title="7.语句"></a>7.语句</h3><h4 id="7-1-概念："><a href="#7-1-概念：" class="headerlink" title="7.1 概念："></a>7.1 概念：</h4><blockquote>
+<p>到语句了，语句这里ES给出定义：语句以一个分号结尾。这里语句就像中文的一句话，中文以句号结尾。语句可长可短，只要能表达到意思能让人明白意思，对于js语句就要让其解析器明白。（分号可以省略，但是最好不要，避免出现不必要的问题）。<br>例子：</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//声明语句</span></div><div class="line"><span class="keyword">var</span> sum = <span class="number">1</span>;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>插插话：其实一个JavaScript的程序就是语句的集合，解析器一条条读下来一条条解析，你想表达的机器知道了，就执行相应操作，最终做好一件事。是不是感觉写个程序好比一篇理科生作文。</p>
+</blockquote>
+<h4 id="7-2-ECMA-262-规定了一组语句（流程语句）。"><a href="#7-2-ECMA-262-规定了一组语句（流程语句）。" class="headerlink" title="7.2 ECMA-262 规定了一组语句（流程语句）。"></a>7.2 ECMA-262 规定了一组语句（流程语句）。</h4><blockquote>
+<p>这里规定的语句就像的是它给了一组句型你，你通过这些句型能够更好来表达你的程序。看到这你会发现js和java的语法有些相似。</p>
+</blockquote>
+<p>常用语句（句型）如下：<br>1.if语句（条件语句）<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">*if语句模版</div><div class="line">*如果if括号condition值为true就执行if后面的代码块，否则执行else后面的代码块</div><div class="line">*/</div><div class="line"><span class="keyword">if</span>(condition)&#123;</div><div class="line">    <span class="comment">//do something</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">else</span>&#123;</div><div class="line">    <span class="comment">//do something</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>2.do-while（循环语句）<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">*do-while语句模版</div><div class="line">*do会先执行一次其后面的代码，如果while后面的expression条件为true就会继续执行do后面的代码块</div><div class="line">*/</div><div class="line"><span class="keyword">do</span>&#123;</div><div class="line">    <span class="comment">//do something</span></div><div class="line">&#125;<span class="keyword">while</span>(expression)</div></pre></td></tr></table></figure></p>
+<p>3.while（循环语句）<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">*while模版</div><div class="line">*当expression条件为true则执行代码块里的代码</div><div class="line">*/</div><div class="line"><span class="keyword">while</span>(expression)&#123;</div><div class="line">    <span class="comment">//do something </span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>4.for循环语句<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//模板</span></div><div class="line"><span class="keyword">for</span>(初始值，循环条件，一次循环后执行的代码)&#123;</div><div class="line">    <span class="comment">//do something</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//for循环例子：</span></div><div class="line"><span class="keyword">var</span> count = <span class="number">100</span>;</div><div class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i&lt;count ; i++ )&#123;</div><div class="line">    <span class="built_in">console</span>.log(i);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>5.break 与 continue<br>break 和 continue都是对循环语句进行精准的控制的语句，break表示中断整个循环，而continue表示中断此次循环下面的代码执行，并跳到下一次的循环。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//break例子</span></div><div class="line"><span class="comment">//代码的输出结果是在控制台输出一个0后，结束运行。</span></div><div class="line"><span class="keyword">var</span> i=<span class="number">0</span>;</div><div class="line"><span class="keyword">while</span>(i&lt;<span class="number">10</span>)&#123;</div><div class="line">    <span class="built_in">console</span>.log(i);</div><div class="line">    i++;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//continue例子</span></div><div class="line"><span class="comment">//每次遇到continue就会执行下一次循环，而continue后面的alert永远不会被执行，所以控制台会输出0-9，但是alert不会被执行。</span></div><div class="line"><span class="keyword">var</span> i =<span class="number">0</span>;</div><div class="line"><span class="keyword">while</span>(i&lt;<span class="number">10</span>)&#123;</div><div class="line">    <span class="built_in">console</span>.log(i);</div><div class="line">    i++;</div><div class="line">    <span class="keyword">continue</span>;</div><div class="line">    alert(i);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>6.switch<br>switch语句是一种判断语句，通过输入的内容来选择对应的处理方式，用于有限种的判断。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//switch例子</span></div><div class="line"><span class="comment">//根据i的值的不同而选择对应的case，每个case后面应加上break作为终结，不然会继续运行下去，直达遇到break。</span></div><div class="line"><span class="keyword">switch</span>(i)&#123;</div><div class="line">    <span class="keyword">case</span> <span class="number">1</span>:</div><div class="line">        <span class="built_in">console</span>.log(<span class="number">1</span>);</div><div class="line">        <span class="keyword">break</span>;</div><div class="line">    <span class="keyword">case</span> <span class="number">2</span>:</div><div class="line">        <span class="built_in">console</span>.log(<span class="number">2</span>);</div><div class="line">        <span class="keyword">break</span>;</div><div class="line">    <span class="keyword">case</span> <span class="number">3</span>:</div><div class="line">        <span class="built_in">console</span>.log(<span class="number">3</span>);</div><div class="line">        <span class="keyword">break</span>;</div><div class="line">    <span class="comment">//default里代码是当没有以上case对应的值时执行，比如5</span></div><div class="line">    <span class="keyword">default</span>:</div><div class="line">        alert(<span class="string">"Other"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="最后小结；"><a href="#最后小结；" class="headerlink" title="最后小结；"></a>最后小结；</h2><blockquote>
+<p>这次笔记，总结了js的基本概念的一部分躯壳，为什么说是躯壳，我们可以回顾一下，上面说的内容都是教人识字一样，告诉你们怎么写字（标识符写法，不能用关键字等规则），还有什么是语句（就教你们认识了什么是语句，给出的流程语句有哪些），给人感觉就是空虚，不怕慢慢来，下一篇便向其注入灵魂。   </p>
+<p>基本概念还有另一部分在下一篇灵魂篇（数据类型和操作符），我不喜欢很长的博客，太长会觉得冗肿，所以分开来写了。敬请关注。分享这博客能希望大家一起学js，写博客不易，每篇都费很多心思，觉得写得好就点个赞吧。</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/04/JavaScript-我发现，原来你是这样的js（初识）/" rel="next" title="JavaScript--我发现！原来你是这样的js（红宝书读书笔记一）">
+                <i class="fa fa-chevron-left"></i> JavaScript--我发现！原来你是这样的js（红宝书读书笔记一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/10/JavaScript-我发现，原来你是这样的JS（基础概念-灵魂-，注入数据类型和操作符）/" rel="prev" title="JavaScript--我发现，原来你是这样的JS（基础概念--灵魂 ，注入数据类型和操作符）">
+                JavaScript--我发现，原来你是这样的JS（基础概念--灵魂 ，注入数据类型和操作符） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Ry-yuan" />
+          <p class="site-author-name" itemprop="name">Ry-yuan</p>
+           
+              <p class="site-description motion-element" itemprop="description">如果你觉得困难，那也许是在进步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念-躯壳篇"><span class="nav-number">2.</span> <span class="nav-text">基本概念(躯壳篇)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-区分大小写"><span class="nav-number">2.1.</span> <span class="nav-text">1.区分大小写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-标识符（就是自己去定义的名称，如变量，函数名，属性名，参数等）"><span class="nav-number">2.2.</span> <span class="nav-text">2.标识符（就是自己去定义的名称，如变量，函数名，属性名，参数等）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-关键字和保留字"><span class="nav-number">2.3.</span> <span class="nav-text">5.关键字和保留字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-变量"><span class="nav-number">2.4.</span> <span class="nav-text">6.变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#注意点："><span class="nav-number">2.4.1.</span> <span class="nav-text">注意点：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-语句"><span class="nav-number">2.5.</span> <span class="nav-text">7.语句</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#7-1-概念："><span class="nav-number">2.5.1.</span> <span class="nav-text">7.1 概念：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-2-ECMA-262-规定了一组语句（流程语句）。"><span class="nav-number">2.5.2.</span> <span class="nav-text">7.2 ECMA-262 规定了一组语句（流程语句）。</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后小结；"><span class="nav-number">3.</span> <span class="nav-text">最后小结；</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ry-yuan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+&nbsp;|&nbsp;
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("RjwnbvSlgbai8OyA9HotKOIY-gzGzoHsz", "Bwqfl7y14vPhnj48bjA112I8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

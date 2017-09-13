@@ -1,0 +1,867 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="一、前言：前段时间看红宝书（JavaScript高级程序设计），但没有计划的去看，也没有做详细的笔记，读了之后有点空虚，感觉不对劲啊，学的东西很难记住，印象不深啊，有种挫败感，作前端的js都学不好怎么做前端。     因此吾阅之，再阅之，并决心记之以博客，以强印象，作得读书笔记，以便日后翻看及供大家参阅与讨论。    温馨提示：笔记言辞会有主观色彩，知识重点记录。  二、JavaScript历史">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript--我发现！原来你是这样的js（红宝书读书笔记一）">
+<meta property="og:url" content="http://Ry-yuan.me/2017/09/04/JavaScript-我发现，原来你是这样的js（初识）/index.html">
+<meta property="og:site_name" content="Ry-yuan(瑞元)">
+<meta property="og:description" content="一、前言：前段时间看红宝书（JavaScript高级程序设计），但没有计划的去看，也没有做详细的笔记，读了之后有点空虚，感觉不对劲啊，学的东西很难记住，印象不深啊，有种挫败感，作前端的js都学不好怎么做前端。     因此吾阅之，再阅之，并决心记之以博客，以强印象，作得读书笔记，以便日后翻看及供大家参阅与讨论。    温馨提示：笔记言辞会有主观色彩，知识重点记录。  二、JavaScript历史">
+<meta property="og:updated_time" content="2017-09-06T07:42:58.118Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript--我发现！原来你是这样的js（红宝书读书笔记一）">
+<meta name="twitter:description" content="一、前言：前段时间看红宝书（JavaScript高级程序设计），但没有计划的去看，也没有做详细的笔记，读了之后有点空虚，感觉不对劲啊，学的东西很难记住，印象不深啊，有种挫败感，作前端的js都学不好怎么做前端。     因此吾阅之，再阅之，并决心记之以博客，以强印象，作得读书笔记，以便日后翻看及供大家参阅与讨论。    温馨提示：笔记言辞会有主观色彩，知识重点记录。  二、JavaScript历史">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://Ry-yuan.me/2017/09/04/JavaScript-我发现，原来你是这样的js（初识）/"/>
+
+
+
+
+
+  <title>JavaScript--我发现！原来你是这样的js（红宝书读书笔记一） | Ry-yuan(瑞元)</title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ry-yuan(瑞元)</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://Ry-yuan.me/2017/09/04/JavaScript-我发现，原来你是这样的js（初识）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ry-yuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ry-yuan(瑞元)">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JavaScript--我发现！原来你是这样的js（红宝书读书笔记一）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-04T22:06:08+08:00">
+                2017-09-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/09/04/JavaScript-我发现，原来你是这样的js（初识）/" class="leancloud_visitors" data-flag-title="JavaScript--我发现！原来你是这样的js（红宝书读书笔记一）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一、前言："><a href="#一、前言：" class="headerlink" title="一、前言："></a>一、前言：</h2><p>前段时间看红宝书（JavaScript高级程序设计），但没有计划的去看，也没有做详细的笔记，读了之后有点空虚，感觉不对劲啊，学的东西很难记住，印象不深啊，有种挫败感，作前端的js都学不好怎么做前端。    </p>
+<p>因此吾阅之，再阅之，并决心记之以博客，以强印象，作得读书笔记，以便日后翻看及供大家参阅与讨论。  </p>
+<blockquote>
+<p>温馨提示：笔记言辞会有主观色彩，知识重点记录。</p>
+</blockquote>
+<h2 id="二、JavaScript历史"><a href="#二、JavaScript历史" class="headerlink" title="二、JavaScript历史"></a>二、JavaScript历史</h2><ul>
+<li><p><strong>起源：</strong>话说在上世纪末1995年，Netscape公司推出Navigator浏览器。人家公司有追求，不单单能实现静态HTML，人家还想要有动态效果，还想着能去处理表单的验证，不要老是等到后台那边才知道表单输入合不合法，特别在那个年代，一次一等就上分钟，现在我们等上个十秒都想关掉它是不是，嘴边还吐槽着什么破网站。  </p>
+</li>
+<li><p><strong>动手：</strong>有目标就去做，Netscape公司大牛多，Brendan Eich 用10天（网上说10天）就把JavaScript搞了出来，刚出来时叫LiveScript，为了蹭蹭当红明星Java热度，就改成JavaScript了，所以事实上他们两没啥关系。</p>
+</li>
+<li><p><strong>竞争：</strong>看到Netscape公司有了js，微软感觉不行啊，我的IE要被干掉啊（虽然操作系统是我的，我绑定IE做浏览器，偷笑），但是也感到js的前途无量，于是弄了个名为JScript的JavaScript的实现。</p>
+</li>
+<li><p><strong>标准：</strong> Netscape和微软竞争出现的js导致版本的不一致，随着业界的担心，JavaScript的标准化被提上议事日程。ECMA组织就去干这事，最后在弄出97年了ECMAScript作为标准。这里ECMAscript和JavaScript可以看做表达同一个东西。  </p>
+</li>
+</ul>
+<h2 id="三、ECMAScript"><a href="#三、ECMAScript" class="headerlink" title="三、ECMAScript"></a>三、ECMAScript</h2><p>ECMAScript（以下简称ES）由ECMA-262制定，ES的主要是语言的语法基础，是一种标准的存在。如果硬要区分ES和JS，ES是语言基础标准，而JS就是在这标准的基础上所实现的语言。  </p>
+<p>关于ES版本：ES从1997年制定好到现在已经经历很多版本，前面的版本都是一些小的修改。</p>
+<blockquote>
+<ul>
+<li>ES3是对标准的第一次真正意义上修改</li>
+<li>2009年的ES5是当前各大流行浏览器所支持的</li>
+<li>2015年出版的ES6也流行起来。</li>
+<li>2015年后每年也出版本，但浏览器还没能够支持。</li>
+</ul>
+</blockquote>
+<h2 id="四、JavaScript实现"><a href="#四、JavaScript实现" class="headerlink" title="四、JavaScript实现"></a>四、JavaScript实现</h2><h4 id="javascript由三部分组成："><a href="#javascript由三部分组成：" class="headerlink" title="javascript由三部分组成："></a>javascript由三部分组成：</h4><p>1.ECMAScript  ：核心部分，是js的语法基础，后面会继续写其语法。<br>2.DOM(文本对象模型) ：用于操作HTML文档的应用编程接口。关于DOM：</p>
+<ul>
+<li>DOM的出现使得动态HTML（DHTML）得以实现，可以不用重新加载页面而改变网页的外观和内容。</li>
+<li>DOM带来的问题：主要是兼容性方面，Netscape和微软各抒己见，使得浏览器不兼容的局面产生。未解决此问题W3C着手规划DOM</li>
+<li>DOM级别：DOM1，DOM2，DOM3  ，这里的级别相当于DOM的版本一样，代表着DOM在不断的完善，现在最新是DOM3</li>
+</ul>
+<p>3.BOM(浏览器模型)  ：使用BOM可以控制浏览器显示的页面以外的部分 </p>
+<h2 id="五、JavaScript使用"><a href="#五、JavaScript使用" class="headerlink" title="五、JavaScript使用:"></a>五、JavaScript使用:</h2><h4 id="1-标签属性：在网页中使用js关键的是使用"><a href="#1-标签属性：在网页中使用js关键的是使用" class="headerlink" title="(1)标签属性：在网页中使用js关键的是使用"></a>(1)标签属性：在网页中使用js关键的是使用<figure class="highlight plain"><figcaption><span>```标签，其有6个属性： </span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">1. async：可选，表示立即下载脚本，但不妨碍页面中的其他操作。也就是异步脚本，只适用于外部脚本文件。</div><div class="line">2. defer：可选，表示脚本可以延迟到文档完全被解析和显示后在执行。也就是延迟脚本，只适合与外部脚本文件。</div><div class="line">3. charset：可选，表示通过src属性指定代码的字符集，大多数浏览器会忽略它的值，很少人使用。</div><div class="line">4. language：已废弃</div><div class="line">5. src：可选，表示包含要执行代码的外部文件。</div><div class="line">6. type：默认text/Javascript。默认执行js，可以不用指定。</div><div class="line"></div><div class="line">#### (2)使用：使用``` &lt;script &gt;``` ：有两种操作：  </div><div class="line">##### 1. 直接在标签内写入代码，即在html中内嵌代码，这种方式不推荐。如：</div><div class="line">``` html</div><div class="line">&lt;script&gt;</div><div class="line"> function helloWorld()&#123;</div><div class="line">    alert(&quot;hello world!&quot;);</div><div class="line"> &#125;</div><div class="line"> helloWorld();</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure></h4><h5 id="2-另一种通过src属性引入外部的文件。"><a href="#2-另一种通过src属性引入外部的文件。" class="headerlink" title="2. 另一种通过src属性引入外部的文件。"></a>2. 另一种通过src属性引入外部的文件。</h5><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/hello.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>尽可能使用外部引用js文件，优点：    </p>
+<ul>
+<li><p>可维护性：内嵌代码在html中，维护困难且可读性差，在js单独的文件中维护将轻松的多。  </p>
+</li>
+<li><p>可缓存：浏览器可以根据具体的设置缓存链接的所用外部js文件  </p>
+</li>
+<li><p>适应未来：通过外部文件来包含js无须对XHML的特别处理和注释hack。HTML和XHTML的包含文件的语法相同。</p>
+</li>
+</ul>
+<blockquote>
+<p>特别注意：<figure class="highlight plain"><figcaption><span>```在使用了src属性后，不要在内嵌代码，此时的内嵌的代码不会被执行。只会执行src对应文件的代码。</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#### (3)位置：关于``` &lt;script&gt; ``` 在HTML文档中的位置：</div><div class="line">在HTML4中规定```&lt;script&gt; ``` 标签可以放在 ```&lt;head&gt;```和```&lt;body&gt;``` 标签内。  </div><div class="line">由于HTML文档是由上到下加载，且在遇到```&lt;script&gt;``` 标签后会先解析和执行js代码，并中断HTML的加载，所以放在```&lt;head&gt;``` 标签中是会使得HTML文档可视内容中断加载。  </div><div class="line">所以```&lt;script&gt;``` 标签的位置首考虑放在```&lt;body&gt;``` 标签底部。例如：</div><div class="line">```html</div><div class="line">&lt;html&gt;</div><div class="line">    &lt;head&gt;</div><div class="line">       &lt;title&gt;hello js&lt;/title&gt;</div><div class="line">    &lt;/head&gt;</div><div class="line">    &lt;body&gt;</div><div class="line">        &lt;p&gt;hello js!&lt;/p&gt;</div><div class="line">        &lt;!-- js文件放在body底部 --&gt;</div><div class="line">        &lt;script src=&quot;example.js&quot;&gt;&lt;/script&gt;</div><div class="line">    &lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure></p>
+</blockquote>
+<h2 id="六、JavaScript的平稳退化方案"><a href="#六、JavaScript的平稳退化方案" class="headerlink" title="六、JavaScript的平稳退化方案"></a>六、JavaScript的平稳退化方案</h2><p>使用<figure class="highlight plain"><figcaption><span>``` 标签，应用场景：</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">* 浏览器不支持JavaScript</div><div class="line">* 浏览器支持脚本，但脚本被禁止了  </div><div class="line"></div><div class="line">例子：当浏览器不支持js或禁用js时就会显示出noscript标签中的内容，若浏览器能执行js则noscript就被隐藏。  </div><div class="line">```html</div><div class="line">&lt;html&gt;</div><div class="line">    &lt;head&gt;</div><div class="line">        &lt;script src=&quot;example.js&quot;&gt;&lt;/script&gt;</div><div class="line">    &lt;/head&gt;</div><div class="line">    &lt;body&gt;</div><div class="line">        &lt;noscript&gt;</div><div class="line">         &lt;p&gt;本页面需要浏览器支持JavaScript&lt;/p&gt;</div><div class="line">        &lt;/noscript&gt;</div><div class="line">    &lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure></p>
+<h2 id="七、后记"><a href="#七、后记" class="headerlink" title="七、后记"></a>七、后记</h2><blockquote>
+<p>这是看红宝书的第一篇笔记，涵盖了一二章的内容。本系列博客将会继续更新，一同和大家分享。如果觉得写得好就给个赞吧。谢谢大家。<br>分享一句话：时间不会停下来等你，我们现在过的每一天，都是余生中最年轻的一天。</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/28/前后端分离（手）-- mockjs（好样的）/" rel="next" title="前后端分离（手）-- 使用mock.js（好样的）">
+                <i class="fa fa-chevron-left"></i> 前后端分离（手）-- 使用mock.js（好样的）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/08/JavaScript--我发现，原来你是这样的js（基础概念躯壳）/" rel="prev" title="JavaScript--原来你是这样的js（基本概念躯壳篇）--不妨从中文角度看js">
+                JavaScript--原来你是这样的js（基本概念躯壳篇）--不妨从中文角度看js <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Ry-yuan" />
+          <p class="site-author-name" itemprop="name">Ry-yuan</p>
+           
+              <p class="site-description motion-element" itemprop="description">如果你觉得困难，那也许是在进步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、前言："><span class="nav-number">1.</span> <span class="nav-text">一、前言：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、JavaScript历史"><span class="nav-number">2.</span> <span class="nav-text">二、JavaScript历史</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、ECMAScript"><span class="nav-number">3.</span> <span class="nav-text">三、ECMAScript</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、JavaScript实现"><span class="nav-number">4.</span> <span class="nav-text">四、JavaScript实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#javascript由三部分组成："><span class="nav-number">4.0.1.</span> <span class="nav-text">javascript由三部分组成：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、JavaScript使用"><span class="nav-number">5.</span> <span class="nav-text">五、JavaScript使用:</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-标签属性：在网页中使用js关键的是使用"><span class="nav-number">5.0.1.</span> <span class="nav-text">(1)标签属性：在网页中使用js关键的是使用```标签，其有6个属性： 1234567891011121314151617  1. async：可选，表示立即下载脚本，但不妨碍页面中的其他操作。也就是异步脚本，只适用于外部脚本文件。2. defer：可选，表示脚本可以延迟到文档完全被解析和显示后在执行。也就是延迟脚本，只适合与外部脚本文件。3. charset：可选，表示通过src属性指定代码的字符集，大多数浏览器会忽略它的值，很少人使用。4. language：已废弃5. src：可选，表示包含要执行代码的外部文件。6. type：默认text/Javascript。默认执行js，可以不用指定。#### (2)使用：使用``` <script >``` ：有两种操作：  ##### 1. 直接在标签内写入代码，即在html中内嵌代码，这种方式不推荐。如：``` html<script> function helloWorld(){    alert("hello world!"); } helloWorld();</script></span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-另一种通过src属性引入外部的文件。"><span class="nav-number">5.0.1.1.</span> <span class="nav-text">2. 另一种通过src属性引入外部的文件。</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、JavaScript的平稳退化方案"><span class="nav-number">6.</span> <span class="nav-text">六、JavaScript的平稳退化方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七、后记"><span class="nav-number">7.</span> <span class="nav-text">七、后记</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ry-yuan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+&nbsp;|&nbsp;
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("RjwnbvSlgbai8OyA9HotKOIY-gzGzoHsz", "Bwqfl7y14vPhnj48bjA112I8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
