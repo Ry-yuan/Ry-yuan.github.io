@@ -1,0 +1,891 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="一、介绍 这是红宝书（JavaScript高级程序设计 3版）的读书笔记第四篇，是红宝书第四章内容（主要是变量和作用域问题），当然其中还有我个人的理解。红宝书这本书可以说是难啃的，要看完不容易，挺厚的，要看懂更不容易，要熟练js更是难，中间需要不断的积累与重温。因此不是读一两遍就能把这书吃透，需要多读，可谓温故而知新，可以为师矣。   温馨提示：笔记言辞会有主观色彩，知识重点记录。博客内容为基础，">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Javascript--我发现，原来你是这样的js（变量和作用域，垃圾回收机制）">
+<meta property="og:url" content="http://Ry-yuan.me/2017/10/21/Javascript-我发现，原来你是这样的js（变量和作用域，垃圾回收机制）/index.html">
+<meta property="og:site_name" content="Ry-yuan(瑞元)">
+<meta property="og:description" content="一、介绍 这是红宝书（JavaScript高级程序设计 3版）的读书笔记第四篇，是红宝书第四章内容（主要是变量和作用域问题），当然其中还有我个人的理解。红宝书这本书可以说是难啃的，要看完不容易，挺厚的，要看懂更不容易，要熟练js更是难，中间需要不断的积累与重温。因此不是读一两遍就能把这书吃透，需要多读，可谓温故而知新，可以为师矣。   温馨提示：笔记言辞会有主观色彩，知识重点记录。博客内容为基础，">
+<meta property="og:image" content="http://images2017.cnblogs.com/blog/1144006/201710/1144006-20171016204344146-1286401198.png">
+<meta property="og:updated_time" content="2017-10-21T07:43:42.212Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Javascript--我发现，原来你是这样的js（变量和作用域，垃圾回收机制）">
+<meta name="twitter:description" content="一、介绍 这是红宝书（JavaScript高级程序设计 3版）的读书笔记第四篇，是红宝书第四章内容（主要是变量和作用域问题），当然其中还有我个人的理解。红宝书这本书可以说是难啃的，要看完不容易，挺厚的，要看懂更不容易，要熟练js更是难，中间需要不断的积累与重温。因此不是读一两遍就能把这书吃透，需要多读，可谓温故而知新，可以为师矣。   温馨提示：笔记言辞会有主观色彩，知识重点记录。博客内容为基础，">
+<meta name="twitter:image" content="http://images2017.cnblogs.com/blog/1144006/201710/1144006-20171016204344146-1286401198.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://Ry-yuan.me/2017/10/21/Javascript-我发现，原来你是这样的js（变量和作用域，垃圾回收机制）/"/>
+
+
+
+
+
+  <title>Javascript--我发现，原来你是这样的js（变量和作用域，垃圾回收机制） | Ry-yuan(瑞元)</title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ry-yuan(瑞元)</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://Ry-yuan.me/2017/10/21/Javascript-我发现，原来你是这样的js（变量和作用域，垃圾回收机制）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ry-yuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ry-yuan(瑞元)">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Javascript--我发现，原来你是这样的js（变量和作用域，垃圾回收机制）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-21T15:43:03+08:00">
+                2017-10-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/10/21/Javascript-我发现，原来你是这样的js（变量和作用域，垃圾回收机制）/" class="leancloud_visitors" data-flag-title="Javascript--我发现，原来你是这样的js（变量和作用域，垃圾回收机制）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一、介绍"><a href="#一、介绍" class="headerlink" title="一、介绍"></a>一、介绍</h2><blockquote>
+<p>这是红宝书（JavaScript高级程序设计 3版）的读书笔记第四篇，是红宝书第四章内容（主要是变量和作用域问题），当然其中还有我个人的理解。红宝书这本书可以说是难啃的，要看完不容易，挺厚的，要看懂更不容易，要熟练js更是难，中间需要不断的积累与重温。因此不是读一两遍就能把这书吃透，需要多读，可谓温故而知新，可以为师矣。  </p>
+<p>温馨提示：笔记言辞会有主观色彩，知识重点记录。博客内容为基础，适合初学者。  </p>
+</blockquote>
+<p>同系列：<br><a href="http://www.cnblogs.com/Ry-yuan/p/7482599.html" target="_blank" rel="external">第一篇：JavaScript–我发现，原来你是这样的JS（一）（初识）</a><br><a href="http://www.cnblogs.com/Ry-yuan/p/7496574.html" target="_blank" rel="external">第二篇：JavaScript–我发现，原来你是这样的JS（二）（基础概念–躯壳篇，不妨从中文角度看js）</a><br><a href="http://www.cnblogs.com/Ry-yuan/p/7501214.html" target="_blank" rel="external">第三篇：JavaScript–我发现，原来你是这样的JS（三）（基础概念–灵魂篇） </a>  </p>
+<h2 id="二、变量"><a href="#二、变量" class="headerlink" title="二、变量"></a>二、变量</h2><h3 id="1-变量介绍："><a href="#1-变量介绍：" class="headerlink" title="1 .变量介绍："></a>1 .变量介绍：</h3><blockquote>
+<p>javascript 中的变量是松散型的，既不用去指定改变量的数据类型值，声明变量时直接使用一个操作符var就行。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//声明变量</div><div class="line">var str = &apos;string&apos;;</div><div class="line">var num = 123;</div><div class="line">//当不用var时，则为全局变量但不推荐这样操作</div><div class="line">i = 123;</div></pre></td></tr></table></figure>
+<h3 id="2-变量的两种值：基本类型和引用类型的值："><a href="#2-变量的两种值：基本类型和引用类型的值：" class="headerlink" title="2.变量的两种值：基本类型和引用类型的值："></a>2.变量的两种值：基本类型和引用类型的值：</h3><blockquote>
+<p>js的变量有两种不同的数据类型的值：基本类型的值和引用类型的值。  </p>
+</blockquote>
+<ul>
+<li>基本类型上一篇提到的五种基本类型：null ，undefined，boolean，string，number</li>
+<li>引用类型一般是：对象，函数，数组等，都是object类型</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//基本类型的值</div><div class="line">var num = 123;</div><div class="line">var boo = false;</div><div class="line">//引用类型的值</div><div class="line">var obj = new Object();</div><div class="line">var arr = new Array();</div><div class="line">var arr2 = &#123;&#125;;</div></pre></td></tr></table></figure>
+<h3 id="3-基本类型的值和引用类型的值的区别"><a href="#3-基本类型的值和引用类型的值的区别" class="headerlink" title="3.基本类型的值和引用类型的值的区别"></a>3.基本类型的值和引用类型的值的区别</h3><h4 id="区别一：动态的属性"><a href="#区别一：动态的属性" class="headerlink" title="区别一：动态的属性"></a>区别一：动态的属性</h4><blockquote>
+<p>动态的属性怎么理解：就是可以动态的增加，删除，改变属性和方法</p>
+</blockquote>
+<ul>
+<li>对于基本类型的值，不能够进行这些操作</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//基本类型的值</div><div class="line">var str = &apos;123&apos;;</div><div class="line">//添加属性</div><div class="line">str.age = 123;</div><div class="line"></div><div class="line">console.log(str.age); //undefined,说明该值没被声明，所以基本类型属性没有动态的属性</div></pre></td></tr></table></figure>
+<ul>
+<li>对于引用类型的值，能够进行这些操作，例子没毛病</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">//引用类型的值</div><div class="line">var person = new Object();</div><div class="line">//添加属性name</div><div class="line">person.name = &apos;ry-yuan&apos;;</div><div class="line">//添加方法sayHi</div><div class="line">person.sayHi = function()&#123;</div><div class="line">    console.log(&apos;hi&apos;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">console.log(person.name);   //输出ry-yuan</div><div class="line">person.sayHi();  //输出hi</div></pre></td></tr></table></figure>
+<h4 id="区别二：复制变量值不同"><a href="#区别二：复制变量值不同" class="headerlink" title="区别二：复制变量值不同"></a>区别二：复制变量值不同</h4><ul>
+<li>对于基本类型变量值之间的复制，会创建一个新值给另一变量，<strong>彼此不会相互影响</strong>，例子：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var n1 = 100;</div><div class="line">//n1复制给n2</div><div class="line">var n2 = n1;</div><div class="line">console.log(n2); //100</div><div class="line">//对n2操作自增</div><div class="line">n2++;</div><div class="line">console.log(n1); //100,n1不会受n2影响</div><div class="line">console.log(n2); //101</div></pre></td></tr></table></figure>
+<ul>
+<li>对于引用类型之间复制，则不会创建新值，而是 <strong>指向同一个对象</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//引用变量值</div><div class="line">var o1 = new Object();</div><div class="line">//复制o1给o2</div><div class="line">var o2 = o1;</div><div class="line">//为o1添加属性</div><div class="line">o1.name = &apos;ry-yuan&apos;;</div><div class="line">//o2也会有这个属性值</div><div class="line">console.log(o2.name); //&apos;ry-yuan&apos;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>为什么引用类型会指向同一个对象？因为o1中存着的值只是一个对象的引用地址，所以o1复制到o2时就把地址复制给o2，两者的地址相同，所以指向同一个对象。  </p>
+</blockquote>
+<p><img src="http://images2017.cnblogs.com/blog/1144006/201710/1144006-20171016204344146-1286401198.png" alt=""></p>
+<h4 id="区别三：传递参数"><a href="#区别三：传递参数" class="headerlink" title="区别三：传递参数"></a>区别三：传递参数</h4><blockquote>
+<p>这里的传递参数是对函数传递参数。函数参数的按值传递的。传递参数的两者的区别和上面复制的一样。</p>
+</blockquote>
+<ul>
+<li>对于基本数据类型的值，对函数传递参数，是将值复制给函数内部的参数，复制另一份独立的值，所以两者不影响彼此。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">var n = 123;</div><div class="line">function add(num)&#123;</div><div class="line">    num ++;</div><div class="line">    console.log(num);</div><div class="line">&#125;</div><div class="line"></div><div class="line">//将n传给函数add</div><div class="line">add(n);   //124</div><div class="line">console.log(n);  //123，n不会被影响</div></pre></td></tr></table></figure>
+<ul>
+<li>对于引用数据类型的值，对函数传递参数，是将对象在的引用地址值复制给函数内部参数（局部变量），所以操作的是同一个对象。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//引用类型</div><div class="line">var p = new Object();</div><div class="line">function addName(obj)&#123;</div><div class="line">    obj.name = &apos;ry-yuan&apos;;</div><div class="line">&#125;</div><div class="line">console.log(p.name);   //undefined，对象没有name属性</div><div class="line">//将p传进函数</div><div class="line">addName(p);  </div><div class="line">console.log(p.name);   //ry-yuan，对象有了name属性</div></pre></td></tr></table></figure>
+<h4 id="区别四：检测类型"><a href="#区别四：检测类型" class="headerlink" title="区别四：检测类型"></a>区别四：检测类型</h4><ul>
+<li>对于基本数据类型，我们使用<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure></li>
+</ul>
+<p>var num = 666;<br>var str = “hello ry”;<br>var boo = false;<br>var und = undefined;<br>var n = null;</p>
+<p>console.log(typeof num);  //number<br>console.log(typeof str);  //string<br>console.log(typeof boo);  //boolean<br>console.log(typeof und);  //undefined<br>console.log(typeof n);  //object,特别的null返回的是object<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">* 对于引用类型的值，我们使用```instanceof```操作符，判断它是什么类型的对象。不用typeof的原因是typeof检测引用类型都会返回object，这不是我们想要的，我们想知道它是什么类型的object</div></pre></td></tr></table></figure></p>
+<p>//这里想知道arr是不是数组类型,如果是返回true，不是返回false<br>console.log(arr instanceof Array);<br>//这里想知道arr是不是正则类型,如果是返回true，不是返回false<br>console.log(arr instanceof RegExp);</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">* 特别的：用```instanceof```去判断基本类型值都会返回false，因为基本类型数据都不是object，就更不用判断是什么类型的object了。</div><div class="line"></div><div class="line"></div><div class="line">## 三、作用域</div><div class="line">&gt; 执行环境即作用域：是变量与函数的可访问范围，即作用域控制着变量与函数的可见性和生命周期。在JavaScript中，变量的作用域有全局作用域和局部作用域两种。</div><div class="line"></div><div class="line">### 1.全局执行环境：</div><div class="line">&gt; 最外围的一个执行环境，在web浏览器中，全局执行环境被认为是window对象，因此所有的全局变量和函数都是作为window对象的属性和方法创建的。</div><div class="line"></div><div class="line">### 2.局部执行环境：</div><div class="line">&gt; 局部执行环境是指在函数内部，函数被创建，就会有一个函数作用域，在函数内定义的变量和方法，函数外面不能访问，但函数内可以访问外面的变量和方法。</div></pre></td></tr></table></figure>
+<p>//声明一个全局变量，当前最外围是全局作用域<br>var g = 1;<br>//声明函数fn1<br>function fn1(){<br>//局部作用域<br>    //声明一个变量<br>    var i = 10;<br>    //可以访问g<br>    console.log(g);  //1<br>    //再声明一个函数fn2<br>    function fn2(){<br>    //局部作用域<br>        var j = 100;<br>        //可以访问g和i<br>        console.log(g);  //1<br>        console.log(i);  //100<br>    }</p>
+<p>//fn1不能访问到fn2里面的变量和方法<br>console.log(j);    //报错，j没被定义<br>}</p>
+<p>//全局作用域中不能访问i,j<br>console.log(i);   //报错，i没有被定义<br>console.log(j);   //报错，j没有被定义</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">上图：  </div><div class="line">![](http://images2017.cnblogs.com/blog/1144006/201710/1144006-20171016205440443-577916834.png)</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">全局作用域中只能访问红颜色中有的变量和函数，有g和fn1  </div><div class="line">局部作用域fn1中能访问红色+蓝色中的变量和函数，有g，i，fn1，fn2  </div><div class="line">局部作用域fn2中能访问整个所有的变量和函数g，i，j，fn1，fn2   </div><div class="line">综上越里面的作用域访问的就越多。有种不能渗透到内部，只能向外拓展的感觉。</div><div class="line"></div><div class="line"></div><div class="line">### 3.没有块级作用域</div><div class="line">&gt; 什么是块级作用域：用大括号括起来的区域&#123;  coding....  &#125;</div><div class="line"></div><div class="line">js中没有块级作用域，所以有一下这种情况：</div></pre></td></tr></table></figure>
+<p>for(var i =0 ; i<10 10="" ;="" i++){="" console.log(i);="" }="" ，这里会有结果，i没有被销毁="" <figure="" class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#### 查询标记符：</div><div class="line">查询标记符怎么操作？</div><div class="line">来个例子：</div></pre></td></tr></table></10></p>
+<p>var a = 1;<br>function getNum(){<br>    return a ;<br>}</p>
+<p>console.log(getNum());  //1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">我们来分析一下变量a 的查找过程：  </div><div class="line">1.首先在getNum函数作用域中找，发现没有a变量  </div><div class="line">2.于是向外拓展，到了全局作用域，发现，哎，有a，var了个a，没错就是你了。然后获得这个a。</div><div class="line"></div><div class="line">再来一个例子：</div></pre></td></tr></table></figure></p>
+<p>var b = 1;<br>function get(){<br>    var b = 2;<br>    return b;<br>}<br>console.log(get());  //2<br>```</p>
+<p>这次又是怎么操作：<br>1.在执行函数get时，我们声明了一个b变量，return时需要用到b，这时我们在局部作用域中找，哎，有了，有个b变量，就是你了，然后就返回了。不用再到外面找了。</p>
+<h3 id="四、垃圾回收问题："><a href="#四、垃圾回收问题：" class="headerlink" title="四、垃圾回收问题："></a>四、垃圾回收问题：</h3><h4 id="1-什么是js的垃圾回收机制？"><a href="#1-什么是js的垃圾回收机制？" class="headerlink" title="1.什么是js的垃圾回收机制？"></a>1.什么是js的垃圾回收机制？</h4><p>答：javascript中垃圾收集机制是自动回收的，不用人工操作，这让我们更专注于编辑代码上。  回收垃圾机制是定时执行的，具有周期性。  </p>
+<h4 id="2-什么时候会有垃圾？"><a href="#2-什么时候会有垃圾？" class="headerlink" title="2.什么时候会有垃圾？"></a>2.什么时候会有垃圾？</h4><p>答：在中作用域当整个作用域中的代码执行完后，作用域中的变量和方法都会没用，此时就是被当做垃圾了。比如局部作用域，一个函数执行完，里面的变量就可以被销毁，其占用内存被释放。  </p>
+<h4 id="3-垃圾回收方式？"><a href="#3-垃圾回收方式？" class="headerlink" title="3.垃圾回收方式？"></a>3.垃圾回收方式？</h4><p>答：常用的是标记清除：这样操作：一个变量–&gt;进入环境（被标记，有此标记为不能被清除）–&gt;执行–&gt;离开环境（被标记，这个标记告诉机制能被清除）–&gt;回收机制一段周期后，变量被清除。</p>
+<h4 id="4-为什么还要管理内存？"><a href="#4-为什么还要管理内存？" class="headerlink" title="4.为什么还要管理内存？"></a>4.为什么还要管理内存？</h4><p>答：分配给web浏览器的内存比桌面的应用的内存少，这是出于安全考虑，为了防止运行js的网页耗尽系统内存导致系统崩溃。所以，开发者发现一旦数据不再用时，就将其值设为null来释放其引用（解除引用），这做法适用于全局变量和全局对象属性。</p>
+<h2 id="五、说说"><a href="#五、说说" class="headerlink" title="五、说说"></a>五、说说</h2><p>博文好久没更新啦，堕落了，啊啊啊啊，努力努力，积极向上。最近挺多事。。。，不能档我学习，通通闪开。</p>
+<blockquote>
+<p>本文出自博客园：<a href="http://www.cnblogs.com/Ry-yuan/" target="_blank" rel="external">http://www.cnblogs.com/Ry-yuan/</a><br>作者：Ry<br>欢迎转载，转载请标明出处</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/10/JavaScript-我发现，原来你是这样的JS（基础概念-灵魂-，注入数据类型和操作符）/" rel="next" title="JavaScript--我发现，原来你是这样的JS（基础概念--灵魂 ，注入数据类型和操作符）">
+                <i class="fa fa-chevron-left"></i> JavaScript--我发现，原来你是这样的JS（基础概念--灵魂 ，注入数据类型和操作符）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Ry-yuan" />
+          <p class="site-author-name" itemprop="name">Ry-yuan</p>
+           
+              <p class="site-description motion-element" itemprop="description">如果你觉得困难，那也许是在进步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、介绍"><span class="nav-number">1.</span> <span class="nav-text">一、介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、变量"><span class="nav-number">2.</span> <span class="nav-text">二、变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-变量介绍："><span class="nav-number">2.1.</span> <span class="nav-text">1 .变量介绍：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-变量的两种值：基本类型和引用类型的值："><span class="nav-number">2.2.</span> <span class="nav-text">2.变量的两种值：基本类型和引用类型的值：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-基本类型的值和引用类型的值的区别"><span class="nav-number">2.3.</span> <span class="nav-text">3.基本类型的值和引用类型的值的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#区别一：动态的属性"><span class="nav-number">2.3.1.</span> <span class="nav-text">区别一：动态的属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#区别二：复制变量值不同"><span class="nav-number">2.3.2.</span> <span class="nav-text">区别二：复制变量值不同</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#区别三：传递参数"><span class="nav-number">2.3.3.</span> <span class="nav-text">区别三：传递参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#区别四：检测类型"><span class="nav-number">2.3.4.</span> <span class="nav-text">区别四：检测类型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、垃圾回收问题："><span class="nav-number">2.4.</span> <span class="nav-text">四、垃圾回收问题：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-什么是js的垃圾回收机制？"><span class="nav-number">2.4.1.</span> <span class="nav-text">1.什么是js的垃圾回收机制？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-什么时候会有垃圾？"><span class="nav-number">2.4.2.</span> <span class="nav-text">2.什么时候会有垃圾？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-垃圾回收方式？"><span class="nav-number">2.4.3.</span> <span class="nav-text">3.垃圾回收方式？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-为什么还要管理内存？"><span class="nav-number">2.4.4.</span> <span class="nav-text">4.为什么还要管理内存？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、说说"><span class="nav-number">3.</span> <span class="nav-text">五、说说</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ry-yuan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+&nbsp;|&nbsp;
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("RjwnbvSlgbai8OyA9HotKOIY-gzGzoHsz", "Bwqfl7y14vPhnj48bjA112I8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
