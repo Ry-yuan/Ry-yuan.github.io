@@ -1,0 +1,947 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="一、介绍  没错，这是第五篇，到了引用类型，这次要分成两次博文了，太多内容了，这是前篇，篇幅很长也很多代码，主要讲引用类型和常用的引用类型，代码试验过的，老铁没毛病。 坚持看坚持写，不容易不容易，希望大家能在这博客中学到东西。能和大家分享，不错不错。而且啊，我想通过自己的认识，思考来得到一些个人见解，以便能大家能容易理解，书中那枯燥的文字。如果大家在看后有种感觉说这家伙写得不错，那我就满足了。嘿嘿">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Javascript--我发现，原来你是这样的JS（引用类型不简单，且听我娓娓道来）">
+<meta property="og:url" content="http://Ry-yuan.me/2017/10/28/Javascript-我发现，原来你是这样的JS（引用类型不简单，且听我娓娓道来）/index.html">
+<meta property="og:site_name" content="Ry-yuan(瑞元)">
+<meta property="og:description" content="一、介绍  没错，这是第五篇，到了引用类型，这次要分成两次博文了，太多内容了，这是前篇，篇幅很长也很多代码，主要讲引用类型和常用的引用类型，代码试验过的，老铁没毛病。 坚持看坚持写，不容易不容易，希望大家能在这博客中学到东西。能和大家分享，不错不错。而且啊，我想通过自己的认识，思考来得到一些个人见解，以便能大家能容易理解，书中那枯燥的文字。如果大家在看后有种感觉说这家伙写得不错，那我就满足了。嘿嘿">
+<meta property="og:image" content="http://images2017.cnblogs.com/blog/1144006/201710/1144006-20171018191035131-1496770153.png">
+<meta property="og:updated_time" content="2017-10-28T00:27:24.133Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Javascript--我发现，原来你是这样的JS（引用类型不简单，且听我娓娓道来）">
+<meta name="twitter:description" content="一、介绍  没错，这是第五篇，到了引用类型，这次要分成两次博文了，太多内容了，这是前篇，篇幅很长也很多代码，主要讲引用类型和常用的引用类型，代码试验过的，老铁没毛病。 坚持看坚持写，不容易不容易，希望大家能在这博客中学到东西。能和大家分享，不错不错。而且啊，我想通过自己的认识，思考来得到一些个人见解，以便能大家能容易理解，书中那枯燥的文字。如果大家在看后有种感觉说这家伙写得不错，那我就满足了。嘿嘿">
+<meta name="twitter:image" content="http://images2017.cnblogs.com/blog/1144006/201710/1144006-20171018191035131-1496770153.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://Ry-yuan.me/2017/10/28/Javascript-我发现，原来你是这样的JS（引用类型不简单，且听我娓娓道来）/"/>
+
+
+
+
+
+  <title>Javascript--我发现，原来你是这样的JS（引用类型不简单，且听我娓娓道来） | Ry-yuan(瑞元)</title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ry-yuan(瑞元)</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://Ry-yuan.me/2017/10/28/Javascript-我发现，原来你是这样的JS（引用类型不简单，且听我娓娓道来）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ry-yuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ry-yuan(瑞元)">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Javascript--我发现，原来你是这样的JS（引用类型不简单，且听我娓娓道来）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-28T08:23:58+08:00">
+                2017-10-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/10/28/Javascript-我发现，原来你是这样的JS（引用类型不简单，且听我娓娓道来）/" class="leancloud_visitors" data-flag-title="Javascript--我发现，原来你是这样的JS（引用类型不简单，且听我娓娓道来）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一、介绍"><a href="#一、介绍" class="headerlink" title="一、介绍"></a>一、介绍</h2><blockquote>
+<ul>
+<li>没错，这是第五篇，到了引用类型，这次要分成两次博文了，太多内容了，这是前篇，篇幅很长也很多代码，主要讲引用类型和常用的引用类型，代码试验过的，老铁没毛病。</li>
+<li>坚持看坚持写，不容易不容易，希望大家能在这博客中学到东西。能和大家分享，不错不错。而且啊，我想通过自己的认识，思考来得到一些个人见解，以便能大家能容易理解，书中那枯燥的文字。如果大家在看后有种感觉说这家伙写得不错，那我就满足了。嘿嘿嘿</li>
+</ul>
+</blockquote>
+<p>不废话了，进入正题…</p>
+<h2 id="二、引用类型"><a href="#二、引用类型" class="headerlink" title="二、引用类型"></a>二、引用类型</h2><p>引用类型？如果有学过java一类的语言的，可以把它看成类，书中又说这种描述不准确。。。什么也别说了，我们把引用类型理解为<strong>对象定义</strong>。</p>
+<p>有时发现语言这种东西，真的神奇，说引用类型你可能不理解，我说对象定义，就可能理解了。</p>
+<blockquote>
+<p>引用类型（对象定义）：描述了一类对象所具有的属性和方法。<br><strong>听我娓娓道来：</strong>  </p>
+</blockquote>
+<p><img src="http://images2017.cnblogs.com/blog/1144006/201710/1144006-20171018191035131-1496770153.png" alt=""></p>
+<p><strong>1.引用类型（对象定义）：</strong> 人类就是引用类型，它描述了人类对象所共有的属性和方法。人的属性比如，有眼睛，有头，手等；人的方法（可以说是行为）：走路，吃饭等等。每个引用类型只有一种定义，即它是集体性的指向。  </p>
+<p><strong>2.引用类型的值</strong>：就是每一个new出来的对象(引用类型的实例)，对象有很多，就像我们亿万人民一样。同一个引用类型的对象们有共同的属性和方法，但我们可以动态添改属性，就像每个人都有不同的地方。</p>
+<p><strong>3.js中内置的引用类型</strong>：object类型，Array类型，Function类型，Date类型，RegExp类型等等，当然我们也可以自定义引用类型。</p>
+<p><strong>看了图的创建对象，我们看看代码中创建对象：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//这里创建了一个对象叫obj，它是object类型的，那么它就有object类型共有的属性和方法</div><div class="line">var obj = new Object();</div><div class="line">//这里创建了一个对象叫arr，它是Array类型的,那么它就有Array类型共有的属性和方法</div><div class="line">var arr = new Array();</div><div class="line">//我们可以创建很多对象</div><div class="line">var arr1 = new Array();</div><div class="line">var arr2 = new Array();</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>通俗的讲：如果我说人类，在你的大脑中就有个大概的人的模型，对，我说数组，你大脑就有个数组的大概样子，但是你不知道它具体的样子。具体的东西是对象才能展现出来的，比如我说小明（如果你认识小明），那你就知道小明是个怎样的人了。   </p>
+</blockquote>
+<p><strong>到这里应该把引用类型理解得差不多了，下面就说js中的内置的引用类型吧。</strong></p>
+<h2 id="三、Js内置的引用类型"><a href="#三、Js内置的引用类型" class="headerlink" title="三、Js内置的引用类型"></a>三、Js内置的引用类型</h2><blockquote>
+<p>为什么需要介绍js的内置引用类型，主要是我们用得多。我们就像从小去认识一种事物一样，比如鱼类，一开始我们不知道这东西，后来妈妈老是跟我们说这是鱼啊宝贝，告诉你鱼是怎样怎样的，然后对这种类型有了基本认识。</p>
+</blockquote>
+<p>在js的世界里我们没世上那么多的东西，内置的引用类型我们就先理解Object，Array，Date，RegExp，Function这几个常用的。</p>
+<h3 id="1-Object类型"><a href="#1-Object类型" class="headerlink" title="1.Object类型"></a>1.Object类型</h3><blockquote>
+<p>Object 类型是使用得最多得类型，虽然Object得实例不具备多少功能，但对于应用程序存储和传输数据而言，是好的选择。</p>
+</blockquote>
+<h4 id="1-1创建Object对象："><a href="#1-1创建Object对象：" class="headerlink" title="1.1创建Object对象："></a>1.1创建Object对象：</h4><p>先出生了再说，创建Obeject的对象的2种方法：<br><strong>1.直接new。  </strong><br>语法：new操作符跟Obeject构造函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//new操作符后面加Obejct的构造函数</div><div class="line">var o = new Obeject();</div><div class="line">//添加属性</div><div class="line">o.name = &quot;yuan&quot;;</div></pre></td></tr></table></figure></p>
+<p><strong>2.对象字面量  </strong><br>语法：花括号，里面的属性用键值对形式,每个属性用逗号隔开，最后一个属性不用逗号。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//对象字面量（有种封装数据的感觉）</div><div class="line">var p = &#123;</div><div class="line">    data:13,</div><div class="line">    name:&apos;yuan&apos;,</div><div class="line">    age:11</div><div class="line">&#125;</div><div class="line">//两者对比</div><div class="line">var x = &#123;&#125;;  //创建一个空对象和new Object() 相同</div></pre></td></tr></table></figure></p>
+<h4 id="1-2访问属性"><a href="#1-2访问属性" class="headerlink" title="1.2访问属性"></a>1.2访问属性</h4><p>1.通过点表示法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var p = new Object();</div><div class="line">p.name = &apos;渊源远愿&apos;;</div><div class="line">console.log(p.name);  //渊源远愿</div></pre></td></tr></table></figure></p>
+<p>2.通过方括号法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">var o = new Object();</div><div class="line">o.age = 22;</div><div class="line">console.log(o[&quot;age&quot;]);  //22</div><div class="line">//方括号可以用变量来访问属性</div><div class="line">var otherAge = &quot;age&quot;;</div><div class="line">console.log(o[otherAge]);  //22</div></pre></td></tr></table></figure></p>
+<p>通常来说都是用点方法比较多的。</p>
+<h4 id="1-3-Object的属性和方法："><a href="#1-3-Object的属性和方法：" class="headerlink" title="1.3 Object的属性和方法："></a>1.3 Object的属性和方法：</h4><p>不赘述了：<a href="http://www.cnblogs.com/Ry-yuan/p/7501214.html" target="_blank" rel="external">看看同系列的第三篇吧</a></p>
+<h3 id="2-Array类型"><a href="#2-Array类型" class="headerlink" title="2.Array类型"></a>2.Array类型</h3><h4 id="2-1-创建数组"><a href="#2-1-创建数组" class="headerlink" title="2.1 创建数组"></a>2.1 创建数组</h4><p>两种方式：<br>1.new Array();<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//创建一个空数组</div><div class="line">var arr1 = new Array();</div><div class="line">//创建一个长度为10的空数组，</div><div class="line">var arr2 = new Array(10);</div><div class="line">//创建一个包含一个字符串good的数组</div><div class="line">var arr3 = new Array(&quot;good&quot;);</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>特别说明：当传进去括号中的只有一个值，这个值是数值的话，就会创建长度为这个数值的数组；如果是其他值，那就是包含一个这个值的数组。  </p>
+</blockquote>
+<p> 2.数组字面量，使用方括号:    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// 创建空的</div><div class="line"> var fish = [];</div><div class="line"> //创建有值的，在括号里添加</div><div class="line"> var cars = [&quot;BMW&quot;,&quot;BenZ&quot;,&quot;Ferrari&quot;];</div><div class="line"> //注意，创建数组不要留空项。浏览器兼容性问题，IE8或以前版本会认为这是有3项，下面这种不建议。</div><div class="line"> var nums = [1,2,];</div></pre></td></tr></table></figure>
+<h4 id="2-2-访问数组中的值"><a href="#2-2-访问数组中的值" class="headerlink" title="2.2 访问数组中的值"></a>2.2 访问数组中的值</h4><p>和其他语言一样下标访问(下标从0开始）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//创建数组</div><div class="line">var cars = [&quot;BMW&quot;,&quot;BenZ&quot;,&quot;Ferrari&quot;];</div><div class="line">console.log(cars[0]);  //BMW</div><div class="line">console.log(cars[2]);  //Ferrari</div><div class="line"></div><div class="line">//修改数组某个值,对其重新赋值就像</div><div class="line">cars[0]  = &quot;lala&quot;;</div></pre></td></tr></table></figure></p>
+<h4 id="2-3-常用属性和方法"><a href="#2-3-常用属性和方法" class="headerlink" title="2.3 常用属性和方法"></a>2.3 常用属性和方法</h4><blockquote>
+<p>这里给出常用的属性和方法，更详细的在js的文档里面有。</p>
+</blockquote>
+<p><strong>1.length属性：返回数组的长度。</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var num = [1,2,3,4,5]</div><div class="line">console.log(arr.length);  //5</div><div class="line">//妙用：通过改变数组的length可以改变数组长度</div><div class="line">arr.length = 10;  //现在num 数组长度为10了</div><div class="line">console.log(num); //[1,2,3,4,5,,,,,]  后面5个值是空的</div></pre></td></tr></table></figure></p>
+<p><strong>2.Array.isArray()方法:判断对象是不是数组</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//用了判断改对象是不是数组</div><div class="line">var arr = [];</div><div class="line">console.log(Array.isArray(arr));   //true</div><div class="line">console.log(Array.isArray(&quot;s&quot;);    //false</div></pre></td></tr></table></figure></p>
+<p><strong>3.join()方法:改变数组分隔方式，返回新的分隔符字符串</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//原来是使用逗号连接的</div><div class="line">var arr = [1,2,3,4,5];</div><div class="line">//用|连接,注意只是返回字符串，不会改变数组里面的连接方式</div><div class="line">console.log((arr.join(&quot;|&quot;));  //&apos;1|2|3|4|5&apos;</div><div class="line">console.log(arr);  //[1,2,3,4,5]  还是一样用逗号的</div></pre></td></tr></table></figure></p>
+<p><strong>4.栈方法：pop()和push()组合使用实现栈的先进后出 </strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//引入这两方法是为了用数组实现栈的功能</div><div class="line">//push() :从数组最后添加数据</div><div class="line">var stack = new Array();</div><div class="line">//添加一个10</div><div class="line">stack.push(10);</div><div class="line">//添加一个5</div><div class="line">stack.push(5);</div><div class="line">//添加一个100</div><div class="line">stack.push(100);</div><div class="line">//现在stack中有3个数值</div><div class="line">console.log(stack);   //[10,5,100]</div><div class="line"></div><div class="line">//pop() :从数组最后删除并返回该数据</div><div class="line">stack.pop();  //100  100被删除</div><div class="line">console.log(stack);   //[10,5]  剩下两数</div></pre></td></tr></table></figure></p>
+<p><strong>5.队列方法：shift()和push()组合使用实现先进先出</strong></p>
+<blockquote>
+<p>这里就不再举例了，类似与栈的操作，只是操作的函数不同，栈的pop是从后面删除，而队列的shift是从前面删除，这样就先进先出了。</p>
+</blockquote>
+<p><strong>6.重排序方法：sort()和reverse()</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">//sort()默认是按照ascii码表排序的，所以会出现下面这种情况</div><div class="line">var arr = [5,12,18,1];</div><div class="line">console.log(arr.sort());  //[1,12,18,5]</div><div class="line">//为了可以对数字正常排序，为sort传入一个比较函数</div><div class="line">function comp(a,b)&#123;</div><div class="line">    return a-b;</div><div class="line">&#125;</div><div class="line">//再来排序</div><div class="line">arr.sort(comp);</div><div class="line">console.log(arr);  //[1,5,12,18]  这次正确了</div><div class="line"></div><div class="line">//reverse()是将数组完全颠倒</div><div class="line">arr.reverse();</div><div class="line">console.log(arr);  //[18,12,5,1]</div></pre></td></tr></table></figure></p>
+<p><strong>7.合并和剪切：concat() , slice()</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//1.concat() 在该数组的基础上添加元素，返回一个新数组（不会改变原数组）</div><div class="line">var arr1 = [1,2,3];</div><div class="line">//在arr1基础添加4，5，6，并返回给arr2，不会改变arr</div><div class="line">var arr2 = arr1.concat(4,5,6);</div><div class="line">console.log(arr2);  //[1,2,3,4,5,6]</div><div class="line"></div><div class="line">//2.slice() 通过传入开始和终点值来剪切数组，并返回新数组</div><div class="line">var  arr3  = arr2.slice(1,5);</div><div class="line">console.log(arr3);  //[2,3,4,5]</div></pre></td></tr></table></figure></p>
+<p><strong>8.最强大的数组方法：splice()</strong><br><strong>删除</strong>：接受两个参数，第一个是开始删除位置，第二个是删除的个数,返回一个删除项的数组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//用来删除</div><div class="line">var arr = [1,2,3,4,5,6,7];</div><div class="line">var del_arr = arr.splice(0,4);  //从0位开始删除4项，即前4项</div><div class="line">console.log(del_arr);  //[1,2,3,4]</div><div class="line">console.log(arr);  //[5,6,7]  arr数组剩下后面3项了</div></pre></td></tr></table></figure></p>
+<p><strong>插入</strong>：输入3个参数，起始位置，0（删除项数设为0），要插入的值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//用来插入</div><div class="line">var arr1 = [1,2,3,4,5,6];</div><div class="line">arr1.splice(3,0,100);//从位置3插入一个100值</div><div class="line">console.log(arr1);  //[1,2,3,100,4,5,6];</div></pre></td></tr></table></figure></p>
+<p><strong>替换</strong>：指定3个参数，起始位置，要删除的项，插入的值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//替换</div><div class="line">var arr2 = [1,2,3,4,5];</div><div class="line">//我要替换3，替换成100</div><div class="line">arr2.splice(2,1,100);  //起始位是2，删除1项（就是3了），载插入100，ok</div><div class="line">console.log(arr2); //[1,2,100,4,5]</div></pre></td></tr></table></figure></p>
+<p><strong>9.位置函数：indexOf()和lastIndexOf():这两个方法用来找数值下标位置。都接受两个参数，第一个是要找的值，第二个是开始位置</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//indexOf() 只传一个参数时默认从0开始找数值，找到返回这个数的数组位置，没有返回-1</div><div class="line">var arr = [100,12,123,1234];</div><div class="line">console.log(arr.indexOf(123));  //2  数组的位置2</div><div class="line"></div><div class="line">//lastIndexOf()  和indexOf查找顺序正好相反，它从数组末尾开始找起</div><div class="line">console.log(arr.lastIndexOf(100));  //0</div></pre></td></tr></table></figure></p>
+<p><strong>10.forEach()方法，对每一项进行处理</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//接受一个函数，函数传入2个参数表示当前数值和其下标位置</div><div class="line">var arr = [1,2,3,4,5];</div><div class="line">arr.forEach(function(item, index)&#123;</div><div class="line">    console.log(item + 1);</div><div class="line">&#125;</div><div class="line"></div><div class="line">//输出 2,3,4,5,6  每一项都加1了</div></pre></td></tr></table></figure></p>
+<h3 id="3-Date类型"><a href="#3-Date类型" class="headerlink" title="3.Date类型"></a>3.Date类型</h3><h4 id="3-1-创建对象"><a href="#3-1-创建对象" class="headerlink" title="3.1 创建对象"></a>3.1 创建对象</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//创建一个时间对象，保存着当前时间</div><div class="line">var n = new Date();</div></pre></td></tr></table></figure>
+<h4 id="3-2-常用方法"><a href="#3-2-常用方法" class="headerlink" title="3.2 常用方法"></a>3.2 常用方法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var now = new Date();</div><div class="line">//getDate() 返回当前天数，一个月的某天（0-31）</div><div class="line">console.log(now.getDate());  //20</div><div class="line">//getMonth()  //返回月份</div><div class="line">console.log(now.getMonth());  //9,这里的9表示10月 （0-11）</div><div class="line">//getFullYear(),返回当前年份</div><div class="line">console.log(now.getFullYear());  //2017</div></pre></td></tr></table></figure>
+<p>更多方法在js文档中。</p>
+<h3 id="4-RegExg类型"><a href="#4-RegExg类型" class="headerlink" title="4.RegExg类型"></a>4.RegExg类型</h3><blockquote>
+<p>ES通过RegExg类型来支持正则表达式，语法：var e = /pattern/flag<br>其中pattern表示正则表达式，flag表示标识，标识可以一个或多个。</p>
+</blockquote>
+<p>flags有3个，这些flags可以组合使用  </p>
+<table>
+<thead>
+<tr>
+<th>flags</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>g</td>
+<td>全局模式，该模式应用于所有的字符串</td>
+</tr>
+<tr>
+<td>i</td>
+<td>不区分大小写模式，确定匹配项时忽略模式与字符串的大小写</td>
+</tr>
+<tr>
+<td>m</td>
+<td>多行模式，一行文本到尾后还会查下一行的字符串，如果有的话</td>
+</tr>
+</tbody>
+</table>
+<h4 id="4-1-创建RegExg对象"><a href="#4-1-创建RegExg对象" class="headerlink" title="4.1 创建RegExg对象"></a>4.1 创建RegExg对象</h4><p>1.字面量方式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//懒啊，直接书上的例子</div><div class="line">var p1 = /at/g;  //匹配所有&quot;at&quot; 的实例</div><div class="line">var p2 = /[bc]at/i  //匹配第一个bat或cat，不区分大小写</div><div class="line">var p3 = /.at/gi  //匹配所有at结尾的组合，不区分大小写</div><div class="line"></div><div class="line">//正则中如果想在字符中包含元字符需要对其进行转义</div><div class="line">//这里和p3不同的是对.这个元字符进行转义,用\符号转义</div><div class="line">var p4 = /\.at/gi;  //这里的意思是匹配所有的&quot;.at&quot;,不区分大小写。</div></pre></td></tr></table></figure></p>
+<p>2.使用new RegExg构造函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//RegExg() 接受两个参数，一个是正则表达式，一个是标志</div><div class="line">var pattern1 = new RegExg(&quot;at&quot;,&quot;gi&quot;);</div><div class="line">//pattern1和pattern2完全等价</div><div class="line">var pattern2 = /at/gi;</div></pre></td></tr></table></figure></p>
+<h4 id="4-2-RegExp的实例属性"><a href="#4-2-RegExp的实例属性" class="headerlink" title="4.2 RegExp的实例属性"></a>4.2 RegExp的实例属性</h4><p>有5个实例属性：global，ignoreCase,multiline,lastIndex,source<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">//直接上例子，了解作用是什么就好了</div><div class="line">//有一个正则对象</div><div class="line">var p = /hello/i;</div><div class="line">//global属性，返回布尔值，表示是否设置了g标志</div><div class="line">console.log(p.global);  //false</div><div class="line">//ignoreCase属性，返回布尔值，表示是否设置了i标志</div><div class="line">console.log(p.ignoreCase);  //true</div><div class="line">//multiline属性，返回布尔值，表示是否设置了m标志</div><div class="line">console.log(p.multiline);  //false</div><div class="line">//lastIndex属性，返回整数，表示开始搜索下一个匹配字符的位置，从0开始</div><div class="line">console.log(p.lastIndex);  //0</div><div class="line">//source属性，返回正则表达式的字符串形式</div><div class="line">console.log(p.source); //&quot;hello&quot;</div></pre></td></tr></table></figure></p>
+<h4 id="4-3-RegExp常用方法"><a href="#4-3-RegExp常用方法" class="headerlink" title="4.3 RegExp常用方法"></a>4.3 RegExp常用方法</h4><p><strong>1.exec()方法</strong>：接受一个参数，这参数是应用模式的字符串，然后返回包含第一个匹配项的数组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">var p = /p/;</div><div class="line">var str = &quot;happy&quot;;</div><div class="line">var arr = p.exec(str);</div><div class="line">console.log(arr); // [&quot;p&quot;,index:2,input:&quot;happy&quot;]  返回这个数组，第一个值表示匹配到的字符，index表示字符所在的位置，input表示应用的字符串</div></pre></td></tr></table></figure></p>
+<p><strong>2. test() 方法</strong>：用于知道这个字符串与模式是否匹配，接受一个字符串参数，返回布尔值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var p1 = /ry/g;</div><div class="line">console.log(p1.test(&quot;ryuan&quot;)); //true,字符串中有ry这字符串，所以返回true</div></pre></td></tr></table></figure>
+<h3 id="5-Function类型"><a href="#5-Function类型" class="headerlink" title="5.Function类型"></a>5.Function类型</h3><blockquote>
+<p>核心：函数即对象</p>
+</blockquote>
+<h4 id="5-1-定义函数"><a href="#5-1-定义函数" class="headerlink" title="5.1 定义函数"></a>5.1 定义函数</h4><blockquote>
+<p>定义函数有下面3种方法，常用的是1,2种</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">//1.函数声明</div><div class="line">function getName()&#123;</div><div class="line">    var name = &apos;ry-yuan&apos;;</div><div class="line">    return name;</div><div class="line">&#125;</div><div class="line">//2.函数表达式</div><div class="line">var getAge = function()&#123;</div><div class="line">    var age = 100;</div><div class="line">    return age;</div><div class="line">&#125;</div><div class="line">//3.使用Function构造函数,前面1-n个是参数，最后一个参数的是函数体，这种不推荐使用。</div><div class="line">var sum = new Function(&quot;num&quot;,&quot;return num&quot;);</div></pre></td></tr></table></figure>
+<h4 id="5-2-函数声明和函数表达式的区别"><a href="#5-2-函数声明和函数表达式的区别" class="headerlink" title="5.2 函数声明和函数表达式的区别"></a>5.2 函数声明和函数表达式的区别</h4><blockquote>
+<p>上面的定义函数常用1,2中，分别是函数声明和函数表达式，那他们有什么区别？<br>如果听过声明提升的话就很容易理解下面的内容，js解析器执行时会先找到所有的声明，将其提升到顶部。有什么用？看例子：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">//函数声明，我们先运行sayHello,但是不会报错，因为函数声明已经在解析时被提到顶部</div><div class="line">sayHello();  //hello everyone</div><div class="line">function sayHello()&#123;</div><div class="line">    console.log(&quot;hello everyone&quot;);</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">//函数表达式，用var定义函数名.用函数表达式，不会提升，所以先运行sayBye就会找不到函数体</div><div class="line">sayBey();  //报错 TypeError: sayBye is not a function</div><div class="line">var sayBye = function()&#123;</div><div class="line">    console.log(&quot;bye bye&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="5-3-函数名是指向函数的指针"><a href="#5-3-函数名是指向函数的指针" class="headerlink" title="5.3 函数名是指向函数的指针"></a>5.3 函数名是指向函数的指针</h4><blockquote>
+<p>一个函数在js种就是一个Function的实例，函数名就是对实例的引用，一个指针，前面的对象中也有说过。那么一个函数就可以有多个函数名了。  </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">//定义一个函数，函数名是sum</div><div class="line">var sum = funtion(num1,num2)&#123;</div><div class="line">    return num1+num2;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//讲sum复制给otherSum,那么otherSum和sum都指向同一个function对象</div><div class="line">otherSum = sum;</div><div class="line"></div><div class="line">otherSum(100,420);  //520</div><div class="line">sum(1300+14); //1314</div><div class="line"></div><div class="line">//对sum设置为null,sum变量就不在指向function对象</div><div class="line">sum  = null;</div><div class="line"></div><div class="line">//otherSum依然能够使用</div><div class="line">otherSum(1,9); //10</div></pre></td></tr></table></figure>
+<h4 id="5-4-函数没有重载"><a href="#5-4-函数没有重载" class="headerlink" title="5.4 函数没有重载"></a>5.4 函数没有重载</h4><blockquote>
+<p>上面说了，函数名只是函数的指针，函数名是变量一样，重复复制就会覆盖原来的。<br>在java语言来说，有不同的参数数量也称为重载，但是js中没这种操作</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">//函数声明，fn为函数名</div><div class="line">function fn(num1, num2)&#123;</div><div class="line">    return num1+ num2;</div><div class="line">&#125;</div><div class="line">//再来函数声明，fn为函数名</div><div class="line">function fn(num)&#123;</div><div class="line">    return num;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//fn只会指向最后一次声明的函数</div><div class="line">fn(1,43);  //1</div></pre></td></tr></table></figure>
+<h4 id="5-5-函数像值一样传递"><a href="#5-5-函数像值一样传递" class="headerlink" title="5.5 函数像值一样传递"></a>5.5 函数像值一样传递</h4><blockquote>
+<p>因为函数名本来就是一个变量，所以函数也可以像值一样被传递。说实话，函数能被当做值来传递确实是一件好玩的事，大家有兴趣可以去了解回调函数，这里先不介绍了。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">//声明一个函数fn1，它可以接受两个参数，一个是函数，一个是值</div><div class="line">function fn1(fn,value)&#123;</div><div class="line">    return (fn(value));</div><div class="line">&#125;</div><div class="line">//声明一个fn2，接受一个参数</div><div class="line">function fn2(val)&#123;</div><div class="line">    console.log(val+1000);</div><div class="line">&#125;</div><div class="line">//fn2当成参数传递给fn1</div><div class="line">fn1(fn2,24);  //1024</div></pre></td></tr></table></figure>
+<h4 id="5-6-函数内部对象"><a href="#5-6-函数内部对象" class="headerlink" title="5.6 函数内部对象"></a>5.6 函数内部对象</h4><blockquote>
+<p>函数内部有两个特殊的对象arguments和this</p>
+</blockquote>
+<p>1.arguments:包含传入函数的所有参数，主要用于保存函数参数,它可以看做是一个数组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">function fn(num1,num2)&#123;</div><div class="line">    console.log(arguments);</div><div class="line">&#125;</div><div class="line">fn(100,200);  //&#123;&apos;0&apos;:100,&apos;1&apos;:200&#125;</div><div class="line"></div><div class="line">//arguments有一个callee的属性，它是一个指针，用来指向当前这个函数</div><div class="line">//例如一个递归调用,阶乘函数，里面的arguments.callee就是等价于这个函数</div><div class="line">function factorial(num)&#123;</div><div class="line">    if(num&lt;=1)&#123;</div><div class="line">        return 1;</div><div class="line">    &#125;</div><div class="line">    else&#123;</div><div class="line">        return num*arguments.callee(num-1);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>2.this：指向调用这个函数的对象<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">//全局作用域下</div><div class="line">var hi = &apos;hi&apos;;</div><div class="line">//一个普通object对象</div><div class="line">var obj = &#123; hi = &quot;obj hi&quot;&#125;;</div><div class="line">function say()&#123;</div><div class="line">    console.log(this.hi)</div><div class="line">&#125;</div><div class="line"></div><div class="line">//say函数在全局作用域下定义，直接执行，this将指向window对象，所以hi是windows对象的。</div><div class="line">say();  //hi  </div><div class="line"></div><div class="line">//将say赋予obj对象，并且obj来调用say，这次this将指向obj对象</div><div class="line">obj.say = say;</div><div class="line">obj.say();  //obj hi</div></pre></td></tr></table></figure></p>
+<h4 id="5-7函数属性和方法"><a href="#5-7函数属性和方法" class="headerlink" title="5.7函数属性和方法"></a>5.7函数属性和方法</h4><p><strong>1.length属性：</strong>函数接受参数的个数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">function fn(n,m)&#123;&#125;;</div><div class="line">alert(fn.length); //2</div></pre></td></tr></table></figure></p>
+<p><strong>2.prototype属性：</strong>后面博客再说，厉害嘞</p>
+<p><strong>3.apply()和call()方法</strong>：扩充函数依赖的运行环境。就像是把一个函数给一个个的对象使用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">var color = &quot;red&quot;;</div><div class="line">var obj = &#123;color: &quot;green&quot;&#125;;</div><div class="line">//先声明一个函数</div><div class="line">function fn()&#123;</div><div class="line">    console.log(this.color);</div><div class="line">&#125;</div><div class="line">//给window对象用</div><div class="line">fn.call(window);  //red</div><div class="line">//给obj对象用</div><div class="line">fn.call(obj);   //green</div></pre></td></tr></table></figure></p>
+<p><strong>apply和call功能是一样的</strong>：不同就是接受参数不同，大家第一个参数都是作用域对象，后面的apply接收一个参数数组，call则是接收一个个参数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">//声明一个函数add</div><div class="line">function add(num1,num2)&#123;</div><div class="line">    return num1+num2;</div><div class="line">&#125;</div><div class="line">//在另一个函数调用,第一个是this，后面参数一个个输入</div><div class="line">//这里用call</div><div class="line">function otherAdd(n1,n2)&#123;</div><div class="line">    return add.call(this,n1,n2);</div><div class="line">&#125;</div><div class="line">//这里用apply，第一都是this，后面接受参数变成数组形式</div><div class="line">function otherAdd(n1,n2)&#123;</div><div class="line">    return add.apply(this,[n1,n2]);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="四、说说"><a href="#四、说说" class="headerlink" title="四、说说"></a>四、说说</h2><blockquote>
+<p>这篇东西挺长篇幅，适合慢慢看，也适合作为温故js的引用类型的知识，多看几遍。可以可以，如果觉得写得好，就点赞啊，还会继续更新哦。</p>
+<p>同系列前几篇：<br><a href="http://www.cnblogs.com/Ry-yuan/p/7482599.html" target="_blank" rel="external">第一篇：JavaScript–我发现，原来你是这样的JS（一）（初识）</a><br><a href="http://www.cnblogs.com/Ry-yuan/p/7496574.html" target="_blank" rel="external">第二篇：JavaScript–我发现，原来你是这样的JS（二）（基础概念–躯壳篇）</a><br><a href="http://www.cnblogs.com/Ry-yuan/p/7501214.html" target="_blank" rel="external">第三篇：JavaScript–我发现，原来你是这样的JS（三）（基础概念–灵魂篇） </a><br><a href="http://www.cnblogs.com/Ry-yuan/p/7675894.html" target="_blank" rel="external">第四篇：JavaScript–我发现，原来你是这样的JS（四）（看看变量，作用域，垃圾回收是啥）</a>  </p>
+<p>本文出自博客园：<a href="http://www.cnblogs.com/Ry-yuan/" target="_blank" rel="external">http://www.cnblogs.com/Ry-yuan/</a><br>作者：Ry<br>欢迎转载，转载请标明出处</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/21/Javascript-我发现，原来你是这样的js（变量和作用域，垃圾回收机制）/" rel="next" title="Javascript--我发现，原来你是这样的JS（变量和作用域，垃圾回收机制，四）">
+                <i class="fa fa-chevron-left"></i> Javascript--我发现，原来你是这样的JS（变量和作用域，垃圾回收机制，四）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Ry-yuan" />
+          <p class="site-author-name" itemprop="name">Ry-yuan</p>
+           
+              <p class="site-description motion-element" itemprop="description">如果你觉得困难，那也许是在进步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、介绍"><span class="nav-number">1.</span> <span class="nav-text">一、介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、引用类型"><span class="nav-number">2.</span> <span class="nav-text">二、引用类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、Js内置的引用类型"><span class="nav-number">3.</span> <span class="nav-text">三、Js内置的引用类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Object类型"><span class="nav-number">3.1.</span> <span class="nav-text">1.Object类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1创建Object对象："><span class="nav-number">3.1.1.</span> <span class="nav-text">1.1创建Object对象：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2访问属性"><span class="nav-number">3.1.2.</span> <span class="nav-text">1.2访问属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-Object的属性和方法："><span class="nav-number">3.1.3.</span> <span class="nav-text">1.3 Object的属性和方法：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Array类型"><span class="nav-number">3.2.</span> <span class="nav-text">2.Array类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-创建数组"><span class="nav-number">3.2.1.</span> <span class="nav-text">2.1 创建数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-访问数组中的值"><span class="nav-number">3.2.2.</span> <span class="nav-text">2.2 访问数组中的值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-常用属性和方法"><span class="nav-number">3.2.3.</span> <span class="nav-text">2.3 常用属性和方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Date类型"><span class="nav-number">3.3.</span> <span class="nav-text">3.Date类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-创建对象"><span class="nav-number">3.3.1.</span> <span class="nav-text">3.1 创建对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-常用方法"><span class="nav-number">3.3.2.</span> <span class="nav-text">3.2 常用方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-RegExg类型"><span class="nav-number">3.4.</span> <span class="nav-text">4.RegExg类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-创建RegExg对象"><span class="nav-number">3.4.1.</span> <span class="nav-text">4.1 创建RegExg对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-RegExp的实例属性"><span class="nav-number">3.4.2.</span> <span class="nav-text">4.2 RegExp的实例属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-RegExp常用方法"><span class="nav-number">3.4.3.</span> <span class="nav-text">4.3 RegExp常用方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Function类型"><span class="nav-number">3.5.</span> <span class="nav-text">5.Function类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-定义函数"><span class="nav-number">3.5.1.</span> <span class="nav-text">5.1 定义函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-函数声明和函数表达式的区别"><span class="nav-number">3.5.2.</span> <span class="nav-text">5.2 函数声明和函数表达式的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-函数名是指向函数的指针"><span class="nav-number">3.5.3.</span> <span class="nav-text">5.3 函数名是指向函数的指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-4-函数没有重载"><span class="nav-number">3.5.4.</span> <span class="nav-text">5.4 函数没有重载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-5-函数像值一样传递"><span class="nav-number">3.5.5.</span> <span class="nav-text">5.5 函数像值一样传递</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-6-函数内部对象"><span class="nav-number">3.5.6.</span> <span class="nav-text">5.6 函数内部对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-7函数属性和方法"><span class="nav-number">3.5.7.</span> <span class="nav-text">5.7函数属性和方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、说说"><span class="nav-number">4.</span> <span class="nav-text">四、说说</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ry-yuan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+&nbsp;|&nbsp;
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("RjwnbvSlgbai8OyA9HotKOIY-gzGzoHsz", "Bwqfl7y14vPhnj48bjA112I8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
