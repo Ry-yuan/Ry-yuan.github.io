@@ -1,0 +1,870 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="一、面向对象编程（继承） 这篇博客是面向对象编程的第三篇，JS继承。继承顾名思义，就是获取父辈的各种”财产”(属性和方法)。  怎么实现继承？我们的JavaScript比较特别了，主要通过原型链实现继承的。   下面介绍各种实现继承的方式：原型链继承，借用构造函数，组合继承，原型式继承，寄生式继承，寄生组合式继承。 二、实现继承方式1.原型链方式 原型我们都知道，每个构造函数都有一个原型对象（pr">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Javascript--我发现，原来你是这样的JS:面向对象编程OOP[3]--(js继承)">
+<meta property="og:url" content="http://Ry-yuan.me/2017/11/17/Javascript-我发现，原来你是这样的JS-面向对象编程OOP-3-js继承/index.html">
+<meta property="og:site_name" content="Ry-yuan(瑞元)">
+<meta property="og:description" content="一、面向对象编程（继承） 这篇博客是面向对象编程的第三篇，JS继承。继承顾名思义，就是获取父辈的各种”财产”(属性和方法)。  怎么实现继承？我们的JavaScript比较特别了，主要通过原型链实现继承的。   下面介绍各种实现继承的方式：原型链继承，借用构造函数，组合继承，原型式继承，寄生式继承，寄生组合式继承。 二、实现继承方式1.原型链方式 原型我们都知道，每个构造函数都有一个原型对象（pr">
+<meta property="og:updated_time" content="2017-11-17T06:54:23.348Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Javascript--我发现，原来你是这样的JS:面向对象编程OOP[3]--(js继承)">
+<meta name="twitter:description" content="一、面向对象编程（继承） 这篇博客是面向对象编程的第三篇，JS继承。继承顾名思义，就是获取父辈的各种”财产”(属性和方法)。  怎么实现继承？我们的JavaScript比较特别了，主要通过原型链实现继承的。   下面介绍各种实现继承的方式：原型链继承，借用构造函数，组合继承，原型式继承，寄生式继承，寄生组合式继承。 二、实现继承方式1.原型链方式 原型我们都知道，每个构造函数都有一个原型对象（pr">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://Ry-yuan.me/2017/11/17/Javascript-我发现，原来你是这样的JS-面向对象编程OOP-3-js继承/"/>
+
+
+
+
+
+  <title>Javascript--我发现，原来你是这样的JS:面向对象编程OOP[3]--(js继承) | Ry-yuan(瑞元)</title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ry-yuan(瑞元)</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://Ry-yuan.me/2017/11/17/Javascript-我发现，原来你是这样的JS-面向对象编程OOP-3-js继承/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ry-yuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ry-yuan(瑞元)">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Javascript--我发现，原来你是这样的JS:面向对象编程OOP[3]--(js继承)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-17T14:52:24+08:00">
+                2017-11-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/11/17/Javascript-我发现，原来你是这样的JS-面向对象编程OOP-3-js继承/" class="leancloud_visitors" data-flag-title="Javascript--我发现，原来你是这样的JS:面向对象编程OOP[3]--(js继承)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一、面向对象编程（继承）"><a href="#一、面向对象编程（继承）" class="headerlink" title="一、面向对象编程（继承）"></a>一、面向对象编程（继承）</h2><blockquote>
+<p>这篇博客是面向对象编程的第三篇，JS继承。继承顾名思义，就是获取父辈的各种”财产”(属性和方法)。</p>
+</blockquote>
+<h3 id="怎么实现继承？"><a href="#怎么实现继承？" class="headerlink" title="怎么实现继承？"></a>怎么实现继承？</h3><p>我们的JavaScript比较特别了，主要通过原型链实现继承的。  </p>
+<p>下面介绍各种实现继承的方式：原型链继承，借用构造函数，组合继承，原型式继承，寄生式继承，寄生组合式继承。</p>
+<h2 id="二、实现继承方式"><a href="#二、实现继承方式" class="headerlink" title="二、实现继承方式"></a>二、实现继承方式</h2><h3 id="1-原型链方式"><a href="#1-原型链方式" class="headerlink" title="1.原型链方式"></a>1.原型链方式</h3><blockquote>
+<p>原型我们都知道，每个构造函数都有一个原型对象（prototype），用于存放共享的属性方法。<br><strong>原型链继承原理</strong>：我们要继承一个父类，那就把这个<strong>子类的原型对象</strong>指向<strong>父类的实例</strong>就行了。</p>
+</blockquote>
+<h4 id="a-代码："><a href="#a-代码：" class="headerlink" title="a.代码："></a>a.代码：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">//创建父类构造函数</div><div class="line">function Father()&#123;</div><div class="line">    this.fristName = &quot;Father&quot;;</div><div class="line">&#125;</div><div class="line">//给父类的原型对象添加方法</div><div class="line">Father.prototype.getFatherName = function()&#123;</div><div class="line">    return this.fristName ;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//创建子类构造函数</div><div class="line">function Son()&#123;</div><div class="line">    this.name = &apos;jack&apos;;</div><div class="line">&#125;</div><div class="line">//重点这行：把子类的原型对象指向父类实例实现继承</div><div class="line">Son.prototype = new Father();</div><div class="line"></div><div class="line">//我们还可以为子类添加原型方法</div><div class="line">Son.prototype.getName = function()&#123;</div><div class="line">    return this.name;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//测试一下，创建一个子类的实例</div><div class="line">var s1 = Son();</div><div class="line">s1.getFaterName();  //Father  继承了爸爸的名字了！</div></pre></td></tr></table></figure>
+<h4 id="b-一些特别注意的地方："><a href="#b-一些特别注意的地方：" class="headerlink" title="b.一些特别注意的地方："></a>b.一些特别注意的地方：</h4><p>1.上面我们看到为子类原型添加方法getName，它在子类原型对象指向父类实例后，也一定要在这句话后面，如果在前面的话，这方法会被覆盖的。因为子类原型对象指向父类实例时相当于重写子类原型对象。<br>2.为子类原型添加方法式不能用字面量的方式，这样会重写已经继承类父类的原型对象。</p>
+<h4 id="c-原型链继承的问题："><a href="#c-原型链继承的问题：" class="headerlink" title="c.原型链继承的问题："></a>c.原型链继承的问题：</h4><p>很明显的，继承的属性方法都在子类的原型对象里面，那么里面的属性方法都是共享的，这明显不是符合我们平常要求。</p>
+<h3 id="2-借用构造函数"><a href="#2-借用构造函数" class="headerlink" title="2.借用构造函数"></a>2.借用构造函数</h3><blockquote>
+<p>借？是的，借一下父类的构造函数，怎么借？那就使用call或者apply方法吧。<br><strong>借用构造函数原理:</strong> 就在子类创建构造函数时内部调用父类的构造函数。</p>
+</blockquote>
+<h4 id="代码演示："><a href="#代码演示：" class="headerlink" title="代码演示："></a>代码演示：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">//父类（父类是相对来说的，大家注意一下噢）</div><div class="line">function Father()&#123;</div><div class="line">    this.colors = [&apos;red&apos;,&apos;green&apos;];</div><div class="line">&#125;</div><div class="line">//子类</div><div class="line">function Son()&#123;</div><div class="line">    //重点这行：内部调用父类构造函数，this是指向未来创建Son的实例</div><div class="line">    Father.call(this);</div><div class="line">&#125;</div><div class="line"></div><div class="line">//测试一下，继承了父类的属性了，并且属性不会共享噢</div><div class="line">var s1 = new Son();</div><div class="line">s1.colors.push(&apos;blue&apos;);</div><div class="line">console.log(s1.colors); [&apos;red&apos;,&apos;green&apos;,&apos;blue&apos;]</div><div class="line"></div><div class="line">//s2实例的colors不会被影响</div><div class="line">var s2 = new Son();</div><div class="line">console.log(s2.colors); [&apos;red&apos;,&apos;green&apos;]</div></pre></td></tr></table></figure>
+<blockquote>
+<p>这里的借用构造函数可以实现属性和方法不会被共享，因为属性在构造函数中，而不是在原型对象中。但是这也说明这种方式没办法共享方法的。</p>
+</blockquote>
+<h3 id="3-组合继承（最常用）"><a href="#3-组合继承（最常用）" class="headerlink" title="3.组合继承（最常用）"></a>3.组合继承（最常用）</h3><blockquote>
+<p>组合继承=原型链继承+借用构造函数继承，没错就结合两种方法就好了。<br><strong>组合继承原理</strong>：实例共享的属性方法：我就原型链继承；实例私用的属性方法：我就借用构造函数（结合两者的优点）</p>
+</blockquote>
+<h4 id="代码演示：-1"><a href="#代码演示：-1" class="headerlink" title="代码演示："></a>代码演示：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">//父类</div><div class="line">function Father(name)&#123;</div><div class="line">    this.name = name;</div><div class="line">    this.colors = [&apos;red&apos;,&apos;green&apos;];</div><div class="line">&#125;</div><div class="line">//父类原型对象</div><div class="line">Father.pototype.sayName = function()&#123;</div><div class="line">    console.log(this.name);</div><div class="line">&#125;</div><div class="line">//子类</div><div class="line">function Son(name,age)&#123;</div><div class="line">    //借用父类构造函数</div><div class="line">    Father.call(this,name);</div><div class="line">    this.age = age;</div><div class="line">&#125;</div><div class="line">//子类原型指向父类实例，原型链继承</div><div class="line">Son.prototype = new Father();</div><div class="line">Son.prototype.constructor = Son;   //让子类的原型只向子类构造函数</div><div class="line">Son.prototype.sayAge = function()&#123;</div><div class="line">    console.log(this.age);</div><div class="line">&#125;</div><div class="line"></div><div class="line">//创建实例对象</div><div class="line">var s1 = new Son(&apos;Mc ry&apos;,22);</div><div class="line">var s2 = new Son(&apos;yy&apos;,20);</div><div class="line">//继承了父类方法，sayName是共享的</div><div class="line">s1.sayName(); //mc ry</div><div class="line">s2.sayName(); //yy</div><div class="line">//继承colors，每个实例私有</div><div class="line">s1.colors.push(&apos;blue&apos;);</div><div class="line">console.log(s1.colors); [&apos;red&apos;,&apos;green&apos;,&apos;blue&apos;]</div><div class="line">console.log(s2.colors); [&apos;red&apos;,&apos;green&apos;]</div></pre></td></tr></table></figure>
+<blockquote>
+<p>可能有的疑惑：在原型链继承那里，子类原型对象指向类父类的实例，应该继承了所有的属性和方法啊，那应该都是共享的，但为什么colors,name属性不会共享呢？<br>原因：在调用借用构造函数时，属性在子类新实例中创建了，也就是在子类实例中已经有的父类属性就不用继续到原型对象中查找了，也就是屏蔽了，所以不会共享了。</p>
+</blockquote>
+<h3 id="4-原型式继承"><a href="#4-原型式继承" class="headerlink" title="4.原型式继承"></a>4.原型式继承</h3><blockquote>
+<p>这是道格拉斯·克罗克福提出的一个方式，他提出一个函数object() 来简单实现不用构造函数的继承</p>
+</blockquote>
+<h4 id="代码演示：-2"><a href="#代码演示：-2" class="headerlink" title="代码演示："></a>代码演示：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//object函数，传入一个对象</div><div class="line">function object(o)&#123;</div><div class="line">    //创建一个空的构造函数</div><div class="line">    function F()&#123;&#125;;</div><div class="line">    //这个空构造函数的原型对象指向o这个对象</div><div class="line">    F.prototype = o ;</div><div class="line">    //返回F的实例对象</div><div class="line">    return new F();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>认真读这段代码可以知道，这个函数最终返回一个对象，这个对象拥有传入对象o的全部属性和方法。从而实现了继承。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">//一个对象</div><div class="line">var person = &#123;</div><div class="line">    name : &apos;ry&apos;,</div><div class="line">    sayName : function()&#123;</div><div class="line">        console.log(this.name);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//children对象继承了person对象所有的属性方法</div><div class="line">var children = object(person);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>原型式继承方式的出现，可以不用创建构造函数都能继承另一个对象的属性方法。但是很明显，所用属性都是共享的。<br>ES5中有个object.create()方法的作用和上面的object()一样的。</p>
+</blockquote>
+<h3 id="5-寄生式的继承"><a href="#5-寄生式的继承" class="headerlink" title="5.寄生式的继承"></a>5.寄生式的继承</h3><blockquote>
+<p>寄生式其实和利用了原型式，都要使用到object函数，但不同的是寄生式中新的对象能够添加自己的方法。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">function creatAnother(o)&#123;</div><div class="line">    //调用object继承o</div><div class="line">     var obj = object(o);</div><div class="line">     //还可以添加自己想要的方法</div><div class="line">     obj.sayHi = function ()&#123;</div><div class="line">         console.log(&apos;hi&apos;);</div><div class="line">     &#125;</div><div class="line">     //返回这个对象</div><div class="line">     retrun obj;</div><div class="line"> &#125;</div><div class="line"> //新的对象继承了person</div><div class="line"> var anotherPerson = creatAnother(person);</div><div class="line"> //继承后能使用person的方法</div><div class="line"> anotherPerson.sayHi(); //&quot;hi&quot;</div></pre></td></tr></table></figure>
+<h3 id="6-寄生组合式继承-最理想"><a href="#6-寄生组合式继承-最理想" class="headerlink" title="6.寄生组合式继承(最理想)"></a>6.寄生组合式继承(最理想)</h3><blockquote>
+<p>上面组合式方式中虽然是最常用的，但有追求的还是会继续优化它。因为组合方式中也有不够好的地方：<br>一方面：我们可以看到调用了两次父类的构造函数。（一次是原型链继承中子类原型对象指向父类实例时，一次是借用构造函数中）<br>另一方面：就是上面疑惑，子类的原型中拥有父类已经有全部属性，但我们又要在调用子类构造函数时重写部分属性。</p>
+</blockquote>
+<p>所以寄生组合方式就解决了上面，通过一个函数来代替组合方式中的原型链继承。</p>
+<h4 id="代码演示：-3"><a href="#代码演示：-3" class="headerlink" title="代码演示："></a>代码演示：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">//主要是这个函数，实现子类原型对象只继承父类原型对象中的属性</div><div class="line">function inheritPrototype(subType,superType)&#123;</div><div class="line">    //利用上面的Object函数，将父类的原型赋予prototype变量</div><div class="line">    var prototype = object(superType.prototype);</div><div class="line">    //将prototype的构造函数重新指向子类</div><div class="line">    prototype.constructor = subType;</div><div class="line">    //将prototype给sub的原型对象</div><div class="line">    subType.prototype = prototype;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//将前面的组合继承改写</div><div class="line">//父类</div><div class="line">function Father(name)&#123;</div><div class="line">    this.name = name;</div><div class="line">    this.colors = [&apos;red&apos;,&apos;green&apos;];</div><div class="line">&#125;</div><div class="line">//父类原型对象</div><div class="line">Father.pototype.sayName = function()&#123;</div><div class="line">    console.log(this.name);</div><div class="line">&#125;</div><div class="line">//子类</div><div class="line">function Son(name,age)&#123;</div><div class="line">    //借用父类构造函数</div><div class="line">    Father.call(this,name);</div><div class="line">    this.age = age;</div><div class="line">&#125;</div><div class="line">//(这行用inheritPrototype函数替换)子类原型指向父类实例，原型链继承</div><div class="line">inheritPrototype(Son, Father);</div><div class="line">Son.prototype.sayAge = function()&#123;</div><div class="line">    console.log(this.age);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>寄生组合式的继承方式是最理想的方式，它使得子类构造函数继承父类构造函数的属性，子类的原型对象继承父类原型对象的属性和方法。</p>
+</blockquote>
+<h2 id="三、小结"><a href="#三、小结" class="headerlink" title="三、小结"></a>三、小结</h2><blockquote>
+<p>  1.这次博客讲述了在js中是如何实现继承的，有很多中方式，但主要的是<strong>组合方式</strong>和<strong>寄生组合方式</strong>。继承后我们能够使用父类的属性和方法，增加了代码的重用性。<br>2.了解js继承作用：有助于我们去阅读一些框架的源码，可能本次代码有点难以理解，我打上了大量的注释，供大家一起阅读，还是那句话，多看几遍，其义自见。如果觉得有收获，就点个赞吧。  </p>
+<ul>
+<li>细心的朋友可能发现，我把文章的样式修改了，类似Markdown风格咯，看起来比较清爽，舒服。</li>
+</ul>
+<p>同系列几篇：<br><a href="http://www.cnblogs.com/Ry-yuan/p/7482599.html" target="_blank" rel="external">第一篇：JavaScript–我发现，原来你是这样的JS（一）（初识）</a><br><a href="http://www.cnblogs.com/Ry-yuan/p/7774098.html" target="_blank" rel="external">JS–我发现，原来你是这样的JS：面向对象编程OOP[1]–(理解对象和对象属性类型) </a><br><a href="http://www.cnblogs.com/Ry-yuan/p/7782408.html?yyue=a21bo.50862.201879" target="_blank" rel="external">JS–我发现，原来你是这样的JS：面向对象编程OOP[2]–(创建你的那个对象吧) </a><br><a href="http://www.cnblogs.com/Ry-yuan/category/1109797.html" target="_blank" rel="external">我发现，原来你是这样的JS全部文章汇总（点击此处）</a></p>
+<p>本文出自博客园：<a href="http://www.cnblogs.com/Ry-yuan/" target="_blank" rel="external">http://www.cnblogs.com/Ry-yuan/</a><br>作者：Ry（渊源远愿）<br>欢迎转载，转载请标明出处，保留该字段。</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/17/Javascript-我发现，原来你是这样的JS-面向对象编程OOP-2-创建对象/" rel="next" title="Javascript--我发现，原来你是这样的JS:面向对象编程OOP[2]--(创建对象)">
+                <i class="fa fa-chevron-left"></i> Javascript--我发现，原来你是这样的JS:面向对象编程OOP[2]--(创建对象)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Ry-yuan" />
+          <p class="site-author-name" itemprop="name">Ry-yuan</p>
+           
+              <p class="site-description motion-element" itemprop="description">如果你觉得困难，那也许是在进步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、面向对象编程（继承）"><span class="nav-number">1.</span> <span class="nav-text">一、面向对象编程（继承）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#怎么实现继承？"><span class="nav-number">1.1.</span> <span class="nav-text">怎么实现继承？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、实现继承方式"><span class="nav-number">2.</span> <span class="nav-text">二、实现继承方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-原型链方式"><span class="nav-number">2.1.</span> <span class="nav-text">1.原型链方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a-代码："><span class="nav-number">2.1.1.</span> <span class="nav-text">a.代码：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#b-一些特别注意的地方："><span class="nav-number">2.1.2.</span> <span class="nav-text">b.一些特别注意的地方：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c-原型链继承的问题："><span class="nav-number">2.1.3.</span> <span class="nav-text">c.原型链继承的问题：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-借用构造函数"><span class="nav-number">2.2.</span> <span class="nav-text">2.借用构造函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#代码演示："><span class="nav-number">2.2.1.</span> <span class="nav-text">代码演示：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-组合继承（最常用）"><span class="nav-number">2.3.</span> <span class="nav-text">3.组合继承（最常用）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#代码演示：-1"><span class="nav-number">2.3.1.</span> <span class="nav-text">代码演示：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-原型式继承"><span class="nav-number">2.4.</span> <span class="nav-text">4.原型式继承</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#代码演示：-2"><span class="nav-number">2.4.1.</span> <span class="nav-text">代码演示：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-寄生式的继承"><span class="nav-number">2.5.</span> <span class="nav-text">5.寄生式的继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-寄生组合式继承-最理想"><span class="nav-number">2.6.</span> <span class="nav-text">6.寄生组合式继承(最理想)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#代码演示：-3"><span class="nav-number">2.6.1.</span> <span class="nav-text">代码演示：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、小结"><span class="nav-number">3.</span> <span class="nav-text">三、小结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ry-yuan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+&nbsp;|&nbsp;
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("RjwnbvSlgbai8OyA9HotKOIY-gzGzoHsz", "Bwqfl7y14vPhnj48bjA112I8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

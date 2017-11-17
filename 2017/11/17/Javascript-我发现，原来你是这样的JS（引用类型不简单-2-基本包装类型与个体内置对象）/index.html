@@ -1,0 +1,887 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="一.介绍 本篇是续上一篇的，引用类型的后篇，本篇主要是说基本包装类型和个体内置对象。如果你能收获一些知识，那我很高兴，很满足，哈哈哈，希望大家能愉快看完。如果你想学好一门技术，要不忘初心，方得始终。  二.基本包装类型 先说明基本包装类型也是属于引用类型,是接着上一篇的,强调一下.  然后我们记住两句话:1.基本包装类型是为了方便操作基本类型值而出现的.2.有一瞬间你出现,可惜转眼却离我而去. 1">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Javascript--我发现，原来你是这样的JS（引用类型不简单[2],基本包装类型与个体内置对象）">
+<meta property="og:url" content="http://Ry-yuan.me/2017/11/17/Javascript-我发现，原来你是这样的JS（引用类型不简单-2-基本包装类型与个体内置对象）/index.html">
+<meta property="og:site_name" content="Ry-yuan(瑞元)">
+<meta property="og:description" content="一.介绍 本篇是续上一篇的，引用类型的后篇，本篇主要是说基本包装类型和个体内置对象。如果你能收获一些知识，那我很高兴，很满足，哈哈哈，希望大家能愉快看完。如果你想学好一门技术，要不忘初心，方得始终。  二.基本包装类型 先说明基本包装类型也是属于引用类型,是接着上一篇的,强调一下.  然后我们记住两句话:1.基本包装类型是为了方便操作基本类型值而出现的.2.有一瞬间你出现,可惜转眼却离我而去. 1">
+<meta property="og:updated_time" content="2017-11-17T06:53:48.059Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Javascript--我发现，原来你是这样的JS（引用类型不简单[2],基本包装类型与个体内置对象）">
+<meta name="twitter:description" content="一.介绍 本篇是续上一篇的，引用类型的后篇，本篇主要是说基本包装类型和个体内置对象。如果你能收获一些知识，那我很高兴，很满足，哈哈哈，希望大家能愉快看完。如果你想学好一门技术，要不忘初心，方得始终。  二.基本包装类型 先说明基本包装类型也是属于引用类型,是接着上一篇的,强调一下.  然后我们记住两句话:1.基本包装类型是为了方便操作基本类型值而出现的.2.有一瞬间你出现,可惜转眼却离我而去. 1">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://Ry-yuan.me/2017/11/17/Javascript-我发现，原来你是这样的JS（引用类型不简单-2-基本包装类型与个体内置对象）/"/>
+
+
+
+
+
+  <title>Javascript--我发现，原来你是这样的JS（引用类型不简单[2],基本包装类型与个体内置对象） | Ry-yuan(瑞元)</title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ry-yuan(瑞元)</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://Ry-yuan.me/2017/11/17/Javascript-我发现，原来你是这样的JS（引用类型不简单-2-基本包装类型与个体内置对象）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ry-yuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ry-yuan(瑞元)">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Javascript--我发现，原来你是这样的JS（引用类型不简单[2],基本包装类型与个体内置对象）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-17T14:50:10+08:00">
+                2017-11-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/11/17/Javascript-我发现，原来你是这样的JS（引用类型不简单-2-基本包装类型与个体内置对象）/" class="leancloud_visitors" data-flag-title="Javascript--我发现，原来你是这样的JS（引用类型不简单[2],基本包装类型与个体内置对象）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一-介绍"><a href="#一-介绍" class="headerlink" title="一.介绍"></a>一.介绍</h2><blockquote>
+<p>本篇是续上一篇的，引用类型的后篇，本篇主要是说基本包装类型和个体内置对象。如果你能收获一些知识，那我很高兴，很满足，哈哈哈，希望大家能愉快看完。如果你想学好一门技术，要不忘初心，方得始终。</p>
+</blockquote>
+<h2 id="二-基本包装类型"><a href="#二-基本包装类型" class="headerlink" title="二.基本包装类型"></a>二.基本包装类型</h2><blockquote>
+<p>先说明基本包装类型也是属于引用类型,是接着上一篇的,强调一下.</p>
+</blockquote>
+<p>然后我们记住两句话:<br><strong>1.基本包装类型是为了方便操作基本类型值而出现的.</strong><br><strong>2.有一瞬间你出现,可惜转眼却离我而去.</strong></p>
+<h3 id="1-说说这基本包装类型有什么吧-就这3个"><a href="#1-说说这基本包装类型有什么吧-就这3个" class="headerlink" title="1.说说这基本包装类型有什么吧,就这3个"></a>1.说说这基本包装类型有什么吧,就这3个</h3><ol>
+<li>Boolean</li>
+<li>Number</li>
+<li>String</li>
+</ol>
+<h3 id="2-有人会疑惑这些家伙不是基本类型吗-怎么变成基本包装类型了"><a href="#2-有人会疑惑这些家伙不是基本类型吗-怎么变成基本包装类型了" class="headerlink" title="2.有人会疑惑这些家伙不是基本类型吗?怎么变成基本包装类型了?"></a>2.有人会疑惑这些家伙不是基本类型吗?怎么变成基本包装类型了?</h3><p>对，就是要把你搞蒙，不然怎么显得js高深莫测呢。<br>看看例子:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//有没有觉得这东西是不是很方便，但又很奇怪为什么能这么干</div><div class="line">var str  = &quot;hello Ry&quot;</div><div class="line">console.log(str.length);  //8  一个属性,直接给出字符串长度</div><div class="line">console.log(str.substring(6));  &quot;ry&quot;  //一个剪切字符串的方法</div></pre></td></tr></table></figure></p>
+<h4 id="上面的例子我们看到-str的值明明是一个基本类型值-String-，为什么会有属性，为什么会有方法"><a href="#上面的例子我们看到-str的值明明是一个基本类型值-String-，为什么会有属性，为什么会有方法" class="headerlink" title="上面的例子我们看到,str的值明明是一个基本类型值(String)，为什么会有属性，为什么会有方法?"></a>上面的例子我们看到,str的值明明是一个基本类型值(String)，为什么会有属性，为什么会有方法?</h4><p><strong>我们记住的第一句话：基本包装类型是为了方便操作基本类型值的：</strong><br>js在被设计出来时搞了这个叫基本数据包装类型的东西，当对基本类型值访问读取时，后台会自动创建其对应的基本包装类型对象(没错是对象)，使得它能进行一些属性和方法的调用。</p>
+<p><strong>第二句话：有一瞬间你出现,可惜转眼却离我而去（文学风）</strong><br>就是基本包装类型从创建对象到该对象销毁就一瞬间，之后便逝去了，也就是只有存在于那一行代码执行时（比如：str.length）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//在前几篇有个这样的例子，这也说明基本包装类型对象只存在于一行代码执行过程</div><div class="line">var p = &quot;ry&quot;;</div><div class="line">person.age = 123;  //这时创建了基本包装对象，我们能为属性赋值</div><div class="line">console.log(p.age);  //undefined  到了下一行代码对象便不见了，其属性值也就没了</div></pre></td></tr></table></figure>
+<blockquote>
+<p>再来句通俗的话：String,Number,Boolean 他们有两重身份：基本类型和基本包装类型。但是我们用的时候都是基本类型的（只要我们不去主动创建基本包装类型对象），当需要读取和操作这基本类型值时，他就变身（哈哈，变身），变成一个基本包装类型的对象，变身就厉害了吧，这时它能做的事就更多了。</p>
+</blockquote>
+<h2 id="三-基本包装类型细说"><a href="#三-基本包装类型细说" class="headerlink" title="三.基本包装类型细说"></a>三.基本包装类型细说</h2><blockquote>
+<p>刚才算是介绍清楚基本包装类型了，希望大家能看懂。接下来详细说说这3个基本包装类型：String，Number，Boolean（也就是说他们变身后能干神马）</p>
+<p>还有很重要的点，我们一般都不直接创建基本包装类型的对象，这样容易分不清你是操作着基本类型值，还是引用类型。</p>
+<h3 id="1-Boolean类型"><a href="#1-Boolean类型" class="headerlink" title="1.Boolean类型"></a>1.Boolean类型</h3><p>这个基本包装类型，对应布尔值的基本类型。</p>
+<h4 id="创建这个类型对象"><a href="#创建这个类型对象" class="headerlink" title="创建这个类型对象"></a>创建这个类型对象</h4></blockquote>
+<p>一如既往的new，只要是对象都new了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//这是Boolean类型对象,这家伙用处不大，上面说了一般都不这样直接创建，这东西给js语言后台弄就对了。</div><div class="line">var b = new Boolean();</div></pre></td></tr></table></figure></p>
+<p>虽然不直接创建它，但是我们还是要了解它，不是吗，为什么？为了人民日益增长的美好生活的需要。哈哈不是吗。</p>
+<p><strong>知识点来了：看注释</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//这家伙是基本包装类对象，是对象</div><div class="line">var b = new Boolean(false);   //他是false的对象</div><div class="line">//但是会出现</div><div class="line">console.log(b &amp;&amp; true);  //true  </div><div class="line">//因为在布尔表达式中对象的布尔值是true，也就是说b这对象将转为true（而不是它的值false）</div></pre></td></tr></table></figure></p>
+<p>还有：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">//这是基本类型值</div><div class="line">var t1 = true;</div><div class="line">//这是基本包装类型对象，是对象</div><div class="line">var t2 = new Boolean(true);</div><div class="line">//typeof测试</div><div class="line">console.log(typeof t1);  //boolean</div><div class="line">console.log(typeof t2);  //object , typeof 对所有对象都返回object</div><div class="line">//instanceof</div><div class="line">console.log(t1 instanceof Boolean); //false ，t1是值类型不是对象，所以返回false</div><div class="line">console.log(t2 instanceof Boolean); //true</div></pre></td></tr></table></figure></p>
+<h3 id="2-Number类型"><a href="#2-Number类型" class="headerlink" title="2.Number类型"></a>2.Number类型</h3><h4 id="创建对象"><a href="#创建对象" class="headerlink" title="创建对象"></a>创建对象</h4><p>我们尽量不要创建对象<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var n = New Number(10);</div></pre></td></tr></table></figure></p>
+<h4 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h4><p>直接将有什么方法就好了，用的也就属性方法。<br>1.toString()：传入参数是告诉它返回多少进制<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//这是基本类型</div><div class="line">var num = 10;</div><div class="line">//读取操作时变身，有能力了，是Number对象的能力</div><div class="line">console.log(num.toString(8));  //12  返回了八进制的数</div><div class="line">console.log(num.toString(2));  //1010  返回二进制</div><div class="line">console.log(num.toString(16));  //a  返回十六进制</div></pre></td></tr></table></figure></p>
+<p>2.toFixed(): 传入一个参数(0-20)，表示返回的数显示几位小数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var n = 123;</div><div class="line">console.log(n.toFixed(2));  //123.00</div></pre></td></tr></table></figure></p>
+<p>3.toPrecision():传入一个参数数字， 返回一个合适这个数字不是的位数的格式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">var n1 = 123;</div><div class="line">console.log(n.toPrecision(2));   //&apos;1.2e+2&apos;</div><div class="line">console.log(n.toPrecision(4));  //&apos;123.0&apos;</div><div class="line">console.log(n.toPrecision(3));  //&apos;123&apos;</div></pre></td></tr></table></figure></p>
+<h3 id="3-String类型"><a href="#3-String类型" class="headerlink" title="3.String类型"></a>3.String类型</h3><h4 id="直接上属性和方法"><a href="#直接上属性和方法" class="headerlink" title="直接上属性和方法"></a>直接上属性和方法</h4><p>1.length ： 返回字符串长度<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var str = &quot;hello lovely girl&quot;;</div><div class="line">console.log(str);  //17</div></pre></td></tr></table></figure></p>
+<p>2.charAt 和 charCodeAt()<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//charAt() 接受一个参数，返回字符串的该参数位置下标的值</div><div class="line">var str = &quot;hello&quot;;</div><div class="line">str.charAt(2);  //l</div><div class="line">//charCodeAt() 和charAt不同的是返回的是字符编码</div><div class="line">str.charCodeAt(2); //108  这是l的字符编码</div><div class="line">//还有一种更简单的方法得到字符串对应下标的值，像数组一样用方括号</div><div class="line">str[2];  //l</div></pre></td></tr></table></figure></p>
+<p>3.concat() 拼接字符串，返回新的字符串<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var str = &quot;I &quot;;</div><div class="line">//在str上加上字符串</div><div class="line">var str1 = str.concat(&quot;love you&quot;);</div><div class="line">console.log(str1);  //I love you</div><div class="line"></div><div class="line">//当然我们都习惯直接用+号来完成这操作</div><div class="line">var str2 = str+&quot;love you&quot;;</div><div class="line">console.log(str2); //I love you</div></pre></td></tr></table></figure></p>
+<p>4.剪切字符串：slice() , substr() , substring() 传入一或两个参数，返回新的字符串，不会影响原来字符串<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//slice(),substring() 1参数是开始位置，2是结束位置（不指定默认到最后）</div><div class="line">var str = &quot;welcome&quot;;</div><div class="line">str.slice(3);  //come</div><div class="line">str.slice(3,4); //c</div><div class="line">str.substring(3); //come</div><div class="line">str.substring(4,6); //om</div><div class="line">//substr() 1参数是开始位置，2是返回的字符数量</div><div class="line">str.substr(3,4); //come  3位置开始的4个字符</div><div class="line">str.substr(1,3); //elc</div></pre></td></tr></table></figure></p>
+<p>5.indexOf()和lastIndexOf()，查找字符，返回字符第一次出现的位置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">//indexOf只传一个参数，默认从0位开始找</div><div class="line">var s = &quot;hello&quot;;</div><div class="line">s.indexOf(&quot;l&quot;);  //2  从前面开始找l第一次出现在2</div><div class="line">s.indexOf(a);  //-1</div><div class="line"></div><div class="line">//lastIndexOf() 只传一个参数，默认从后面开始找</div><div class="line">s.lastIndexOf(&quot;l&quot;);  //3  从后面开始找l第一次出现在3</div><div class="line"></div><div class="line">//接受两个参数，第二参数表示从第x位开始查找</div><div class="line">s.indexOf(l,1);  //2   第二参数表示从第1位开始查找</div><div class="line">s.lastIndexOf(l,2);  //2   第二参数表示从第2位开始查找</div><div class="line"></div><div class="line">//第二个参数应用，通过循环使用这两方法，找到后增加第二个参数的值来继续寻找字符，最后能把所用的该字符位置找出来</div></pre></td></tr></table></figure></p>
+<p>6.trim()：删除前置及后缀所有空格，返回新的字符串<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var str = &quot;  welcome to my blog    &quot;;  //前后有很多空格</div><div class="line">var str2 = str.trim(str);</div><div class="line">console.log(str2);  //&quot;welcome to my blog&quot;</div></pre></td></tr></table></figure></p>
+<p>7.字符串大小写转换 toLocaleUppperCase,toUpperCase,toLocaleLowerCase,toLowerCase<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var str = &quot;beautiful&quot;;</div><div class="line">//大写,两个方法差不多</div><div class="line">console.log(str.toLocaleUpperCase());  //   &quot;BEAUTIFUL&quot;</div><div class="line">console.log(str.toUpperCase());        //   &quot;BEAUTIFUL&quot;</div><div class="line">//小写，两个方法差不多</div><div class="line">console.log(str.toLocaleLowerCase());  //   &quot;beautiful&quot;</div><div class="line">console.log(str.toLowerCase());        //   &quot;beautiful&quot;</div></pre></td></tr></table></figure></p>
+<p>8.替换字符串的方法：replace()<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var text = &quot;bat,cat,sat,fat&quot;;</div><div class="line">//第一参数是匹配要替换字符串，第二参数是替换成的字符串</div><div class="line">var result = text.replace(&quot;at&quot;,&quot;oo&quot;);</div><div class="line">console.log(result); &quot;boo,cat,sat,fat&quot;;  //只替换了第一个</div><div class="line"></div><div class="line">result = text.replace(&quot;/at/g&quot; , &quot;oo&quot;);</div><div class="line">console.log(result);  &quot;boo,coo,soo,foo&quot;;  //加了正则表达，替换了全部</div></pre></td></tr></table></figure></p>
+<p>9.localeCompare() : 比较两个字符串,通过字符串在字母表的顺序排列<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">var str1 = &quot;back&quot;;</div><div class="line">var str2 = &quot;bat&quot;;</div><div class="line">var str3 = &quot;abc&quot;;</div><div class="line">console.log(str1.localeCompare(str2));  //-1  &quot;back&quot; 排在 &quot;bat&quot; 前面 返回-1</div><div class="line">console.log(str1.localeCompare(str1));  //0  &quot;字符串相等返回0</div><div class="line">console.log(str1.localeCompare(str3));  //1  &quot;back&quot; 排在 &quot;abc&quot; 后面 返回1</div></pre></td></tr></table></figure></p>
+<p>10.formCharCode() : 接受编码转为字符串<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">console.log(String.formCharCode(104,101,108,108,111));  //hello</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>String类型的字符串的方法很多，这里只是简单的举例了他们的使用方法，需要深入建议看看文档哦</p>
+</blockquote>
+<h2 id="四-单体内置对象"><a href="#四-单体内置对象" class="headerlink" title="四.单体内置对象"></a>四.单体内置对象</h2><blockquote>
+<p>内置对象上一篇前面讲了Object ， Array ， Function，RegExp，Date等，下面还有两个（Global 和 Math）</p>
+<h3 id="1-Global对象"><a href="#1-Global对象" class="headerlink" title="1.Global对象"></a>1.Global对象</h3><p>最特别的对象，你看不见摸不着，对了，但是就是存在。<br>怎么理解：golbal是全局的意思，所以对于在全局作用域定义的属性和方法都是Global对象的属性和方法。</p>
+</blockquote>
+<p>比如一些函数：isNaN(),isFinite(),parseInt(),parseFloat()等都是Global的方法。</p>
+<h4 id="再说一些Global方法："><a href="#再说一些Global方法：" class="headerlink" title="再说一些Global方法："></a>再说一些Global方法：</h4><p>1.encodeURI()和EncodeURIComponent()  : URI编码方法，他们都是对URI进行编码的，以便发送给浏览器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var uri = http://www.xxx.com/ry yuan/</div><div class="line">//encodeURI方法:只处理空格,把空格转成了%20</div><div class="line">console.log(encodeURI(uri));  //&quot;http://www.xxx.com/ry%20yuan/&quot;</div><div class="line">//encodeURIComponent方法: 只要是非数字都转成编码</div><div class="line">console.log(encodeURIComponent(uri));  //&quot;http%3A%2F%2Fwww.xxx.com%2Fry%20yuan%2F&quot;</div></pre></td></tr></table></figure></p>
+<p>2.eval() 方法： 可以执行解析JavaScript字符串（慎用，少用）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">eval(&quot;console.log(&apos;hello&apos;)&quot;);  // hello  ， 等价于console.log(&apos;hello&apos;);</div></pre></td></tr></table></figure></p>
+<h4 id="再说说window对象"><a href="#再说说window对象" class="headerlink" title="再说说window对象"></a>再说说window对象</h4><blockquote>
+<p>ES中没有指出如何访问Global对象，但是web浏览器中window对象是Global对象的部分实现，所以我们再浏览器中常说的全局属性和方法是window，也是这个原因</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var str = &quot;nice to meet you&quot;;</div><div class="line">console.log(window.str);  //&quot;nice to meet you&quot; , 用window访问其str属性没毛病</div></pre></td></tr></table></figure>
+<h3 id="2-Math对象"><a href="#2-Math对象" class="headerlink" title="2.Math对象"></a>2.Math对象</h3><blockquote>
+<p>这个对象主要用来辅助完成简单和复杂的运算</p>
+</blockquote>
+<h4 id="Math对象的属性：很多下面举例几个常用："><a href="#Math对象的属性：很多下面举例几个常用：" class="headerlink" title="Math对象的属性：很多下面举例几个常用："></a>Math对象的属性：很多下面举例几个常用：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">console.log(Math.E);  //2.718281828459045  自然底数e  </div><div class="line">console.log(Math.PI); //3.141592653589793  π </div><div class="line">console.log(Math.SQPR);  //开根号2 </div><div class="line">console.log(Math.LN2);   //2的自然底数  </div><div class="line">console.log(Math.LN10);   //10的自然底数</div></pre></td></tr></table></figure>
+<h4 id="Math方法"><a href="#Math方法" class="headerlink" title="Math方法"></a>Math方法</h4><p>1.min()和max()  : 用于确定一组值的最小值和最大值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">var max = Math.max(1,2,3,4,5,6);  </div><div class="line">console.log(max)  //6</div><div class="line"></div><div class="line">var min = Math.min(1,2,3,4,5,6);  //1</div><div class="line">console.log(min)  //1</div><div class="line"></div><div class="line">//要找数组的最大值，可以这样做</div><div class="line">var arr = [1,23,33,12];</div><div class="line">var result = Math.max.apply(Math,arr);</div><div class="line">//console.log(result);  //33</div></pre></td></tr></table></figure></p>
+<p>2.舍入方法：Math.ceil() , Math.floor() , Math.round()<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">//Math.ceil()  向上舍入</div><div class="line">console.log(Math.ceil(1.2));  //2</div><div class="line">console.log(Math.ceil(1.5));  //2</div><div class="line">console.log(Math.ceil(1.8));  //2</div><div class="line"></div><div class="line">//Math.floor()  向下舍入</div><div class="line">console.log(Math.floor(5.1)); //5</div><div class="line">console.log(Math.floor(5.6)); //5</div><div class="line">console.log(Math.floor(5.9)); //5</div><div class="line"></div><div class="line">//Math.round()  四舍五入</div><div class="line">console.log(Math.round(8.1)); //8</div><div class="line">console.log(Math.round(8.5)); //9</div><div class="line">console.log(Math.round(8.7)); //9</div></pre></td></tr></table></figure></p>
+<p>3.生成随机数的方法： random()  返回大于等于0 小于1的随机数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">console.log(Math.random());  //0.8261111731972886  随机数</div><div class="line">console.log(Math.random());  //0.2343731972234522  随机数</div><div class="line"></div><div class="line">//一条公式：值 = Math.floor(Math.random() * 可能值的总数 + 第一个可能的值);  怎么说，看下面</div><div class="line">//如果我想返回从1-10的其中一个随机数</div><div class="line">console.log(Math.floor(Math.random()*10+1))  //1-10 可能值总数10，第一个可能值是1</div><div class="line">//如果我想返回从1-10的其中一个随机数</div><div class="line">console.log(Math.floor(Math.random()*90+10)) //10-100   可能值总数90，第一个可能值是10</div></pre></td></tr></table></figure></p>
+<p>4.还有很多方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//x的绝对值Math.abs(x)</div><div class="line">//x平方Math.sqrt(x)</div><div class="line">//x的n次幂Math.pow(x,n)</div><div class="line">//正弦余弦正切Math.sin(x), Math.cos(x),Math.tan(x)</div><div class="line">//等等</div></pre></td></tr></table></figure></p>
+<h2 id="五-说说"><a href="#五-说说" class="headerlink" title="五.说说"></a>五.说说</h2><blockquote>
+<p>本篇结束，对，引用类型也就到这里了落幕，接着还会继续前进的，老铁们，觉得写得好就推荐一下，关注一下吧，yoyo。</p>
+<p>同系列前几篇：<br><a href="http://www.cnblogs.com/Ry-yuan/p/7482599.html" target="_blank" rel="external">第一篇：JavaScript–我发现，原来你是这样的JS（一）（初识）</a><br><a href="http://www.cnblogs.com/Ry-yuan/p/7496574.html" target="_blank" rel="external">第二篇：JavaScript–我发现，原来你是这样的JS（二）（基础概念–躯壳篇）</a><br><a href="http://www.cnblogs.com/Ry-yuan/p/7501214.html" target="_blank" rel="external">第三篇：JavaScript–我发现，原来你是这样的JS（三）（基础概念–灵魂篇） </a><br><a href="http://www.cnblogs.com/Ry-yuan/p/7675894.html" target="_blank" rel="external">第四篇：JavaScript–我发现，原来你是这样的JS（四）（看看变量，作用域，垃圾回收是啥）</a><br><a href="http://www.cnblogs.com/Ry-yuan/p/7688322.html" target="_blank" rel="external">第五篇：JavaScript–我发现，原来你是这样的JS（引用类型不简单[上篇]，且听我娓娓道来）</a>  </p>
+<p>本文出自博客园：<a href="http://www.cnblogs.com/Ry-yuan/" target="_blank" rel="external">http://www.cnblogs.com/Ry-yuan/</a><br>作者：Ry（渊源远愿）<br>欢迎转载，转载请标明出处，保留该字段。</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/28/Javascript-我发现，原来你是这样的JS（引用类型不简单，且听我娓娓道来）/" rel="next" title="Javascript--我发现，原来你是这样的JS（引用类型不简单[1]，且听我娓娓道来）">
+                <i class="fa fa-chevron-left"></i> Javascript--我发现，原来你是这样的JS（引用类型不简单[1]，且听我娓娓道来）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/17/Javascript-我发现，原来你是这样的JS-面向对象编程OOP-1-理解对象和对象属性类型/" rel="prev" title="Javascript--我发现，原来你是这样的JS:面向对象编程OOP[1]--(理解对象和对象属性类型)">
+                Javascript--我发现，原来你是这样的JS:面向对象编程OOP[1]--(理解对象和对象属性类型) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Ry-yuan" />
+          <p class="site-author-name" itemprop="name">Ry-yuan</p>
+           
+              <p class="site-description motion-element" itemprop="description">如果你觉得困难，那也许是在进步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-介绍"><span class="nav-number">1.</span> <span class="nav-text">一.介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-基本包装类型"><span class="nav-number">2.</span> <span class="nav-text">二.基本包装类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-说说这基本包装类型有什么吧-就这3个"><span class="nav-number">2.1.</span> <span class="nav-text">1.说说这基本包装类型有什么吧,就这3个</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-有人会疑惑这些家伙不是基本类型吗-怎么变成基本包装类型了"><span class="nav-number">2.2.</span> <span class="nav-text">2.有人会疑惑这些家伙不是基本类型吗?怎么变成基本包装类型了?</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#上面的例子我们看到-str的值明明是一个基本类型值-String-，为什么会有属性，为什么会有方法"><span class="nav-number">2.2.1.</span> <span class="nav-text">上面的例子我们看到,str的值明明是一个基本类型值(String)，为什么会有属性，为什么会有方法?</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-基本包装类型细说"><span class="nav-number">3.</span> <span class="nav-text">三.基本包装类型细说</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Boolean类型"><span class="nav-number">3.1.</span> <span class="nav-text">1.Boolean类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建这个类型对象"><span class="nav-number">3.1.1.</span> <span class="nav-text">创建这个类型对象</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Number类型"><span class="nav-number">3.2.</span> <span class="nav-text">2.Number类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建对象"><span class="nav-number">3.2.1.</span> <span class="nav-text">创建对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法"><span class="nav-number">3.2.2.</span> <span class="nav-text">方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-String类型"><span class="nav-number">3.3.</span> <span class="nav-text">3.String类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#直接上属性和方法"><span class="nav-number">3.3.1.</span> <span class="nav-text">直接上属性和方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四-单体内置对象"><span class="nav-number">4.</span> <span class="nav-text">四.单体内置对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Global对象"><span class="nav-number">4.1.</span> <span class="nav-text">1.Global对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#再说一些Global方法："><span class="nav-number">4.1.1.</span> <span class="nav-text">再说一些Global方法：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#再说说window对象"><span class="nav-number">4.1.2.</span> <span class="nav-text">再说说window对象</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Math对象"><span class="nav-number">4.2.</span> <span class="nav-text">2.Math对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Math对象的属性：很多下面举例几个常用："><span class="nav-number">4.2.1.</span> <span class="nav-text">Math对象的属性：很多下面举例几个常用：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Math方法"><span class="nav-number">4.2.2.</span> <span class="nav-text">Math方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五-说说"><span class="nav-number">5.</span> <span class="nav-text">五.说说</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ry-yuan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+&nbsp;|&nbsp;
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("RjwnbvSlgbai8OyA9HotKOIY-gzGzoHsz", "Bwqfl7y14vPhnj48bjA112I8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

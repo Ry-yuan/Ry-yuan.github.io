@@ -1,0 +1,895 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="一、介绍 我们继续面向对象吧，这次是面向对象编程的第二篇，主要是创建对象的几种方式。时间过得很快，还是不断的学习吧，为了自己的目标。  二、创建对象1.前面的创建对象方式a.在前面的章节中，我们创建对象的方式有两种：new Object() 和 对象字面量：12345678910//1.new Object() 创建对象var person1 = new Object();person1.name">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Javascript--我发现，原来你是这样的JS:面向对象编程OOP[2]--(创建对象)">
+<meta property="og:url" content="http://Ry-yuan.me/2017/11/17/Javascript-我发现，原来你是这样的JS-面向对象编程OOP-2-创建对象/index.html">
+<meta property="og:site_name" content="Ry-yuan(瑞元)">
+<meta property="og:description" content="一、介绍 我们继续面向对象吧，这次是面向对象编程的第二篇，主要是创建对象的几种方式。时间过得很快，还是不断的学习吧，为了自己的目标。  二、创建对象1.前面的创建对象方式a.在前面的章节中，我们创建对象的方式有两种：new Object() 和 对象字面量：12345678910//1.new Object() 创建对象var person1 = new Object();person1.name">
+<meta property="og:image" content="http://images2017.cnblogs.com/blog/1144006/201711/1144006-20171104155528435-1853756105.png">
+<meta property="og:updated_time" content="2017-11-17T06:53:27.181Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Javascript--我发现，原来你是这样的JS:面向对象编程OOP[2]--(创建对象)">
+<meta name="twitter:description" content="一、介绍 我们继续面向对象吧，这次是面向对象编程的第二篇，主要是创建对象的几种方式。时间过得很快，还是不断的学习吧，为了自己的目标。  二、创建对象1.前面的创建对象方式a.在前面的章节中，我们创建对象的方式有两种：new Object() 和 对象字面量：12345678910//1.new Object() 创建对象var person1 = new Object();person1.name">
+<meta name="twitter:image" content="http://images2017.cnblogs.com/blog/1144006/201711/1144006-20171104155528435-1853756105.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://Ry-yuan.me/2017/11/17/Javascript-我发现，原来你是这样的JS-面向对象编程OOP-2-创建对象/"/>
+
+
+
+
+
+  <title>Javascript--我发现，原来你是这样的JS:面向对象编程OOP[2]--(创建对象) | Ry-yuan(瑞元)</title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ry-yuan(瑞元)</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://Ry-yuan.me/2017/11/17/Javascript-我发现，原来你是这样的JS-面向对象编程OOP-2-创建对象/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ry-yuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ry-yuan(瑞元)">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Javascript--我发现，原来你是这样的JS:面向对象编程OOP[2]--(创建对象)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-17T14:52:09+08:00">
+                2017-11-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/11/17/Javascript-我发现，原来你是这样的JS-面向对象编程OOP-2-创建对象/" class="leancloud_visitors" data-flag-title="Javascript--我发现，原来你是这样的JS:面向对象编程OOP[2]--(创建对象)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一、介绍"><a href="#一、介绍" class="headerlink" title="一、介绍"></a>一、介绍</h2><blockquote>
+<p>我们继续面向对象吧，这次是面向对象编程的第二篇，主要是创建对象的几种方式。<br>时间过得很快，还是不断的学习吧，为了自己的目标。</p>
+</blockquote>
+<h2 id="二、创建对象"><a href="#二、创建对象" class="headerlink" title="二、创建对象"></a>二、创建对象</h2><h3 id="1-前面的创建对象方式"><a href="#1-前面的创建对象方式" class="headerlink" title="1.前面的创建对象方式"></a>1.前面的创建对象方式</h3><h4 id="a-在前面的章节中，我们创建对象的方式有两种：new-Object-和-对象字面量："><a href="#a-在前面的章节中，我们创建对象的方式有两种：new-Object-和-对象字面量：" class="headerlink" title="a.在前面的章节中，我们创建对象的方式有两种：new Object() 和 对象字面量："></a>a.在前面的章节中，我们创建对象的方式有两种：new Object() 和 对象字面量：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">//1.new Object() 创建对象</div><div class="line">var person1 = new Object();</div><div class="line">person1.name = &quot;ry&quot;;</div><div class="line">person1.age = 21;</div><div class="line"></div><div class="line">//2.对象字面量</div><div class="line">var person2 = &#123;</div><div class="line">    name : &quot;ry&quot;,</div><div class="line">    age : 1</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>不足：前面这两种方法是能创建对象，但是有个不足就是，要创建很多对象时会有很多重复的代码，比如我再创个person3，又要打一次上面大部分的代码。<br>所以：作为一个有志青年，我们有下面的解决方法，使用<strong>工厂模式。</strong></p>
+</blockquote>
+<h3 id="2-工厂模式"><a href="#2-工厂模式" class="headerlink" title="2.工厂模式"></a>2.工厂模式</h3><blockquote>
+<p>工厂模式：声明一个函数，它封装了以特定接口创建对象的细节，并返回一个具体对象。</p>
+</blockquote>
+<h4 id="a-透过代码看工厂函数"><a href="#a-透过代码看工厂函数" class="headerlink" title="a.透过代码看工厂函数"></a>a.透过代码看工厂函数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">//工厂模式，声明一个工厂函数</div><div class="line">funtion createPerson(name,age)&#123;</div><div class="line">    //创建一个对象</div><div class="line">    var obj = new Object();</div><div class="line">    //对对象属性赋值</div><div class="line">    obj.name = name;</div><div class="line">    obj.age = age;</div><div class="line">    obj.sayHi = &#123;</div><div class="line">        console.log(&quot;Hi&quot;);</div><div class="line">    &#125;;</div><div class="line">    //返回对象</div><div class="line">    return obj;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">//我们一下子就创建了3个对象</div><div class="line">var p1 = createPerson(&quot;ry&quot;, 30);</div><div class="line">var p2 = createPerson(&quot;渊源远愿&quot;,31);</div><div class="line">var p3 = createPerson(&quot;阿元&quot;,21);</div><div class="line"></div><div class="line">console.log(p1.name);  //&quot;ry&quot;</div><div class="line">console.log(p2.age);  // 30</div><div class="line">p2.sayHi();  //&quot;Hi&quot;</div><div class="line">p3.sayHi();  //&quot;Hi&quot;</div></pre></td></tr></table></figure>
+<h4 id="b-俗话说说工厂函数"><a href="#b-俗话说说工厂函数" class="headerlink" title="b.俗话说说工厂函数"></a>b.俗话说说工厂函数</h4><ul>
+<li>上面我们的例子是创建人的工厂函数，我们可以一次创建很多人了，而不用像第一种方法一样写很多的重复代码。就这么先进，就像工厂一样。  </li>
+<li>但是，工厂模式还是不足，他不能标识出这个对象属于什么类型。通俗点说就是，工厂函数只能说明你是对象，但是你是人，还是猫，还是猪，这个我们不知道。  </li>
+</ul>
+<p>所以：作为一个有志青年，我们有下面的解决对象识别的方法，即使用<strong>构造函数模式。</strong></p>
+<h3 id="3-构造函数模式"><a href="#3-构造函数模式" class="headerlink" title="3.构造函数模式"></a>3.构造函数模式</h3><blockquote>
+<p>构造函数我们以前有听说过，比如创建数组时的Array()，创建时间的Date()，接下来我们也可以自定义自己的构造函数了。</p>
+</blockquote>
+<h4 id="a-透过代码看构造函数"><a href="#a-透过代码看构造函数" class="headerlink" title="a.透过代码看构造函数"></a>a.透过代码看构造函数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">//Dog 构造函数，构造函数用个大写字母开头，以便和普通函数区分一下</div><div class="line">function Dog (name , age )&#123;</div><div class="line">    this.name = name;</div><div class="line">    this.age = age;</div><div class="line">    this.sayHi = function()&#123;</div><div class="line">        console.log(&quot;Hi&quot;);</div><div class="line">    &#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//使用构造函数创建对象，3只狗狗</div><div class="line">var dog1 = new Dog(&apos;lucy&apos; , 1);</div><div class="line">var dog2 = new Dog(&apos;Jack&apos; , 2);</div><div class="line">var dog3 = new Dog(&apos;Mc&apos; , 3);</div></pre></td></tr></table></figure>
+<h4 id="b-俗话说说构造函数"><a href="#b-俗话说说构造函数" class="headerlink" title="b.俗话说说构造函数"></a>b.俗话说说构造函数</h4><p>1.所谓”构造函数”，其实就是一个普通函数，但是内部使用了<strong>this</strong>变量。<br>2.对构造函数使用<strong>new运算符</strong>，就能生成实例（就是这么先进），并且this变量会绑定在实例对象上。  </p>
+<p>▶比工厂模式好在这里：因为使用构造函数创建对象时对象实例会有一个<strong>constructor</strong>属性(构造函数属性)，指向他的构造函数，那我们就知道这个对象是人，还是猫，还是小猪了。</p>
+<p><strong>那就用代码说明一下</strong>：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">//上面的创建的3只狗狗：dog1，dog2 ，dog3，看看他们的constructor属性</div><div class="line">console.log(dog1.constructor == Dog) //true</div><div class="line">console.log(dog2.constructor == Dog) //true</div><div class="line">console.log(dog3.constructor == Dog) //true</div><div class="line"></div><div class="line">//用instanceof 测试一下 </div><div class="line">//instanceof作用是测试某对象是不是某个类型。不记得就看看前面的博客哦</div><div class="line">console.log(dog1 instanceof Dog); //true</div><div class="line">console.log(dog2 instanceof Dog); //true</div><div class="line">console.log(dog3 instanceof Dog); //true</div><div class="line">console.log(dog3 instanceof Object); //true  当然也是一个object类型</div></pre></td></tr></table></figure></p>
+<p>但是，构造函数还是有不足的地方，比如上面大家都有一个sayHi函数（每个对象共有的），我们知道函数就是一个对象，在我们每一次创建一个对象时都需要重新的创建sayHi函数，这会浪费内存空间，所以我们要考虑把这个函数设置成<strong>共享</strong>的（只创建一次大家一起用）。<br>所以，作为一个有志青年，我们看看<strong>原型模式</strong></p>
+<h3 id="4-原型模式（prototype模式）"><a href="#4-原型模式（prototype模式）" class="headerlink" title="4.原型模式（prototype模式）"></a>4.原型模式（prototype模式）</h3><h4 id="a-先理解原型对象"><a href="#a-先理解原型对象" class="headerlink" title="a.先理解原型对象"></a>a.先理解原型对象</h4><blockquote>
+<p>1.首先我们要先了解概念：无论什么时候，我们创建的每一个函数都有一个<strong>prototype</strong>属性，它指向原型对象（自动生成的一个对象）。<br>2.原型对象的作用是包含由特定类型的所有实例共享的属性和方法。（就是能保存让对象共享的属性和方法）。<br>你可以这样看的：如果你把原型对象理解成一个某类型的公共区域，也可以的。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">//原型模式</div><div class="line">function Pig()&#123; </div><div class="line">    //往Pig的原型对象添加属性和方法</div><div class="line">    Pig.prototype.name = &quot;lucy&quot;;</div><div class="line">    Pig.prototype.age = 2;</div><div class="line">    Pig.prototype.sayHi = function()&#123;console.log(&apos;hi&apos;)&#125;;</div><div class="line">&#125;</div><div class="line">//创建对象</div><div class="line">new pig1 = new Pig();</div><div class="line">new pig2 = new Pig();</div><div class="line">//大家都是共同的属性和方法，共享了</div><div class="line">console.log(pig1.name);  //&quot;lucy&quot;</div><div class="line">console.log(pig2.name);  //&quot;lucy&quot;</div><div class="line">pig1.sayHi();  //&quot;hi&quot;</div><div class="line">pig2.sayHi();  //&quot;hi&quot;</div><div class="line"></div><div class="line">console.log(pig1.sayHi == pig2.sayHi());  //true</div></pre></td></tr></table></figure>
+<p>上面的例子，我们将Pig的属性和方法都添加到了Pig.prototype(这就是原型对象了)中，所以由Pig创建的实例能共享这些属性方法。</p>
+<p>我们看图来了解<strong>构造函数</strong>，<strong>原型对象</strong>，<strong>对象实例</strong>之间的关系：<br>1.构造函数有prototype属性指向原型对象<br>2.原型对象有个constructor属性指回构造函数<br>3.每个对象实例有个<em>proto</em>属性（浏览器支持的）指向原型对象</p>
+<p><img src="http://images2017.cnblogs.com/blog/1144006/201711/1144006-20171104155528435-1853756105.png" alt=""></p>
+<blockquote>
+<p>原型对象的出现，为了存放，对象实例的共享的属性和方法。</p>
+</blockquote>
+<h4 id="b-一些常用的方法"><a href="#b-一些常用的方法" class="headerlink" title="b.一些常用的方法"></a>b.一些常用的方法</h4><ul>
+<li><strong>isPrototypeOf()</strong> 来检测对象的原型和原型对象是否有关系</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//测试一下pig1的原型对象是不是Pig.prototype</div><div class="line">console.log(Pig.prototype.isPrototypeOf(pig1)) // true</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>Object.getPrototypeOf()</strong> 获取对象实例的原型对象（ES5新增的方法）。兼容性：IE9+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">console.log(Object.getPrototypeOf(pig1) == Pig.prototype);  //true</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>hasOwnProperty()</strong>，用来确定访问的属性在不在对象实例本身</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//为pig1重写name属性，该属性就会在实例本身。</div><div class="line">pig1.name= &quot;bigPig&quot;;</div><div class="line">//hasOwnPrototype 作用是问name属性在对象实例自己身上吗，是就返回true</div><div class="line">console.log(pig1.hasOwnPrototype(name));  //true</div><div class="line"></div><div class="line">//对于pig2，我们没有在对象实例中重写name，所以它的name属性源于原型对象，而不在pig2本身里面</div><div class="line">console.log(pig2.hasOwnPrototype(name));  //false</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>hasPrototypePorperty()</strong>，用来确定访问的属性在不在原型对象中</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//很明显这个方法和上面的hasOwnProperty是相对的</div><div class="line">//在对象本身重写name，所以name在对象本身</div><div class="line">pig.name = &quot;bigPig&quot;;</div><div class="line">//询问pig1中的name属性是不是在原型对象中</div><div class="line">console.log(hasPrototypePorperty(pig1,&quot;name&quot;));  //false</div><div class="line">//询问pig2中的name属性是不是在原型对象中，pig2没有重写name，所以在原型对象中</div><div class="line">console.log(hasPrototypePorperty(pig2,&quot;name&quot;));  //true</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>in操作符</strong> 作用：直接问对象中有没有某某属性，<strong>无论在对象实例本事还是在原型对象中</strong>，只要有就返回true，否则false</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//pig1 有name属性</div><div class="line">console.log(&quot;name&quot;  in pig1);  //true</div><div class="line">//pig1 中没有weight 属性</div><div class="line">console.log(&quot;weight&quot; in pig1);  //false</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>for-in 作用</strong>：用来遍历某个对象的所有属性</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">function Car ()&#123;</div><div class="line">    Car.prototype.name = &quot;ryuan&quot;,</div><div class="line">    Car.prototype.color = &quot;red&quot;</div><div class="line">&#125;</div><div class="line">var car1 = new Car();</div><div class="line">for(var prop in car1)&#123;</div><div class="line">    console.log(prop);</div><div class="line">&#125;</div><div class="line">//输出：</div><div class="line">name</div><div class="line">color</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>Object.keys()</strong> 作用：取得对象所有可枚举的属性。接受一个对象作为参数，返回对象属性的数组。（ES5的方法）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">function Car ()&#123;</div><div class="line">    Car.prototype.name = &quot;ryuan&quot;,</div><div class="line">    Car.prototype.color = &quot;red&quot;</div><div class="line">&#125;</div><div class="line">console.log(Car.prototype);  //[&quot;name&quot;, &quot;color&quot;]</div></pre></td></tr></table></figure>
+<h4 id="c-更简单的原型对象语法"><a href="#c-更简单的原型对象语法" class="headerlink" title="c.更简单的原型对象语法"></a>c.更简单的原型对象语法</h4><p>因为原型对象也是个对象，所以我们可以这样简便的定义原型对象。当然也是为了偷懒少打些代码，哈哈哈。优雅点，简单点,敲代码的方式简单点。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">function Person()&#123;&#125;;</div><div class="line">//Person构造函数的原型对象，简单写法</div><div class="line">Person.prototype = &#123;</div><div class="line">    name : &quot;ry&quot;,</div><div class="line">    age : 21,</div><div class="line">    sayHi : function()&#123;</div><div class="line">        console.log(&quot;hi&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>不足：这种写法也有不好的地方，就是这样写相当于重写了Person的原型对象。原型对象的constructor属性就不再指向Person了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//比如</div><div class="line">var p1 = new Person();</div><div class="line">console.log(p1.constructor == Person);  //false</div><div class="line"></div><div class="line">//但是instanceof还是能够判断对象是不是某类型</div><div class="line">console.log(p1 instanceof Person);  //true</div></pre></td></tr></table></figure></p>
+<p>如果constructor很重要的请况下：可以这样加上去<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Person.prototype = &#123;</div><div class="line">    //加上这行，也就是定义constructor</div><div class="line">    constructor: Person,</div><div class="line">    name : &quot;ry&quot;,</div><div class="line">    age : 21,</div><div class="line">    sayHi : function()&#123;</div><div class="line">        console.log(&quot;hi&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>问题：原型模式只是一个共享区对吧，那我又要不共享的属性，那怎么办？<br>所以：作为一个有志青年，结合一下<strong>构造函数模式和原型模式</strong>吧。</p>
+<h3 id="5-组合使用构造函数模式和原型模式"><a href="#5-组合使用构造函数模式和原型模式" class="headerlink" title="5.组合使用构造函数模式和原型模式"></a>5.组合使用构造函数模式和原型模式</h3><blockquote>
+<p>这两种模式的结合可以说是最多用的，对于实现引用类型来说。</p>
+</blockquote>
+<p>1.构造模式用于定义实例属性。<br>2.原型模式用来定义方法和共享的属性。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">function Person(name , age , sex)&#123;</div><div class="line">    //这里定义实例的属性</div><div class="line">    this.name = name ;</div><div class="line">    this.age = age ;</div><div class="line">    this.sex = sex;</div><div class="line">&#125;</div><div class="line">//下面定义共享的属性和方法</div><div class="line">Person.prototype = &#123;</div><div class="line">    constructor : Person ,</div><div class="line">    sayHi : function ()&#123;</div><div class="line">        console.log(&quot;hi&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//创建你的对象吧</div><div class="line">var girl = new Person(&quot;玲玲&quot;,18,&quot;female&quot;);</div><div class="line">var boy = new Person (&quot;元元&quot;,20,&quot;male&quot;);</div><div class="line"></div><div class="line">//各自的名字</div><div class="line">console.log(girl.name);  //&quot;玲玲&quot;</div><div class="line">console.log(boy.name);  //&quot;元元&quot;</div><div class="line">//打招呼</div><div class="line">girl.sayHi();  //hi</div><div class="line">boy.sayHi();  //hi</div></pre></td></tr></table></figure></p>
+<h2 id="三、说说"><a href="#三、说说" class="headerlink" title="三、说说"></a>三、说说</h2><blockquote>
+<p>本次主要是怎么去创建对象和怎么去定义自己的引用类型。慢慢理解理解，慢慢吃透，欢迎大家一起讨论。<br>找不到对象，我们还是自己创建吧，哈哈哈。做个积极向上的人，对象总会有的。<br>不忘初心，方得始终。觉得博主写得很好就赞一下吧，也可以关注俺哦。</p>
+<p>同系列前几篇：<br><a href="http://www.cnblogs.com/Ry-yuan/p/7482599.html" target="_blank" rel="external">第一篇：JavaScript–我发现，原来你是这样的JS（一）（初识）</a><br><a href="http://www.cnblogs.com/Ry-yuan/p/7496574.html" target="_blank" rel="external">第二篇：JavaScript–我发现，原来你是这样的JS（二）（基础概念–躯壳篇）</a><br><a href="http://www.cnblogs.com/Ry-yuan/p/7501214.html" target="_blank" rel="external">第三篇：JavaScript–我发现，原来你是这样的JS（三）（基础概念–灵魂篇） </a><br><a href="http://www.cnblogs.com/Ry-yuan/p/7675894.html" target="_blank" rel="external">第四篇：JavaScript–我发现，原来你是这样的JS（四）（看看变量，作用域，垃圾回收是啥）</a><br><a href="http://www.cnblogs.com/Ry-yuan/p/7688322.html" target="_blank" rel="external">第五篇：JavaScript–我发现，原来你是这样的JS（引用类型不简单[上篇]，且听我娓娓道来）</a><br><a href="http://www.cnblogs.com/Ry-yuan/p/7747103.html" target="_blank" rel="external">第六篇：JavaScript–我发现，原来你是这样的JS（引用类型不简单[下篇]，基本包装类型与个体内置对象）</a><br><a href="http://www.cnblogs.com/Ry-yuan/p/7774098.html" target="_blank" rel="external">第七篇：JavaScript–我发现，原来你是这样的JS：面向对象编程OOP[1]–(理解对象和对象属性类型) </a>  </p>
+<p>本文出自博客园：<a href="http://www.cnblogs.com/Ry-yuan/" target="_blank" rel="external">http://www.cnblogs.com/Ry-yuan/</a><br>作者：Ry（渊源远愿）<br>欢迎转载，转载请标明出处，保留该字段。</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/17/Javascript-我发现，原来你是这样的JS-面向对象编程OOP-1-理解对象和对象属性类型/" rel="next" title="Javascript--我发现，原来你是这样的JS:面向对象编程OOP[1]--(理解对象和对象属性类型)">
+                <i class="fa fa-chevron-left"></i> Javascript--我发现，原来你是这样的JS:面向对象编程OOP[1]--(理解对象和对象属性类型)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/17/Javascript-我发现，原来你是这样的JS-面向对象编程OOP-3-js继承/" rel="prev" title="Javascript--我发现，原来你是这样的JS:面向对象编程OOP[3]--(js继承)">
+                Javascript--我发现，原来你是这样的JS:面向对象编程OOP[3]--(js继承) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Ry-yuan" />
+          <p class="site-author-name" itemprop="name">Ry-yuan</p>
+           
+              <p class="site-description motion-element" itemprop="description">如果你觉得困难，那也许是在进步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、介绍"><span class="nav-number">1.</span> <span class="nav-text">一、介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、创建对象"><span class="nav-number">2.</span> <span class="nav-text">二、创建对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-前面的创建对象方式"><span class="nav-number">2.1.</span> <span class="nav-text">1.前面的创建对象方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a-在前面的章节中，我们创建对象的方式有两种：new-Object-和-对象字面量："><span class="nav-number">2.1.1.</span> <span class="nav-text">a.在前面的章节中，我们创建对象的方式有两种：new Object() 和 对象字面量：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-工厂模式"><span class="nav-number">2.2.</span> <span class="nav-text">2.工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a-透过代码看工厂函数"><span class="nav-number">2.2.1.</span> <span class="nav-text">a.透过代码看工厂函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#b-俗话说说工厂函数"><span class="nav-number">2.2.2.</span> <span class="nav-text">b.俗话说说工厂函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-构造函数模式"><span class="nav-number">2.3.</span> <span class="nav-text">3.构造函数模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a-透过代码看构造函数"><span class="nav-number">2.3.1.</span> <span class="nav-text">a.透过代码看构造函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#b-俗话说说构造函数"><span class="nav-number">2.3.2.</span> <span class="nav-text">b.俗话说说构造函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-原型模式（prototype模式）"><span class="nav-number">2.4.</span> <span class="nav-text">4.原型模式（prototype模式）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a-先理解原型对象"><span class="nav-number">2.4.1.</span> <span class="nav-text">a.先理解原型对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#b-一些常用的方法"><span class="nav-number">2.4.2.</span> <span class="nav-text">b.一些常用的方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c-更简单的原型对象语法"><span class="nav-number">2.4.3.</span> <span class="nav-text">c.更简单的原型对象语法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-组合使用构造函数模式和原型模式"><span class="nav-number">2.5.</span> <span class="nav-text">5.组合使用构造函数模式和原型模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、说说"><span class="nav-number">3.</span> <span class="nav-text">三、说说</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ry-yuan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+&nbsp;|&nbsp;
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("RjwnbvSlgbai8OyA9HotKOIY-gzGzoHsz", "Bwqfl7y14vPhnj48bjA112I8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

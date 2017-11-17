@@ -1,0 +1,928 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="一、介绍 老铁们，这次是JS的面向对象的编程OOP（虽然我没有对象，心累啊，但是可以自己创啊）。JS高程里第六章的内容，这章内容在我看来是JS中很难理解的一部分。所以分成三篇博客来逐个理清。这是第一篇：理解对象，认识对象属性的类型。  二、理解对象 书中原话–ECMA-262中把对像定义为：无需属性的集合。其中属性可以是基本值，对象或者是函数。  1.我们通俗点理解一下对象是一个真实存在的东西，就">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Javascript--我发现，原来你是这样的JS:面向对象编程OOP[1]--(理解对象和对象属性类型)">
+<meta property="og:url" content="http://Ry-yuan.me/2017/11/17/Javascript-我发现，原来你是这样的JS-面向对象编程OOP-1-理解对象和对象属性类型/index.html">
+<meta property="og:site_name" content="Ry-yuan(瑞元)">
+<meta property="og:description" content="一、介绍 老铁们，这次是JS的面向对象的编程OOP（虽然我没有对象，心累啊，但是可以自己创啊）。JS高程里第六章的内容，这章内容在我看来是JS中很难理解的一部分。所以分成三篇博客来逐个理清。这是第一篇：理解对象，认识对象属性的类型。  二、理解对象 书中原话–ECMA-262中把对像定义为：无需属性的集合。其中属性可以是基本值，对象或者是函数。  1.我们通俗点理解一下对象是一个真实存在的东西，就">
+<meta property="og:updated_time" content="2017-11-17T06:53:15.498Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Javascript--我发现，原来你是这样的JS:面向对象编程OOP[1]--(理解对象和对象属性类型)">
+<meta name="twitter:description" content="一、介绍 老铁们，这次是JS的面向对象的编程OOP（虽然我没有对象，心累啊，但是可以自己创啊）。JS高程里第六章的内容，这章内容在我看来是JS中很难理解的一部分。所以分成三篇博客来逐个理清。这是第一篇：理解对象，认识对象属性的类型。  二、理解对象 书中原话–ECMA-262中把对像定义为：无需属性的集合。其中属性可以是基本值，对象或者是函数。  1.我们通俗点理解一下对象是一个真实存在的东西，就">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://Ry-yuan.me/2017/11/17/Javascript-我发现，原来你是这样的JS-面向对象编程OOP-1-理解对象和对象属性类型/"/>
+
+
+
+
+
+  <title>Javascript--我发现，原来你是这样的JS:面向对象编程OOP[1]--(理解对象和对象属性类型) | Ry-yuan(瑞元)</title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ry-yuan(瑞元)</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://Ry-yuan.me/2017/11/17/Javascript-我发现，原来你是这样的JS-面向对象编程OOP-1-理解对象和对象属性类型/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ry-yuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ry-yuan(瑞元)">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Javascript--我发现，原来你是这样的JS:面向对象编程OOP[1]--(理解对象和对象属性类型)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-17T14:51:40+08:00">
+                2017-11-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/11/17/Javascript-我发现，原来你是这样的JS-面向对象编程OOP-1-理解对象和对象属性类型/" class="leancloud_visitors" data-flag-title="Javascript--我发现，原来你是这样的JS:面向对象编程OOP[1]--(理解对象和对象属性类型)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一、介绍"><a href="#一、介绍" class="headerlink" title="一、介绍"></a>一、介绍</h2><blockquote>
+<p>老铁们，这次是JS的面向对象的编程OOP（虽然我没有对象，心累啊，但是可以自己创啊）。<br>JS高程里第六章的内容，这章内容在我看来是JS中很难理解的一部分。所以分成三篇博客来逐个理清。<br>这是第一篇：理解对象，认识对象属性的类型。</p>
+</blockquote>
+<h2 id="二、理解对象"><a href="#二、理解对象" class="headerlink" title="二、理解对象"></a>二、理解对象</h2><blockquote>
+<p>书中原话–ECMA-262中把对像定义为：无需属性的集合。其中属性可以是基本值，对象或者是函数。</p>
+</blockquote>
+<h3 id="1-我们通俗点理解一下"><a href="#1-我们通俗点理解一下" class="headerlink" title="1.我们通俗点理解一下"></a>1.我们通俗点理解一下</h3><p>对象是一个真实存在的东西，就像世上每一个人、每一个物体一样，它有自己的属性，行为。也就是说各种属性集合在一起就是一个具体的对象。（你自己也是一个对象）</p>
+<p><strong>举一些生活例子：</strong><br>小明：有名字，年龄（基本值），说话（方法） 等属性<br>电脑：有颜色，大小（基本值），cpu（对象）等属性</p>
+<h3 id="2-我们js代码理解一下："><a href="#2-我们js代码理解一下：" class="headerlink" title="2.我们js代码理解一下："></a>2.我们js代码理解一下：</h3><p>1.用new Object()构造函数方法来创建对象<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//obj是我创建的一个对象，它有name、age属性，sayHi方法</div><div class="line">var obj = new Object();</div><div class="line">obj.name = &quot;ry&quot;;</div><div class="line">obj.age=&quot;3&quot;;</div><div class="line">obj.sayHi = function()&#123;</div><div class="line">    console.log(&quot;Hi&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>2.用对象字面量创建对象<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//创建一个person对象</div><div class="line">var person = &#123;</div><div class="line">    name : &quot;ry&quot;,</div><div class="line">    age : 3,</div><div class="line">    sayBye: function()&#123;</div><div class="line">        console.log(&apos;bye bye&apos;);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>上面说这么多，就想说明白js中的对象是什么。总之：无序的属性的集合 == 对象</p>
+</blockquote>
+<h2 id="三、理解对象属性的类型"><a href="#三、理解对象属性的类型" class="headerlink" title="三、理解对象属性的类型"></a>三、理解对象属性的类型</h2><h3 id="1-对象属性有类型？奇怪吗？"><a href="#1-对象属性有类型？奇怪吗？" class="headerlink" title="1.对象属性有类型？奇怪吗？"></a>1.对象属性有类型？奇怪吗？</h3><blockquote>
+<p>一开始我们对未知的事物都会充满的疑惑和惊讶，但是知识这东西，我们更多的选择去接受它，然后理解它，最后运用它。</p>
+</blockquote>
+<ul>
+<li>可能你会问对象属性还有类型？一开始我也觉得惊讶。  </li>
+<li>没错，对象属性是有类型的，可能你不能理解，但只能接受。 </li>
+</ul>
+<h3 id="2-对象属性类型有哪些：数据属性和访问器属性"><a href="#2-对象属性类型有哪些：数据属性和访问器属性" class="headerlink" title="2.对象属性类型有哪些：数据属性和访问器属性"></a>2.对象属性类型有哪些：数据属性和访问器属性</h3><blockquote>
+<p>对于对象属性类型这块，我们只是简单的去了解有什么类型，类型区别。 这也有助于我们去了解对象。</p>
+</blockquote>
+<h4 id="1-数据属性（最常用的）"><a href="#1-数据属性（最常用的）" class="headerlink" title="1.数据属性（最常用的）"></a>1.数据属性（最常用的）</h4><blockquote>
+<p>既然有不同的类型，那肯定要有一个东西去区分他们，那这个东西就是特性</p>
+</blockquote>
+<ul>
+<li><strong>js中用特性这东西去区分属性类型。对于数据属性，它有以下4个特性去说明它是数据属性</strong>。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[[Configurable]]</td>
+<td>表示能否通过delete来删除属性，能否修改属性的特性，或能否把属性设为访问器属性，默认true。</td>
+</tr>
+<tr>
+<td>[[Enumerable]]</td>
+<td>能不能通过for in枚举该属性，默认true。</td>
+</tr>
+<tr>
+<td>[[Writable]]</td>
+<td>能不能修改属性值，默认true。</td>
+</tr>
+<tr>
+<td>[[Value]]</td>
+<td>这个位置保存属性的值。比如下面的name属性，它的[[Value]]就保存”ry”这个字符串</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>数据属性长什么样子（也就那样，以前那样）</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//一个对象</div><div class="line">var person = &#123;</div><div class="line">    //这就是一个数据属性</div><div class="line">    name:&quot;ry&quot;;</div><div class="line">&#125;;</div><div class="line">console.log(person.name); //ry</div><div class="line">//透过代码可以看出，以前我们定义对象属性就是数据属性，以前不知道它叫数据属性这个名字，但现在知道了。</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>测试一下特性吧。用Object.defineProperty()，修改特性用到这个函数Object.defineProperty():接受3个参数：属性所在对象，属性名字，描述符对象</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//创建一个对象person</div><div class="line">var person = &#123;&#125;;</div><div class="line">//添加一个数据属性</div><div class="line">person.name = &quot;ry&quot;;</div><div class="line">//使用Object.definProperty方法</div><div class="line">Object.definProperty(person,&quot;name&quot;,&#123;</div><div class="line">    //writable表示能不能修改,false表示不能</div><div class="line">    writable:false,</div><div class="line">&#125;)</div><div class="line"></div><div class="line">console.log(person.name);  &quot;ry&quot;</div><div class="line">//修改name的值</div><div class="line">person.name = &quot;yuan&quot;;</div><div class="line">//name的值不变，修改不了</div><div class="line">console.log(person.name);  &quot;ry&quot;</div></pre></td></tr></table></figure>
+<p>除此之外还可以修改其他特性，大家可以试试哦。</p>
+<h4 id="2-访问器属性"><a href="#2-访问器属性" class="headerlink" title="2.访问器属性"></a>2.访问器属性</h4><p>访问器属性的4个特性： </p>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[[Configurable]]</td>
+<td>表示能否通过delete来删除属性，能否修改属性的特性，或能否把属性设为访问器属性，默认true。</td>
+</tr>
+<tr>
+<td>[[Enumerable]]</td>
+<td>能不能通过for in枚举该属性，默认true。</td>
+</tr>
+<tr>
+<td>[[Get]]</td>
+<td>读取时调用的函数，默认undefined</td>
+</tr>
+<tr>
+<td>[[Set]]</td>
+<td>写入时调用的函数，默认undefined</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>访问器属性特性不包含数据值，它们包含一对getter和setter函数(但这两个不是必须的)<br>访问器属性不能直接定义，只能通过Object.defineProperty()来定义。</p>
+</blockquote>
+<p>▶ 书上的例子：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">//一个对象</div><div class="line">var book = &#123;</div><div class="line">    _year : 2004,</div><div class="line">    edition : 1</div><div class="line">&#125;;</div><div class="line"></div><div class="line">//定义一个叫year的访问器属性</div><div class="line">Objecct.defineProperty(book,&quot;year&quot;,&#123;</div><div class="line">    //设置get特性，这是一个方法</div><div class="line">    get: function()&#123;</div><div class="line">        retrun this._year;</div><div class="line">    &#125;;</div><div class="line">    //设置set特性</div><div class="line">    set:function(newValue)&#123;</div><div class="line">        if(newValue &gt; 2004)&#123;</div><div class="line">            this._year = newValue;</div><div class="line">            this.edition += newValue - 2004;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;)；</div><div class="line"></div><div class="line">//测试一下,给访问器属性赋值，即写入year，它会调用set的方法</div><div class="line">book.year = 2005;</div><div class="line">//上面的2005大于2004，set方法中会改变edition的值，变成2</div><div class="line">console.log(book.edtion); //2</div></pre></td></tr></table></figure>
+<p>▶ 特别提醒：Objecct.defineProperty() 的兼容性：IE9+,Firefox4+,chrome，Opera12+，Safari 5+</p>
+<p>▶ 除此之外</p>
+<ul>
+<li>还有一次定义多个属性的方法：<strong>Objecct.defineProperties()</strong> ， 兼容性：IE9+,Firefox4+,chrome，Opera12+，Safari 5+。</li>
+</ul>
+<ul>
+<li>读取属性特性方法：<strong>Object.getOwnPropertyDescriptor()</strong>，接受两参数：属性所在对象和要读取器描述符的属性名称。 返回一个对象。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">//实践比较容易理解</div><div class="line">//一个对象</div><div class="line">var book = &#123;&#125;;</div><div class="line">//用Objecct.defineProperties()方法设置多个属性 </div><div class="line">Object.defineProperties(book,&#123;</div><div class="line">    _year:&#123;</div><div class="line">        value:&quot;ry&quot;</div><div class="line">    &#125;,</div><div class="line">    edition:&#123;</div><div class="line">        value:1</div><div class="line">    &#125;,</div><div class="line">    year:&#123;</div><div class="line">        get:function()&#123;</div><div class="line">            return this._year ;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">//函数返回一个对象</div><div class="line">//descriptor对象有configurable，enumerable，writable，value属性/（如果是访问器属性:configurable，enumerable，get，set）</div><div class="line">//_year是数据属性</div><div class="line">var descriptor = Object.getOwnPropertyDescriptor(book,&quot;_year&quot;);</div><div class="line">console.log(descriptor.value);  //2004</div><div class="line">console.log(descriptor.configurable);  //true</div><div class="line">console.log(descriptor.enumerable);  //true</div><div class="line">//数据属性没有get</div><div class="line">console.log(descriptor2.get); //undefined</div><div class="line"></div><div class="line">//year是访问器属性</div><div class="line">var descriptor2 = Object.getOwnPropertyDescriptor(book,&quot;year&quot;);</div><div class="line">//访问器属性有get</div><div class="line">console.log(descriptor2.get); //function</div></pre></td></tr></table></figure>
+<h2 id="四、小结"><a href="#四、小结" class="headerlink" title="四、小结"></a>四、小结</h2><blockquote>
+<p>这次介绍主要介绍：<br>1.什么是对象：无序属性的集合。<br>2.还有属性的类型：数据属性和访问器属性。还有两种属性的各个特性，区别。不用深入，起码知道有这些东西。<br>3.属性的类型有个了解就好，主要用的还是数据属性（平时用的）。<br>不忘初心，方得始终。觉得写得很好就赞一下吧，也可以关注博主哦</p>
+<p>同系列前几篇：<br><a href="http://www.cnblogs.com/Ry-yuan/p/7482599.html" target="_blank" rel="external">第一篇：JavaScript–我发现，原来你是这样的JS（一）（初识）</a><br><a href="http://www.cnblogs.com/Ry-yuan/p/7496574.html" target="_blank" rel="external">第二篇：JavaScript–我发现，原来你是这样的JS（二）（基础概念–躯壳篇）</a><br><a href="http://www.cnblogs.com/Ry-yuan/p/7501214.html" target="_blank" rel="external">第三篇：JavaScript–我发现，原来你是这样的JS（三）（基础概念–灵魂篇） </a><br><a href="http://www.cnblogs.com/Ry-yuan/p/7675894.html" target="_blank" rel="external">第四篇：JavaScript–我发现，原来你是这样的JS（四）（看看变量，作用域，垃圾回收是啥）</a><br><a href="http://www.cnblogs.com/Ry-yuan/p/7688322.html" target="_blank" rel="external">第五篇：JavaScript–我发现，原来你是这样的JS（引用类型不简单[上篇]，且听我娓娓道来）</a><br><a href="http://www.cnblogs.com/Ry-yuan/p/7747103.html" target="_blank" rel="external">第六篇：JavaScript–我发现，原来你是这样的JS（引用类型不简单[下篇]，基本包装类型与个体内置对象）</a>  </p>
+<p>本文出自博客园：<a href="http://www.cnblogs.com/Ry-yuan/" target="_blank" rel="external">http://www.cnblogs.com/Ry-yuan/</a><br>作者：Ry（渊源远愿）<br>欢迎转载，转载请标明出处，保留该字段。</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/17/Javascript-我发现，原来你是这样的JS（引用类型不简单-2-基本包装类型与个体内置对象）/" rel="next" title="Javascript--我发现，原来你是这样的JS（引用类型不简单[2],基本包装类型与个体内置对象）">
+                <i class="fa fa-chevron-left"></i> Javascript--我发现，原来你是这样的JS（引用类型不简单[2],基本包装类型与个体内置对象）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/17/Javascript-我发现，原来你是这样的JS-面向对象编程OOP-2-创建对象/" rel="prev" title="Javascript--我发现，原来你是这样的JS:面向对象编程OOP[2]--(创建对象)">
+                Javascript--我发现，原来你是这样的JS:面向对象编程OOP[2]--(创建对象) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Ry-yuan" />
+          <p class="site-author-name" itemprop="name">Ry-yuan</p>
+           
+              <p class="site-description motion-element" itemprop="description">如果你觉得困难，那也许是在进步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、介绍"><span class="nav-number">1.</span> <span class="nav-text">一、介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、理解对象"><span class="nav-number">2.</span> <span class="nav-text">二、理解对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-我们通俗点理解一下"><span class="nav-number">2.1.</span> <span class="nav-text">1.我们通俗点理解一下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-我们js代码理解一下："><span class="nav-number">2.2.</span> <span class="nav-text">2.我们js代码理解一下：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、理解对象属性的类型"><span class="nav-number">3.</span> <span class="nav-text">三、理解对象属性的类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-对象属性有类型？奇怪吗？"><span class="nav-number">3.1.</span> <span class="nav-text">1.对象属性有类型？奇怪吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-对象属性类型有哪些：数据属性和访问器属性"><span class="nav-number">3.2.</span> <span class="nav-text">2.对象属性类型有哪些：数据属性和访问器属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-数据属性（最常用的）"><span class="nav-number">3.2.1.</span> <span class="nav-text">1.数据属性（最常用的）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-访问器属性"><span class="nav-number">3.2.2.</span> <span class="nav-text">2.访问器属性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、小结"><span class="nav-number">4.</span> <span class="nav-text">四、小结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ry-yuan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+&nbsp;|&nbsp;
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("RjwnbvSlgbai8OyA9HotKOIY-gzGzoHsz", "Bwqfl7y14vPhnj48bjA112I8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
