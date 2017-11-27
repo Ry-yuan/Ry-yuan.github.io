@@ -1,0 +1,891 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="一、介绍 随着js不断学习，你可能会慢慢的好奇，用了这么久的js，却不知道这js在浏览器怎么被执行的，很尴尬。所以，我查阅很多资料来总结JS的执行过程，也分享出来，和大家一起学习。 本篇主要讲单线程的JS涉及的名词：JS引擎，单线程，执行栈，执行上下文（execution context）  二、JS引擎 JS引擎是浏览器的重要组成部分，主要用于读取并执行js。就是这家伙执行js的，但它不止于执行">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入学习JS执行--单线程的JS">
+<meta property="og:url" content="http://Ry-yuan.me/2017/11/20/深入学习JS执行-单线程的JS/index.html">
+<meta property="og:site_name" content="Ry-yuan(瑞元)">
+<meta property="og:description" content="一、介绍 随着js不断学习，你可能会慢慢的好奇，用了这么久的js，却不知道这js在浏览器怎么被执行的，很尴尬。所以，我查阅很多资料来总结JS的执行过程，也分享出来，和大家一起学习。 本篇主要讲单线程的JS涉及的名词：JS引擎，单线程，执行栈，执行上下文（execution context）  二、JS引擎 JS引擎是浏览器的重要组成部分，主要用于读取并执行js。就是这家伙执行js的，但它不止于执行">
+<meta property="og:image" content="http://images2017.cnblogs.com/blog/1144006/201711/1144006-20171121120123649-80762518.png">
+<meta property="og:updated_time" content="2017-11-27T13:01:51.325Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入学习JS执行--单线程的JS">
+<meta name="twitter:description" content="一、介绍 随着js不断学习，你可能会慢慢的好奇，用了这么久的js，却不知道这js在浏览器怎么被执行的，很尴尬。所以，我查阅很多资料来总结JS的执行过程，也分享出来，和大家一起学习。 本篇主要讲单线程的JS涉及的名词：JS引擎，单线程，执行栈，执行上下文（execution context）  二、JS引擎 JS引擎是浏览器的重要组成部分，主要用于读取并执行js。就是这家伙执行js的，但它不止于执行">
+<meta name="twitter:image" content="http://images2017.cnblogs.com/blog/1144006/201711/1144006-20171121120123649-80762518.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://Ry-yuan.me/2017/11/20/深入学习JS执行-单线程的JS/"/>
+
+
+
+
+
+  <title>深入学习JS执行--单线程的JS | Ry-yuan(瑞元)</title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ry-yuan(瑞元)</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://Ry-yuan.me/2017/11/20/深入学习JS执行-单线程的JS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ry-yuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ry-yuan(瑞元)">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">深入学习JS执行--单线程的JS</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-20T21:00:40+08:00">
+                2017-11-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/11/20/深入学习JS执行-单线程的JS/" class="leancloud_visitors" data-flag-title="深入学习JS执行--单线程的JS">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一、介绍"><a href="#一、介绍" class="headerlink" title="一、介绍"></a>一、介绍</h2><blockquote>
+<p>随着js不断学习，你可能会慢慢的好奇，用了这么久的js，却不知道这js在浏览器怎么被执行的，很尴尬。所以，我查阅很多资料来总结JS的执行过程，也分享出来，和大家一起学习。</p>
+<p>本篇主要讲单线程的JS<br>涉及的名词：JS引擎，单线程，执行栈，执行上下文（execution context）</p>
+</blockquote>
+<h2 id="二、JS引擎"><a href="#二、JS引擎" class="headerlink" title="二、JS引擎"></a>二、JS引擎</h2><blockquote>
+<p>JS引擎是浏览器的重要组成部分，主要用于读取并执行js。就是这家伙执行js的，但它不止于执行js。</p>
+</blockquote>
+<h3 id="各大浏览器的JS引擎："><a href="#各大浏览器的JS引擎：" class="headerlink" title="各大浏览器的JS引擎："></a>各大浏览器的JS引擎：</h3><table>
+<thead>
+<tr>
+<th>浏览器</th>
+<th>Js引擎</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chrome</td>
+<td>V8</td>
+</tr>
+<tr>
+<td>Firefox</td>
+<td>SpiderMonkey</td>
+</tr>
+<tr>
+<td>IE</td>
+<td>Chakra（查克拉）</td>
+</tr>
+<tr>
+<td>Safari</td>
+<td>Nitro/JavaScript Core</td>
+</tr>
+<tr>
+<td>Opera</td>
+<td>Carakan</td>
+</tr>
+</tbody>
+</table>
+<p>虽然每个浏览器的JS引擎都不同，但他们执行js机制大致相同。</p>
+<h2 id="三、JS执行是单线程"><a href="#三、JS执行是单线程" class="headerlink" title="三、JS执行是单线程"></a>三、JS执行是单线程</h2><blockquote>
+<p>单线程是指Js引擎执行Js时只分了一个线程给他执行，也就是执行js时是单线程的。</p>
+</blockquote>
+<h3 id="a-先了解线程"><a href="#a-先了解线程" class="headerlink" title="a.先了解线程"></a>a.先了解线程</h3><ul>
+<li>有人可能会疑惑，线程是什么？ </li>
+</ul>
+<blockquote>
+<p>直接举个例子吧，你打开一个浏览器(应用程序)，那浏览器就是一个进程。打开浏览器后要做很多事情(各种分工)：发送请求，接受请求，渲染页面，执行js等等这些就是一个个线程。</p>
+</blockquote>
+<p>我这里只是简单的说一下，具体的大家可以找计算机操作系统资料深入学习。</p>
+<h3 id="b-为什么是单线程"><a href="#b-为什么是单线程" class="headerlink" title="b.为什么是单线程"></a>b.为什么是单线程</h3><ul>
+<li>有可能有疑惑，为什么js执行要单线程，如果多线程不是可以执行得快一点吗？</li>
+</ul>
+<blockquote>
+<p>这个要回到Js历史了，布兰登·艾奇(Brendan Eich)老哥用10天创造js。当时js用来干嘛，简单的浏览器交互，验证，操作一下dom是吧。那把它设计成那么复杂干什么，而且如果多线程的话，操作dom会出现麻烦的事情，假设一个线程读取DOM节点数据的同时，另一个线程把那个DOM节点删了，呵呵。所以js一个线程就够了，也就是一步一步顺序运行下来。</p>
+</blockquote>
+<h3 id="c-证明一下单线程"><a href="#c-证明一下单线程" class="headerlink" title="c.证明一下单线程"></a>c.证明一下单线程</h3><blockquote>
+<p>单线程只能一步步执行下来，所以执行以下代码会导致阻塞（有个while死循环），不会弹出hello</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">while(1)&#123;&#125;</div><div class="line">alert(&apos;hello&apos;);</div></pre></td></tr></table></figure>
+<h2 id="四、执行栈"><a href="#四、执行栈" class="headerlink" title="四、执行栈"></a>四、执行栈</h2><blockquote>
+<p>实现js执行时的单线程，js引擎维护一个执行栈。（先进后出）</p>
+</blockquote>
+<h4 id="来个例子：运行这段代码是执行栈是怎么做的。"><a href="#来个例子：运行这段代码是执行栈是怎么做的。" class="headerlink" title="来个例子：运行这段代码是执行栈是怎么做的。"></a>来个例子：运行这段代码是执行栈是怎么做的。</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//运行代码</div><div class="line">sayHello();</div><div class="line">function sayHello()&#123;</div><div class="line">    var message = getMessage();</div><div class="line">    console.log(message);</div><div class="line">&#125;</div><div class="line">function getMessage()&#123;</div><div class="line">    return &apos;hello&apos;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="执行栈代码模拟"><a href="#执行栈代码模拟" class="headerlink" title="执行栈代码模拟"></a>执行栈代码模拟</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">//执行栈</div><div class="line">var exeStack = [];</div><div class="line">//先压如全局执行环境</div><div class="line">exeStack.push(&apos;globalContext&apos;);</div><div class="line">//遇到执行sayHello函数，ok，压进去</div><div class="line">exeStack.push(&apos;sayHello&apos;);</div><div class="line">//执行sayHello函数发现，还有个getMessage函数，ok，压进栈</div><div class="line">exeStack.push(&apos;getMessage&apos;);</div><div class="line">//执行完了getMessage函数，弹栈</div><div class="line">exeStack.pop();</div><div class="line">//继续执行sayHello函数，又发现有console.log这个家伙，ok，你进栈</div><div class="line">exeStack.push(&apos;console.log&apos;);</div><div class="line">//执行了console后，输出hello，console 弹栈</div><div class="line">exeStack.pop();</div><div class="line">//这时sayHello执行完，弹栈</div><div class="line">exeStack.pop();</div><div class="line">//最后整个代码执行完，全局环境弹栈</div><div class="line">exeStack.pop();</div></pre></td></tr></table></figure>
+<h4 id="执行栈图示："><a href="#执行栈图示：" class="headerlink" title="执行栈图示："></a>执行栈图示：</h4><p><img src="http://images2017.cnblogs.com/blog/1144006/201711/1144006-20171121120123649-80762518.png" alt=""></p>
+<blockquote>
+<p>这里主要是js在执行时的一个总体过程，但是你们可能会疑惑，压进栈里面的一块块（抽象）东西到底包含的是什么？<br>我可以告诉你们是，执行上下文，global是指全局的的执行上下文，其他的是函数执行上下文，那到底这些上下文包含什么，我会在下一篇详解。</p>
+</blockquote>
+<h2 id="五、小结"><a href="#五、小结" class="headerlink" title="五、小结"></a>五、小结</h2><blockquote>
+<p>这篇主要是将js单线程是什么，并且怎么实现单线程的，先有个总体js执行过程的印象，下一篇会详细写js执行的细节，执行上下文。</p>
+<p>本文出自博客园：<a href="http://www.cnblogs.com/Ry-yuan/" target="_blank" rel="external">http://www.cnblogs.com/Ry-yuan/</a><br>作者：Ry（渊源远愿）<br>欢迎转载，转载请标明出处，保留该字段。</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/17/Javascript-我发现，原来你是这样的JS-面向对象编程OOP-3-js继承/" rel="next" title="Javascript--我发现，原来你是这样的JS:面向对象编程OOP[3]--(js继承)">
+                <i class="fa fa-chevron-left"></i> Javascript--我发现，原来你是这样的JS:面向对象编程OOP[3]--(js继承)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/23/深入学习JS执行-创建执行上下文（变量对象，作用域链，this）/" rel="prev" title="深入学习JS执行--创建执行上下文（变量对象，作用域链，this）">
+                深入学习JS执行--创建执行上下文（变量对象，作用域链，this） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Ry-yuan" />
+          <p class="site-author-name" itemprop="name">Ry-yuan</p>
+           
+              <p class="site-description motion-element" itemprop="description">如果你觉得困难，那也许是在进步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、介绍"><span class="nav-number">1.</span> <span class="nav-text">一、介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、JS引擎"><span class="nav-number">2.</span> <span class="nav-text">二、JS引擎</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#各大浏览器的JS引擎："><span class="nav-number">2.1.</span> <span class="nav-text">各大浏览器的JS引擎：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、JS执行是单线程"><span class="nav-number">3.</span> <span class="nav-text">三、JS执行是单线程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-先了解线程"><span class="nav-number">3.1.</span> <span class="nav-text">a.先了解线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-为什么是单线程"><span class="nav-number">3.2.</span> <span class="nav-text">b.为什么是单线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-证明一下单线程"><span class="nav-number">3.3.</span> <span class="nav-text">c.证明一下单线程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、执行栈"><span class="nav-number">4.</span> <span class="nav-text">四、执行栈</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#来个例子：运行这段代码是执行栈是怎么做的。"><span class="nav-number">4.0.1.</span> <span class="nav-text">来个例子：运行这段代码是执行栈是怎么做的。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行栈代码模拟"><span class="nav-number">4.0.2.</span> <span class="nav-text">执行栈代码模拟</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行栈图示："><span class="nav-number">4.0.3.</span> <span class="nav-text">执行栈图示：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、小结"><span class="nav-number">5.</span> <span class="nav-text">五、小结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ry-yuan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+&nbsp;|&nbsp;
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("RjwnbvSlgbai8OyA9HotKOIY-gzGzoHsz", "Bwqfl7y14vPhnj48bjA112I8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

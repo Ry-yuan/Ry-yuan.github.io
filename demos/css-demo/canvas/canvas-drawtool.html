@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>canvas draw tool</title>
+    <link rel="stylesheet" href="css/canvasTool.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="btn-box">
+            <h4>工具栏</h4>
+            <span>画笔颜色:</span>
+            <select name="" id="selectColor">
+                        <option id="redBtn" value="red" label="black" selected  ></option>
+                        <option id="redBtn" value="red" label="red"  ></option>
+                        <option id="blueBtn" value="blue" label="blue"></option>
+                        <option id="greenBtn" value="green" label="green"></option>
+                </select>
+            <br>
+            <span>画笔粗细:</span>
+            <select name="" id="selectLineWidth">
+                        <option  value="1" label="normal" selected  ></option>
+                        <option  value="10" label="mid"></option>
+                        <option  value="20" label="big"></option>
+                </select>
+            <span id="clearCanvas" class="shape-btn">清空画布</span>
+        </div>
+        <canvas id="canvas" width="800" height="400"> </canvas>
+    </div>
+
+    <script src="js/canvas-draw.js"></script>
+</body>
+
+</html>

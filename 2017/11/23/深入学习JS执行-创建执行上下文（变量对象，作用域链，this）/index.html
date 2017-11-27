@@ -1,0 +1,890 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="一、介绍本篇继上一篇深入理解js执行–单线程的JS，这次我们来深入了解js执行过程中的执行上下文。  本篇涉及到的名词：预执行，执行上下文，变量对象，活动对象，作用域链，this等  二、预执行 在上一篇说到，在js代码被执行，执行上下文会被压进执行栈中，但是在此之前还有一步工作要做，就是创建好执行上下文，因为创建好才能被压进去啊。  创建执行上下文就是预执行过程： 接下来说说创建执行上下文的细节">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入学习JS执行--创建执行上下文（变量对象，作用域链，this）">
+<meta property="og:url" content="http://Ry-yuan.me/2017/11/23/深入学习JS执行-创建执行上下文（变量对象，作用域链，this）/index.html">
+<meta property="og:site_name" content="Ry-yuan(瑞元)">
+<meta property="og:description" content="一、介绍本篇继上一篇深入理解js执行–单线程的JS，这次我们来深入了解js执行过程中的执行上下文。  本篇涉及到的名词：预执行，执行上下文，变量对象，活动对象，作用域链，this等  二、预执行 在上一篇说到，在js代码被执行，执行上下文会被压进执行栈中，但是在此之前还有一步工作要做，就是创建好执行上下文，因为创建好才能被压进去啊。  创建执行上下文就是预执行过程： 接下来说说创建执行上下文的细节">
+<meta property="og:image" content="http://images2017.cnblogs.com/blog/1144006/201711/1144006-20171120204222602-93014105.png">
+<meta property="og:updated_time" content="2017-11-27T13:02:31.633Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入学习JS执行--创建执行上下文（变量对象，作用域链，this）">
+<meta name="twitter:description" content="一、介绍本篇继上一篇深入理解js执行–单线程的JS，这次我们来深入了解js执行过程中的执行上下文。  本篇涉及到的名词：预执行，执行上下文，变量对象，活动对象，作用域链，this等  二、预执行 在上一篇说到，在js代码被执行，执行上下文会被压进执行栈中，但是在此之前还有一步工作要做，就是创建好执行上下文，因为创建好才能被压进去啊。  创建执行上下文就是预执行过程： 接下来说说创建执行上下文的细节">
+<meta name="twitter:image" content="http://images2017.cnblogs.com/blog/1144006/201711/1144006-20171120204222602-93014105.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://Ry-yuan.me/2017/11/23/深入学习JS执行-创建执行上下文（变量对象，作用域链，this）/"/>
+
+
+
+
+
+  <title>深入学习JS执行--创建执行上下文（变量对象，作用域链，this） | Ry-yuan(瑞元)</title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ry-yuan(瑞元)</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://Ry-yuan.me/2017/11/23/深入学习JS执行-创建执行上下文（变量对象，作用域链，this）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ry-yuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ry-yuan(瑞元)">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">深入学习JS执行--创建执行上下文（变量对象，作用域链，this）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-23T14:00:58+08:00">
+                2017-11-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/11/23/深入学习JS执行-创建执行上下文（变量对象，作用域链，this）/" class="leancloud_visitors" data-flag-title="深入学习JS执行--创建执行上下文（变量对象，作用域链，this）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一、介绍"><a href="#一、介绍" class="headerlink" title="一、介绍"></a>一、介绍</h2><p>本篇继上一篇<a href="http://www.cnblogs.com/Ry-yuan/p/7865480.html" target="_blank" rel="external">深入理解js执行–单线程的JS</a>，这次我们来深入了解js执行过程中的执行上下文。</p>
+<blockquote>
+<p>本篇涉及到的名词：预执行，执行上下文，变量对象，活动对象，作用域链，this等</p>
+</blockquote>
+<h2 id="二、预执行"><a href="#二、预执行" class="headerlink" title="二、预执行"></a>二、预执行</h2><blockquote>
+<p>在上一篇说到，在js代码被执行，执行上下文会被压进执行栈中，但是在此之前还有一步工作要做，就是创建好执行上下文，因为创建好才能被压进去啊。</p>
+</blockquote>
+<p><strong>创建执行上下文就是预执行过程：</strong> 接下来说说创建执行上下文的细节部分。</p>
+<h2 id="三、创建执行上下文"><a href="#三、创建执行上下文" class="headerlink" title="三、创建执行上下文"></a>三、创建执行上下文</h2><h3 id="（1）执行上下文组成"><a href="#（1）执行上下文组成" class="headerlink" title="（1）执行上下文组成"></a>（1）执行上下文组成</h3><blockquote>
+<p>执行上下文：也叫一个执行环境，有全局执行环境和函数执行环境两种。每个执行环境中包含这三部分：<strong>变量对象/活动对象</strong>，<strong>作用域链</strong>，<strong>this的值</strong></p>
+</blockquote>
+<h4 id="代码模拟"><a href="#代码模拟" class="headerlink" title="代码模拟"></a>代码模拟</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//可以把执行上下文看作一个对象</div><div class="line">exeContext = &#123;</div><div class="line">    VO = [...],  //VO代表变量对象，保存变量和函数声明</div><div class="line">    scopeChain = [...];  //作用域链</div><div class="line">    thisValue = &#123;...&#125;;  //this的值</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>创建执行上下文就是创建<strong>变量对象，作用域链和this</strong>过程</p>
+</blockquote>
+<p>接下来就分别细说创建变量对象/活动对象，作用域链，this值的过程。</p>
+<h3 id="（2）变量对象-variable-object"><a href="#（2）变量对象-variable-object" class="headerlink" title="（2）变量对象(variable object)"></a>（2）变量对象(variable object)</h3><blockquote>
+<p>变量对象中存储了在上下文（环境）中定义的变量和函数声明</p>
+</blockquote>
+<p><strong>创建变量对象（VO）时就是将各种变量和函数声明进行提升的环节：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//用下面代码为例子</div><div class="line">console.log(a);</div><div class="line">console.log(b);</div><div class="line">console.log(c);</div><div class="line">console.log(d);</div><div class="line">var a = 100;</div><div class="line">b = 10;</div><div class="line">function c()&#123;&#125;;</div><div class="line">var d = function()&#123;&#125;;</div></pre></td></tr></table></figure>
+<p><strong>上述代码的变量对象：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//这里用VO表示变量对象</div><div class="line">VO = &#123;</div><div class="line">    a = undefined; //有a，a使用var声明，值会被赋值为undefined</div><div class="line">    //没有b，因为b没用var声明</div><div class="line">    c = function c ()&#123;&#125;  //有c，c是函数声明，并且c指向该函数</div><div class="line">    d = undefined; //有d，d用var声明，值会被赋值为undefined</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>解说</strong>：执行上述代码的时候，会创建一个全局执行上下文，上下文中包含上面变量对象，创建完执行上下文后，这个执行上下文才会被压进执行栈中。开始执行后，因为js代码一步一步被执行，后面赋值的代码还没被执行到，所以使用console.log函数打印各个变量的值是变量对象中的值。</p>
+<p>在运行到第二行时会报错（报错后就不再执行了），因为没有b（b is no defined）。把第二行注释掉后，再执行各个结果就是VO里面的对应的值。</p>
+<p>讲到这里我想大家对变量对象理解了吧，以及对变量提升和函数提升有个深入了解。  </p>
+<h3 id="（3）活动对象（activation-object）"><a href="#（3）活动对象（activation-object）" class="headerlink" title="（3）活动对象（activation object）"></a>（3）活动对象（activation object）</h3><blockquote>
+<p>活动对象是在函数执行上下文里面的，其实也是变量对象，只是它需要在函数被调用时才被激活，而且初始化arguments，激活后就是看做变量对象执行上面一样的步骤。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//例子</div><div class="line">function fn(name)&#123;</div><div class="line">    var age = 3;</div><div class="line">    console.log(name);</div><div class="line">&#125;</div><div class="line">fn(&apos;ry&apos;);</div></pre></td></tr></table></figure>
+<p>当上面的函数fn被调用，就会创建一个执行上下文，同时活动对象被激活<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//活动对象</div><div class="line">AO = &#123;</div><div class="line">    arguments : &#123;0:&apos;ry&apos;&#125;,  //arguments的值初始化为传入的参数</div><div class="line">    name : ry,  //形参初始化为传进来的值</div><div class="line">    age ： undefined  //var 声明的age，赋值为undefined</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>活动对象其实也是变量对象，做着同样的工作。其实不管变量还是活动对象，这里都表明了，全局执行和函数执行时都有一个变量对象来储存着该上下文（环境内）定义的变量和函数。</p>
+</blockquote>
+<h3 id="（4）作用域链（scope-chain）"><a href="#（4）作用域链（scope-chain）" class="headerlink" title="（4）作用域链（scope chain）"></a>（4）作用域链（scope chain）</h3><blockquote>
+<p>在创建执行上下文时还要创建一个重要的东西，就是作用域链。每个执行环境的作用域链由当前环境的变量对象及父级环境的作用域链构成。</p>
+</blockquote>
+<p><strong>创建作用域链过程：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//以本段代码为例</div><div class="line">function fn(a,b)&#123;</div><div class="line">    var x = &apos;string&apos;,</div><div class="line">&#125;</div><div class="line">fn(1,2);</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>1.函数被调用前，初始化function fn，fn有个私有属性[[scope]],它会被初始化为当前全局的作用域，fn.[[scope]=”globalScope”。  </p>
+<p>2.调用函数fn(1,2)，开始<strong>创建fn执行上下文</strong>，同时<strong>创建作用域链</strong>fn.scopeChain = [fn.[[scope]]]，此时作用域链中有全局作用域。  </p>
+<p>3.fn活动对象AO被初始化后，把活动对象作为变量对象推到作用域链前端，此时fn.scopeChain = [fn.AO,fn.[[scope]]]，构建完成，此时作用域链中有两个值，一个当前活动对象，一个全局作用域。</p>
+</blockquote>
+<p>fn的作用域链构建完成，作用域链中有两个值，第一个是fn函数自身的活动对象，能访问自身的变量，还有一个是全局作用域，所以fn能访问外部的变量。这里就说明了为什么函数中能够访问函数外部的变量，因为有作用域链，在自身找不到就顺着作用域链往上找。</p>
+<h3 id="（5）this的值"><a href="#（5）this的值" class="headerlink" title="（5）this的值"></a>（5）this的值</h3><p>上面说过执行上下文有两种，一个全局执行上下文，一个函数执行上下，下面分别说说这两种上下文的this。</p>
+<h4 id="a-全局执行上下文的this"><a href="#a-全局执行上下文的this" class="headerlink" title="a.全局执行上下文的this"></a>a.全局执行上下文的this</h4><blockquote>
+<p>指向window全局对象</p>
+</blockquote>
+<h4 id="b-函数执行上下文的this-主要讲函数的this"><a href="#b-函数执行上下文的this-主要讲函数的this" class="headerlink" title="b.函数执行上下文的this(主要讲函数的this)"></a>b.函数执行上下文的this(主要讲函数的this)</h4><blockquote>
+<p><strong>在《JavaScript权威指南》中有这么几句话：</strong><br>1.this是关键字，不是变量，不是属性名，js语法不允许给this赋值。<br>2.关键字this没有作用域限制，嵌套的函数不会从调用它的函数中继承this。<br>3.如果嵌套函数作为方法调用，其this指向调用它的对象。<br>4.如果嵌套函数作为函数调用，其this值是window（非严格模式），或undefined（严格模式下）。</p>
+</blockquote>
+<p><strong>解读一下：</strong> 上面说的概括了this两种值的情况：<br>1.函数直接作为<strong>某对象的方法</strong>被调用则函数的this指向该对象。<br>2.函数作为<strong>函数直接独立调用</strong>（不是某对象的方法），或是函数中的函数，其this指向window。</p>
+<p>我们看几个栗子便可理解：<br><strong>栗子1：</strong>（这个例子我相信都能理解）当函数被独立运行时，其this的值指向window对象。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">function a()&#123;</div><div class="line">    console.log(this);</div><div class="line">&#125;</div><div class="line">//独立运行</div><div class="line">a();  //window</div></pre></td></tr></table></figure></p>
+<p><strong>栗子2：</strong>（函数中函数，这里嵌套了个外围函数）这里也是指向window对象，也相当于函数作为函数调用，就是独立运行。其实这个例子也说明闭包的this指向Window。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">//外围函数</div><div class="line">function a()&#123;</div><div class="line">    //b函数在里面</div><div class="line">    function b()&#123;</div><div class="line">        console.log(this);</div><div class="line">    &#125;</div><div class="line">    //虽然在函数中，但b函数独立运行,不是那个对象的方法</div><div class="line">    b();</div><div class="line">&#125;</div><div class="line">a();  //window</div></pre></td></tr></table></figure></p>
+<p><strong>栗子3：</strong>（再写复杂点的话）x函数即使在对象里面，但它是函数中的函数，也是作为函数运行，不是Object的方法。getName才是objcet的方法，所以getName的this指向object（在下个栗子有）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">//一个对象</div><div class="line">var object = &#123;</div><div class="line">    //getName是Object的方法</div><div class="line">    getName : function()&#123;</div><div class="line">        //x是getName里面的函数，它是作为函数调用的，this就是window啦</div><div class="line">        function x()&#123;</div><div class="line">            console.log(this);</div><div class="line">        &#125;</div><div class="line">        x();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">object.getName();  //window</div></pre></td></tr></table></figure></p>
+<p>以上三个都是输出window，下面是this指向某个对象的情况。</p>
+<p><strong>栗子4：</strong>函数作为某个对象的<strong>方法</strong>被调用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//一个对象</div><div class="line">var object = &#123;</div><div class="line">    name : &quot;object&quot;,</div><div class="line">    //getName是Object的方法</div><div class="line">    getName : function()&#123;</div><div class="line">        console.log(this === object);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">object.getName(); //true ， 说明this指向了object</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>这里的getName中的this是指向objct对象的，因为getName是object的一个方法，它作为对象方法被调用。</p>
+</blockquote>
+<p><strong>栗子5：</strong>再来个栗子。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">var name = &quot;window&quot;;</div><div class="line">var obj = &#123;</div><div class="line">    name : &quot;obj&quot;</div><div class="line">&#125;;</div><div class="line">function fn ()&#123;</div><div class="line">    console.log(this.name);</div><div class="line">&#125;</div><div class="line"></div><div class="line">//将fn通过call或bind或apply直接绑定给obj，从而成为obj的方法。</div><div class="line">fn.call(obj);  //obj</div></pre></td></tr></table></figure></p>
+<h4 id="再总结一下this的值"><a href="#再总结一下this的值" class="headerlink" title="再总结一下this的值"></a>再总结一下this的值</h4><p>全局执行上下文：this的值是window<br>函数执行上下文：this的值两种：<br>1.函数中this指向某对象，因为函数作为对象的方法：怎么看函数是对象的方法，一种是直接写在对象里面（不是嵌套在对象方法中的函数，不懂再看看栗子3），另一种是通过call等方法直接绑定在对象中。  </p>
+<p>2.函数中this指向window：函数独立运行，不是对象的方法，函数中的函数（闭包），其this指向window。</p>
+<h2 id="四、总结整个js代码执行过程"><a href="#四、总结整个js代码执行过程" class="headerlink" title="四、总结整个js代码执行过程"></a>四、总结整个js代码执行过程</h2><h3 id="（1）JS执行过程"><a href="#（1）JS执行过程" class="headerlink" title="（1）JS执行过程"></a>（1）JS执行过程</h3><p>js代码执行分成了两部分：<strong>预执行和执行</strong>  </p>
+<ol>
+<li>预执行：创建好执行上下文，有两种，一种是开始执行js代码就创建<strong>全局的执行上下文</strong>，一种是当某个函数被调用时创建它自己的<strong>函数执行上下文</strong>。这里也就是本节主要讲的东西，创建执行上下文的三个重要成分。</li>
+<li>执行：在<strong>执行栈</strong>中执行，栈顶的执行上下文获得<strong>执行权</strong>，并按顺序执行当前上下文中的代码，执行完后弹栈销毁上下文，执行权交给下一个栈顶执行上下文。</li>
+</ol>
+<h3 id="（2）放上图示"><a href="#（2）放上图示" class="headerlink" title="（2）放上图示"></a>（2）放上图示</h3><p>某个执行上下文生命周期：</p>
+<p><img src="http://images2017.cnblogs.com/blog/1144006/201711/1144006-20171120204222602-93014105.png" alt=""></p>
+<h2 id="五、后话"><a href="#五、后话" class="headerlink" title="五、后话"></a>五、后话</h2><blockquote>
+<p>整个js的执行过程就这样了，一开始可能有点难理解，但看多几遍就慢慢领会了。希望大家能够理解。如果觉得写得好，记得点赞，关注哦。</p>
+<p>本文出自博客园：<a href="http://www.cnblogs.com/Ry-yuan/" target="_blank" rel="external">http://www.cnblogs.com/Ry-yuan/</a><br>作者：Ry（渊源远愿）<br>欢迎转载，转载请标明出处，保留该字段。</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/20/深入学习JS执行-单线程的JS/" rel="next" title="深入学习JS执行--单线程的JS">
+                <i class="fa fa-chevron-left"></i> 深入学习JS执行--单线程的JS
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Ry-yuan" />
+          <p class="site-author-name" itemprop="name">Ry-yuan</p>
+           
+              <p class="site-description motion-element" itemprop="description">如果你觉得困难，那也许是在进步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、介绍"><span class="nav-number">1.</span> <span class="nav-text">一、介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、预执行"><span class="nav-number">2.</span> <span class="nav-text">二、预执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、创建执行上下文"><span class="nav-number">3.</span> <span class="nav-text">三、创建执行上下文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#（1）执行上下文组成"><span class="nav-number">3.1.</span> <span class="nav-text">（1）执行上下文组成</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#代码模拟"><span class="nav-number">3.1.1.</span> <span class="nav-text">代码模拟</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（2）变量对象-variable-object"><span class="nav-number">3.2.</span> <span class="nav-text">（2）变量对象(variable object)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（3）活动对象（activation-object）"><span class="nav-number">3.3.</span> <span class="nav-text">（3）活动对象（activation object）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（4）作用域链（scope-chain）"><span class="nav-number">3.4.</span> <span class="nav-text">（4）作用域链（scope chain）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（5）this的值"><span class="nav-number">3.5.</span> <span class="nav-text">（5）this的值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a-全局执行上下文的this"><span class="nav-number">3.5.1.</span> <span class="nav-text">a.全局执行上下文的this</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#b-函数执行上下文的this-主要讲函数的this"><span class="nav-number">3.5.2.</span> <span class="nav-text">b.函数执行上下文的this(主要讲函数的this)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#再总结一下this的值"><span class="nav-number">3.5.3.</span> <span class="nav-text">再总结一下this的值</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、总结整个js代码执行过程"><span class="nav-number">4.</span> <span class="nav-text">四、总结整个js代码执行过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#（1）JS执行过程"><span class="nav-number">4.1.</span> <span class="nav-text">（1）JS执行过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（2）放上图示"><span class="nav-number">4.2.</span> <span class="nav-text">（2）放上图示</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、后话"><span class="nav-number">5.</span> <span class="nav-text">五、后话</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ry-yuan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+&nbsp;|&nbsp;
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("RjwnbvSlgbai8OyA9HotKOIY-gzGzoHsz", "Bwqfl7y14vPhnj48bjA112I8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
