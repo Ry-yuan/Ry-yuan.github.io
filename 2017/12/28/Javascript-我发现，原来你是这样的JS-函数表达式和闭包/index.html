@@ -1,0 +1,853 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="一、介绍 本次博客主要介绍函数表达式的内容，主要是闭包。  二、函数表达式 定义函数的两种方式：一个是函数声明，另一个就是函数表达式。  123456789//1.函数声明写法function fn2()&amp;#123;    console.log(&amp;apos;函数声明&amp;apos;);  &amp;#125;//2.函数表达式写法var fn1 = function()&amp;#123;    console.l">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Javascript--我发现，原来你是这样的JS:函数表达式和闭包">
+<meta property="og:url" content="http://Ry-yuan.me/2017/12/28/Javascript-我发现，原来你是这样的JS-函数表达式和闭包/index.html">
+<meta property="og:site_name" content="Ry-yuan(瑞元)">
+<meta property="og:description" content="一、介绍 本次博客主要介绍函数表达式的内容，主要是闭包。  二、函数表达式 定义函数的两种方式：一个是函数声明，另一个就是函数表达式。  123456789//1.函数声明写法function fn2()&amp;#123;    console.log(&amp;apos;函数声明&amp;apos;);  &amp;#125;//2.函数表达式写法var fn1 = function()&amp;#123;    console.l">
+<meta property="og:updated_time" content="2017-12-28T14:29:54.295Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Javascript--我发现，原来你是这样的JS:函数表达式和闭包">
+<meta name="twitter:description" content="一、介绍 本次博客主要介绍函数表达式的内容，主要是闭包。  二、函数表达式 定义函数的两种方式：一个是函数声明，另一个就是函数表达式。  123456789//1.函数声明写法function fn2()&amp;#123;    console.log(&amp;apos;函数声明&amp;apos;);  &amp;#125;//2.函数表达式写法var fn1 = function()&amp;#123;    console.l">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://Ry-yuan.me/2017/12/28/Javascript-我发现，原来你是这样的JS-函数表达式和闭包/"/>
+
+
+
+
+
+  <title>Javascript--我发现，原来你是这样的JS:函数表达式和闭包 | Ry-yuan(瑞元)</title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ry-yuan(瑞元)</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://Ry-yuan.me/2017/12/28/Javascript-我发现，原来你是这样的JS-函数表达式和闭包/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ry-yuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ry-yuan(瑞元)">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Javascript--我发现，原来你是这样的JS:函数表达式和闭包</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-28T22:28:52+08:00">
+                2017-12-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/12/28/Javascript-我发现，原来你是这样的JS-函数表达式和闭包/" class="leancloud_visitors" data-flag-title="Javascript--我发现，原来你是这样的JS:函数表达式和闭包">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一、介绍"><a href="#一、介绍" class="headerlink" title="一、介绍"></a>一、介绍</h2><blockquote>
+<p>本次博客主要介绍函数表达式的内容，主要是闭包。</p>
+</blockquote>
+<h2 id="二、函数表达式"><a href="#二、函数表达式" class="headerlink" title="二、函数表达式"></a>二、函数表达式</h2><blockquote>
+<p>定义函数的两种方式：一个是函数声明，另一个就是函数表达式。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">//1.函数声明写法</div><div class="line">function fn2()&#123;</div><div class="line">    console.log(&apos;函数声明&apos;);  </div><div class="line">&#125;</div><div class="line">//2.函数表达式写法</div><div class="line">var fn1 = function()&#123;</div><div class="line">    console.log(&apos;函数表达式&apos;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>区别：<br>1.函数声明是用function后面有函数名，函数表达式是赋值形式给一个变量。<br>2.函数声明可以提升函数，而函数表达式不会提升</p>
+<p>函数提升就是函数会被自动提升到最前方，以至于再调用函数后再声明函数也不会有错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">//例子：</div><div class="line">//先调用运行</div><div class="line">sayName();</div><div class="line">//再声明函数</div><div class="line">function sayName()&#123;</div><div class="line">    console.log(&apos;ry&apos;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">//运行结果</div><div class="line">&apos;ry&apos;</div></pre></td></tr></table></figure>
+<p>函数表达式就不会被提升：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//先调用</div><div class="line">sayBye();</div><div class="line">//函数表达式</div><div class="line">var sayBye = function()&#123;</div><div class="line">    console.log(&apos;bye bye&apos;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">//运行报错</div></pre></td></tr></table></figure>
+<p>但是下面的写法很危险：因为存在函数声明的提升<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">//书上代码</div><div class="line">if(condition)&#123;</div><div class="line">    function sayHi()&#123;</div><div class="line">        console.log(&apos;hi&apos;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">else&#123;</div><div class="line">    function sayHi()&#123;</div><div class="line">        console.log(&apos;yo&apos;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>解说一下：</strong> 这段代码想表达在condition为true时声明sayHi，不然就另一函数sayHi，但是运行结果往往出乎意料，在当前chrome或firefox可能能做到，但是在IE10以下的浏览器（我测试过）往往不会遵循你的意愿，不管condition是true还是false都会输出yo。</p>
+<p>这时函数表达式能派上用场了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">//换成函数表达式，没问题因为不会被提升，只有当执行时才赋值</div><div class="line">var sayHi = null;</div><div class="line">if(condition)&#123;</div><div class="line">    sayHi = function ()&#123;</div><div class="line">        console.log(&apos;hi&apos;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">else&#123;</div><div class="line">    sayHi = function sayHi()&#123;</div><div class="line">        console.log(&apos;yo&apos;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="三、闭包"><a href="#三、闭包" class="headerlink" title="三、闭包"></a>三、闭包</h2><blockquote>
+<p>闭包的定义：有权访问另一个函数作用域中的变量的函数</p>
+</blockquote>
+<p>有人觉得闭包很难理解，一开始我也是这样的，我认为那是对一些概念还不够了解。</p>
+<p>定义中说明了什么是闭包，最常见的形式就是在函数中再声明一个函数。</p>
+<h3 id="重点理解这里："><a href="#重点理解这里：" class="headerlink" title="重点理解这里："></a>重点理解这里：</h3><p>1.闭包能访问外围函数的变量是因为其作用域链中有外围函数的活动对象（这个活动对象即使在外围函数执行完还会存在，不会被销毁，因为被闭包引用着）。  </p>
+<p>2.闭包是函数中的函数，也就是说其被调用时也创建执行上下文，对于执行上下文这部分可以看看这篇：<a href="http://www.cnblogs.com/Ry-yuan/p/7868029.html" target="_blank" rel="external">深入理解js执行–创建执行上下文</a>这篇博客。  </p>
+<h4 id="理解了上面之后我们再来看闭包的例子："><a href="#理解了上面之后我们再来看闭包的例子：" class="headerlink" title="理解了上面之后我们再来看闭包的例子："></a>理解了上面之后我们再来看闭包的例子：</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="comment">//a函数的变量</span></div><div class="line">    <span class="keyword">var</span> val_a = <span class="string">"我是a函数里的变量"</span>;</div><div class="line">    <span class="comment">//声明函数b，b能访问函数a的变量</span></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">b</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(val_a);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//a函数将b返回</span></div><div class="line">    <span class="keyword">return</span> b;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//全局变量fn，a执行返回了b给fn</span></div><div class="line"><span class="keyword">var</span> fn = a();</div><div class="line"><span class="comment">//调用fn，能够在全局作用域访问a函数里的变量</span></div><div class="line">fn();  <span class="comment">//我是a函数里的变量</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>这里fn能够访问到a的变量，因为b中引用着a的活动对象，所以即使a函数执行完了，a的活动对象还是不会被销毁的。这也说明过度使用闭包会导致内存泄漏。</p>
+</blockquote>
+<h4 id="再来个常见的例子（给多个li添加点击事件，返回对于li的下标）："><a href="#再来个常见的例子（给多个li添加点击事件，返回对于li的下标）：" class="headerlink" title="再来个常见的例子（给多个li添加点击事件，返回对于li的下标）："></a>再来个常见的例子（给多个li添加点击事件，返回对于li的下标）：</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">"list"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>red<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>green<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>yellow<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>black<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>blue<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//获得li标签组</span></div><div class="line"><span class="keyword">var</span> li_group = <span class="built_in">document</span>.getElementsByTagName(<span class="string">'li'</span>);</div><div class="line"></div><div class="line"><span class="comment">//错误例子:每个li都会跳出5</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="comment">//为每一个li添加点击事件</span></div><div class="line">    <span class="keyword">var</span> i = <span class="number">0</span>;</div><div class="line">    <span class="comment">//使用for来给每个li添加事件</span></div><div class="line">    <span class="keyword">for</span>(;i&lt;li_group.length;i++)&#123;</div><div class="line">        <span class="comment">//添加点击事件</span></div><div class="line">        li_group[i].addEventListener(<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">            <span class="comment">// 输出对应得下标</span></div><div class="line">            <span class="built_in">console</span>.log(i);</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">fn();</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//正确的例子：</span></div><div class="line"><span class="comment">//在加一层的函数，作为闭包，用来保存每一次循环的i变量，就可以达到目的</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">correctFn</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> i = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(;i&lt;li_group.length;i++)&#123;</div><div class="line">        <span class="comment">//在外面套一层函数，这层函数会保存每次循环的i变量，也就是闭包了。</span></div><div class="line">        (<span class="function"><span class="keyword">function</span>(<span class="params">num</span>)</span>&#123;</div><div class="line">            li_group[num].addEventListener(<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">                <span class="built_in">console</span>.log(num);</div><div class="line">            &#125;);               </div><div class="line">        &#125;(i));        </div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">correctFn();</div></pre></td></tr></table></figure>
+<p>看下面解释之前我默认你已经知道活动对象是什么了，如果不懂可以看这篇：<a href="http://www.cnblogs.com/Ry-yuan/p/7868029.html" target="_blank" rel="external">深入理解js执行–创建执行上下文</a>  </p>
+<p>解释一下：<br><strong>1.错误的例子:</strong><br>屡一下思路，每个li都有click执行的函数，每个函数点击后才会执行是吧，那每个click的函数的外层函数是fn这个函数，那这5个click函数都会保存着fn的活动对象，那这个输出的i变量在fn这函数里面，所以当fn执行完后，i的值是5了，因此当每个里触发click的函数的时候输出的也就是5了。<br>再简单的说：每个li的click事件触发的函数引用的i在同一个活动对象中，所以值都一样。  </p>
+<p><strong>2.正确执行的例子：</strong><br>我们就在外层加了一层匿名函数并立即执行(虽然函数被执行了，如果有函数引用着它的活动对象，那其活动对象将不灭)，这时每个li的click函数外层函数是每次循环产生的不同的匿名函数，这匿名也是有活动对象，每个li的click的函数保存着各自的匿名函数的活动对象，num这变量也根据每次循环产生不同的匿名函数传入的i的不同而不同，所以能够输出对应不同的值。  </p>
+<blockquote>
+<p>上面说的可能有点啰嗦，请原谅我[捂脸.jpg]，我是希望尽可能的表达清楚。如果你看懂了，那对闭包的理解也更深一层了哦。</p>
+</blockquote>
+<h2 id="小结："><a href="#小结：" class="headerlink" title="小结："></a>小结：</h2><blockquote>
+<p>1.本篇主要讲的是闭包，闭包是有权访问另一个函数作用域中的变量的函数，主要是函数中的函数，因为能引用外层函数的活动对象所以能够访问其外层的变量。<br>2.我本篇主要讲的是原理，如果对一些东西不懂，可以看下面几篇。</p>
+<p>相关的几篇：<br><a href="http://www.cnblogs.com/Ry-yuan/p/7865480.html" target="_blank" rel="external">深入理解js执行–单线程的JS</a><br><a href="http://www.cnblogs.com/Ry-yuan/p/7868029.html" target="_blank" rel="external">深入学习JS执行–创建执行上下文（变量对象，作用域链，this）</a><br> <a href="http://www.cnblogs.com/Ry-yuan/category/1109797.html" target="_blank" rel="external">我发现，原来你是这样的JS全部文章汇总（点击此处）</a></p>
+<p>本文出自博客园：<a href="http://www.cnblogs.com/Ry-yuan/" target="_blank" rel="external">http://www.cnblogs.com/Ry-yuan/</a><br>作者：Ry（渊源远愿）<br>欢迎访问我的个人首页：<a href="http://112.74.51.234/" target="_blank" rel="external">我的首页</a><br>欢迎访问我的github:<a href="https://github.com/Ry-yuan/demoFiles" target="_blank" rel="external">https://github.com/Ry-yuan/demoFiles</a><br>欢迎转载，转载请标明出处，保留该字段。</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/23/深入学习JS执行-创建执行上下文（变量对象，作用域链，this）/" rel="next" title="深入学习JS执行--创建执行上下文（变量对象，作用域链，this）">
+                <i class="fa fa-chevron-left"></i> 深入学习JS执行--创建执行上下文（变量对象，作用域链，this）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Ry-yuan" />
+          <p class="site-author-name" itemprop="name">Ry-yuan</p>
+           
+              <p class="site-description motion-element" itemprop="description">如果你觉得困难，那也许是在进步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、介绍"><span class="nav-number">1.</span> <span class="nav-text">一、介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、函数表达式"><span class="nav-number">2.</span> <span class="nav-text">二、函数表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、闭包"><span class="nav-number">3.</span> <span class="nav-text">三、闭包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#重点理解这里："><span class="nav-number">3.1.</span> <span class="nav-text">重点理解这里：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#理解了上面之后我们再来看闭包的例子："><span class="nav-number">3.1.1.</span> <span class="nav-text">理解了上面之后我们再来看闭包的例子：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#再来个常见的例子（给多个li添加点击事件，返回对于li的下标）："><span class="nav-number">3.1.2.</span> <span class="nav-text">再来个常见的例子（给多个li添加点击事件，返回对于li的下标）：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结："><span class="nav-number">4.</span> <span class="nav-text">小结：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ry-yuan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+&nbsp;|&nbsp;
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人
+</span>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("RjwnbvSlgbai8OyA9HotKOIY-gzGzoHsz", "Bwqfl7y14vPhnj48bjA112I8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
